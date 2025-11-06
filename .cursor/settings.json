@@ -1,0 +1,51 @@
+{
+  "project": "KEKTECH 3.0",
+  "description": "Prediction Market Platform on BasedAI Chain",
+  "version": "0.1.0",
+  "blockchain": {
+    "network": "BasedAI",
+    "chainId": 32323,
+    "token": "BASED"
+  },
+  "development": {
+    "framework": ["Hardhat", "Foundry"],
+    "language": "Solidity 0.8.19+",
+    "testing": {
+      "coverage": "95%",
+      "fuzzRuns": 10000,
+      "framework": "dual"
+    }
+  },
+  "conventions": {
+    "testFirst": true,
+    "gasOptimization": true,
+    "securityFirst": true,
+    "documentation": "comprehensive"
+  },
+  "directories": {
+    "contracts": "expansion-packs/bmad-blockchain-dev/contracts",
+    "tests": "expansion-packs/bmad-blockchain-dev/test",
+    "scripts": "expansion-packs/bmad-blockchain-dev/scripts",
+    "docs": "expansion-packs/bmad-blockchain-dev/docs"
+  },
+  "commands": {
+    "test": "npm test",
+    "deploy": "npm run deploy:fork",
+    "security": "npm run security:slither",
+    "gas": "npm run test:gas"
+  },
+  "agents": {
+    "architect": "/bmad-bc/architect",
+    "developer": "/bmad-bc/solidity",
+    "security": "/bmad-bc/security",
+    "optimizer": "/bmad-bc/gas",
+    "deployer": "/bmad-bc/deploy"
+  },
+  "rules": {
+    "alwaysTestFirst": true,
+    "requireAccessControl": true,
+    "emitEvents": true,
+    "documentEverything": true,
+    "optimizeGas": true
+  }
+}

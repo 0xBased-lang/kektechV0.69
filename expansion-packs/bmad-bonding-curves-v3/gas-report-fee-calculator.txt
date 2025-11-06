@@ -1,0 +1,125 @@
+
+> bmad-bonding-curves-v3@3.0.0 test
+> hardhat test
+
+WARNING: You are currently using Node.js v23.11.0, which is not supported by Hardhat. This can lead to unexpected behavior. See https://v2.hardhat.org/nodejs-versions
+
+
+
+  DualCurveMath Library
+    Price Invariant
+      ✔ Should maintain P(YES) + P(NO) = PRECISION with equal supplies (1ms)
+      ✔ Should maintain invariant with zero YES supply (0ms)
+      ✔ Should maintain invariant with zero NO supply (1ms)
+      ✔ Should maintain invariant with large supplies (1ms)
+      ✔ Should maintain invariant with very small supplies (0ms)
+      ✔ Should revert with zero total supply (division by zero) (5ms)
+    Price Calculations
+      ✔ Should return 50/50 prices with equal supplies (0ms)
+      ✔ Should increase YES price when NO supply is higher (1ms)
+      ✔ Should increase NO price when YES supply is higher (0ms)
+      ✔ Should handle extreme ratios correctly (0ms)
+      ✔ Should getPrice return correct individual price (1ms)
+    Buy Calculations
+      ✔ Should calculate shares for small ETH amount (0ms)
+      ✔ Should calculate fewer shares for large trades (price impact) (1ms)
+      ✔ Should revert with zero ETH amount (1ms)
+      ✔ Should handle very small ETH amounts (0ms)
+    Sell Calculations
+      ✔ Should calculate payout for selling shares (0ms)
+      ✔ Should revert when selling more shares than supply (1ms)
+      ✔ Should revert with zero shares (1ms)
+      ✔ Should never exceed reserve amount (0ms)
+      ✔ Should apply price impact on large sells (1ms)
+    Price Impact
+      ✔ Should return zero impact for tiny trades (0ms)
+      ✔ Should increase impact with trade size (0ms)
+      ✔ Should cap impact at MAX_PRICE_IMPACT (500) (1ms)
+      ✔ Should return zero with zero total supply (0ms)
+    Invariant Verification
+      ✔ Should verify valid invariant (0ms)
+      ✔ Should accept 1 wei tolerance (1ms)
+      ✔ Should reject invalid invariant (0ms)
+    Helper Functions
+      ✔ Should calculate TVL correctly (0ms)
+      ✔ Should handle zero reserves in TVL (0ms)
+    Integration Scenarios
+      ✔ Should maintain invariant through buy/sell cycle (1ms)
+      ✔ Should handle extreme market conditions (0ms)
+
+  FeeCalculator Library
+    Tier 1: Bond-Based Fee Scaling
+      ✔ Should return minimum fee for minimum bond (10 BASED) (0ms)
+      ✔ Should return maximum fee for maximum bond (1000 BASED) (1ms)
+      ✔ Should linearly scale fee for mid-range bond (500 BASED) (0ms)
+      ✔ Should linearly scale fee for lower mid-range bond (100 BASED) (0ms)
+      ✔ Should linearly scale fee for upper mid-range bond (750 BASED) (0ms)
+      ✔ Should revert if bond amount below minimum (1ms)
+      ✔ Should revert if bond amount above maximum (0ms)
+      ✔ Should handle bond exactly at boundaries (MIN_BOND) (1ms)
+      ✔ Should handle bond exactly at boundaries (MAX_BOND) (0ms)
+      ✔ Should maintain monotonic increase (larger bond = higher fee) (0ms)
+    Tier 2: Voluntary Fee-Based Bonus Scaling
+      ✔ Should return zero bonus for zero voluntary fee (0ms)
+      ✔ Should return maximum bonus for maximum voluntary fee (1000 BASED) (0ms)
+      ✔ Should linearly scale bonus for mid-range voluntary fee (500 BASED) (0ms)
+      ✔ Should linearly scale bonus for lower range (250 BASED) (0ms)
+      ✔ Should linearly scale bonus for upper range (750 BASED) (0ms)
+      ✔ Should revert if voluntary fee above maximum (0ms)
+      ✔ Should handle voluntary fee exactly at maximum (1ms)
+      ✔ Should maintain monotonic increase (larger voluntary = higher bonus) (0ms)
+    Combined Fee Calculation (Additive Model)
+      ✔ Should add bond fee + voluntary bonus (minimum case) (1ms)
+      ✔ Should add bond fee + voluntary bonus (mid-range case) (0ms)
+      ✔ Should add bond fee + voluntary bonus (maximum case) (0ms)
+      ✔ Should work with bond only (no voluntary fee) (1ms)
+      ✔ Should enforce global trading fee cap (MAX_TRADING_FEE_BPS) (0ms)
+      ✔ Should revert if bond amount invalid (1ms)
+      ✔ Should revert if voluntary amount invalid (1ms)
+      ✔ Should maintain additive property (fee1 + fee2 = total) (1ms)
+    3-Way Distribution Validation
+      ✔ Should accept valid distribution (33/34/33) (0ms)
+      ✔ Should accept valid distribution (30/40/30) (0ms)
+      ✔ Should accept valid distribution (25/50/25) (1ms)
+      ✔ Should accept valid distribution (20/60/20) (0ms)
+      ✔ Should accept edge case (100/0/0) (0ms)
+      ✔ Should accept edge case (0/100/0) (0ms)
+      ✔ Should accept edge case (0/0/100) (1ms)
+      ✔ Should revert if distribution sums to less than 100% (0ms)
+      ✔ Should revert if distribution sums to more than 100% (1ms)
+      ✔ Should validate all three shares are within bounds (0ms)
+    Fee Splitting (3-Way Distribution)
+      ✔ Should correctly split fee with 30/40/30 distribution (0ms)
+      ✔ Should correctly split fee with 25/50/25 distribution (1ms)
+      ✔ Should correctly split fee with 20/60/20 distribution (0ms)
+      ✔ Should revert if total fee is zero (1ms)
+    Helper Functions
+      ✔ Should correctly calculate voluntary fee tax (10%) (0ms)
+      ✔ Should return zero for zero voluntary fee (tax helper) (0ms)
+      ✔ Should return complete fee breakdown with all components (1ms)
+      ✔ Should revert in getFeeBreakdown if distribution invalid (0ms)
+    Constants Verification
+      ✔ Should expose correct PRECISION constant (1ms)
+      ✔ Should expose correct bond range constants (0ms)
+      ✔ Should expose correct bond fee range constants (0ms)
+      ✔ Should expose correct voluntary fee range constants (1ms)
+      ✔ Should expose correct voluntary bonus range constants (0ms)
+      ✔ Should expose correct voluntary fee tax constant (0ms)
+      ✔ Should expose correct trading fee cap constant (0ms)
+
+·------------------------|---------------------------|-------------|-----------------------------·
+|  [90mSolc version: 0.8.20[39m  ·  [90mOptimizer enabled: true[39m  ·  [90mRuns: 200[39m  ·  [90mBlock limit: 30000000 gas[39m  │
+·························|···························|·············|······························
+|  [32m[1mMethods[22m[39m                                                                                       │
+··············|··········|·············|·············|·············|···············|··············
+|  [1mContract[22m   ·  [1mMethod[22m  ·  [32mMin[39m        ·  [32mMax[39m        ·  [32mAvg[39m        ·  [1m# calls[22m      ·  [1musd (avg)[22m  │
+··············|··········|·············|·············|·············|···············|··············
+|  [32m[1mDeployments[22m[39m           ·                                         ·  [1m% of limit[22m   ·             │
+·························|·············|·············|·············|···············|··············
+|  DualCurveMathTester   ·          -  ·          -  ·     463240  ·        [90m1.5 %[39m  ·          [32m[90m-[32m[39m  │
+·························|·············|·············|·············|···············|··············
+|  FeeCalculatorTester   ·          -  ·          -  ·     556179  ·        [90m1.9 %[39m  ·          [32m[90m-[32m[39m  │
+·------------------------|-------------|-------------|-------------|---------------|-------------·
+
+  82 passing (232ms)
+
