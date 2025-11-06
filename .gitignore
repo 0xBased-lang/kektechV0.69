@@ -1,0 +1,34 @@
+# Git sub-repositories (maintain their own version control)
+expansion-packs/bmad-blockchain-dev/
+kektech-frontend/
+
+# Backup directories
+backup/
+CLEANUP_BACKUP/
+
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build outputs
+*.log
+.DS_Store
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+tmp/
+temp/
+test-output.txt
+
+# Old/deprecated code (if you want to exclude)
+# contracts/
+# test/
+# scripts/
