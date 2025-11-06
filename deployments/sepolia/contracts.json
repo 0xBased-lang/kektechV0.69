@@ -1,0 +1,16 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployedAt": "TBD",
+  "contracts": {
+    "VersionedRegistry": "TBD",
+    "ParameterStorage": "TBD",
+    "AccessControlManager": "TBD",
+    "CurveRegistry": "TBD",
+    "MarketTemplateRegistry": "TBD",
+    "ResolutionManager": "TBD",
+    "RewardDistributor": "TBD",
+    "FlexibleMarketFactoryUnified": "TBD",
+    "PredictionMarket": "TBD"
+  }
+}
