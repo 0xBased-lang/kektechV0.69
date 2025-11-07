@@ -13,8 +13,12 @@ node_modules/
 # Build outputs
 *.log
 .DS_Store
+**/.DS_Store
 .env
 .env.local
+
+# Archive directories (historical reference, optional to exclude)
+docs/archive/session-reports/
 
 # IDE
 .vscode/

@@ -1,8 +1,0 @@
-{
-  "solc": "solc",
-  "solc_args": "--via-ir --optimizer-runs 200",
-  "solc_remaps": [
-    "@openzeppelin=node_modules/@openzeppelin"
-  ],
-  "filter_paths": "node_modules"
-}
