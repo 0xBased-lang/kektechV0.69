@@ -1,0 +1,60 @@
+{
+  "timestamp": "2025-11-04T21:09:20.728Z",
+  "network": "sepolia",
+  "chainId": 11155111,
+  "config": "Config B (runs=50, viaIR=true)",
+  "results": [
+    {
+      "contract": "MasterRegistry",
+      "status": "success",
+      "address": "0xB38333A90F4D20EBA3b9e1c99B6c67011315A771"
+    },
+    {
+      "contract": "ParameterStorage",
+      "status": "success",
+      "address": "0xfbc51Bd9fEc34187454784e7cDcC51A5546e7eE6"
+    },
+    {
+      "contract": "AccessControlManager",
+      "status": "success",
+      "address": "0xC207a7560F324cda893002261EB54D6efC810a8d"
+    },
+    {
+      "contract": "MockBondingCurve",
+      "status": "success",
+      "address": "0x60B83c1E416b2e3f0ddD5b89320525fe5B07168A"
+    },
+    {
+      "contract": "FlexibleMarketFactoryCore",
+      "status": "success",
+      "address": "0x8468051CF859bdFF85f8535d7f62103dD612597c"
+    },
+    {
+      "contract": "FlexibleMarketFactoryExtensions",
+      "status": "success",
+      "address": "0x5CebeE07b7dA83D9Bf8e5Ee21FB9a55bB03026D3"
+    },
+    {
+      "contract": "ResolutionManager",
+      "status": "success",
+      "address": "0xF6C8D81c92035fEe6D40DEc75910914296134249"
+    },
+    {
+      "contract": "RewardDistributor",
+      "status": "success",
+      "address": "0xBe57022E7A478f910a40CCAe5825DFF9e571cbBA"
+    },
+    {
+      "contract": "ProposalManager",
+      "status": "success",
+      "address": "0x9BAc482caa7C39baE39Ee299C1F97a5C024e5bB4"
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "success": 9,
+    "alreadyVerified": 0,
+    "failed": 0,
+    "verificationRate": 100
+  }
+}

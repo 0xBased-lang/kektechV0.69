@@ -1,0 +1,60 @@
+{
+  "timestamp": "2025-11-04T20:36:30.894Z",
+  "network": "sepolia",
+  "chainId": 11155111,
+  "results": [
+    {
+      "contract": "MasterRegistry",
+      "status": "success",
+      "address": "0x8b910B15beca8f8A2420Eca21747F2c0D795Ec8A"
+    },
+    {
+      "contract": "ParameterStorage",
+      "status": "failed",
+      "address": "0xf6B48fddB75c316c84A49Dccdd0db34a23ae531e",
+      "error": "The Etherscan API responded with a failure status.\nThe verification may still succeed but should be checked manually.\nReason: Fail - Unable to verify. Compiled contract deployment bytecode does NOT match the transaction deployment bytecode."
+    },
+    {
+      "contract": "AccessControlManager",
+      "status": "success",
+      "address": "0xEa401d14f851F8DAB1F880456520CCE10e2B79f9"
+    },
+    {
+      "contract": "MockBondingCurve",
+      "status": "success",
+      "address": "0xDd1f60aFDcB37bdd4cb8d42a1f856531b0b84d44"
+    },
+    {
+      "contract": "FlexibleMarketFactoryCore",
+      "status": "failed",
+      "address": "0x700bbb057C6959D4f2D84204a878681432D25f01",
+      "error": "The Etherscan API responded with a failure status.\nThe verification may still succeed but should be checked manually.\nReason: Fail - Unable to verify. Compiled contract deployment bytecode does NOT match the transaction deployment bytecode."
+    },
+    {
+      "contract": "FlexibleMarketFactoryExtensions",
+      "status": "success",
+      "address": "0x415d06293561a07645853BC53872546baEdCB6a9"
+    },
+    {
+      "contract": "ResolutionManager",
+      "status": "success",
+      "address": "0xA1ceE266992934CcD7A3e49B1A11EF52AD07041B"
+    },
+    {
+      "contract": "RewardDistributor",
+      "status": "success",
+      "address": "0x6646fa4544eCf566ae526943A230257B1B4a620E"
+    },
+    {
+      "contract": "ProposalManager",
+      "status": "success",
+      "address": "0x1a86aaB75fBC487Fbf7F87ba77000355401c0044"
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "success": 7,
+    "alreadyVerified": 0,
+    "failed": 2
+  }
+}

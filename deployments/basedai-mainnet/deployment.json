@@ -1,0 +1,181 @@
+{
+  "network": "basedai_mainnet",
+  "chainId": 32323,
+  "timestamp": "2025-11-06T18:13:01.730Z",
+  "deployer": "0x25fD72154857Bd204345808a690d51a61A81EB0b",
+  "status": "REGISTRY_CONFIGURED",
+  "contracts": {
+    "VersionedRegistry": "0x67F8F023f6cFAe44353d797D6e0B157F2579301A",
+    "ParameterStorage": "0x0FdcaCE9dEE78c70C92B243346cDf763A06fEdF8",
+    "AccessControlManager": "0x4d1afBb8E50e17F24dCbB4Fc3197537be646315A",
+    "ResolutionManager": "0x10daF33E321ED8977e369a36FcC6Beb3d3d106a0",
+    "RewardDistributor": "0x3D274362423847B53E43a27b9E835d668754C96B",
+    "FlexibleMarketFactoryUnified": "0x3eaF643482Fe35d13DB812946E14F5345eb60d62",
+    "PredictionMarketTemplate": "0x1064f1FCeE5aA859468559eB9dC9564F0ef20111",
+    "CurveRegistry": "0x5AcC0f00c0675975a2c4A54aBcC7826Bd229Ca70",
+    "MarketTemplateRegistry": "0x420687494Dad8da9d058e9399cD401Deca17f6bd",
+    "CurveRegistry_OLD": "0x0004ED9967F6a2b750a7456C25D29A88A184c2d7"
+  },
+  "transactions": [
+    {
+      "step": "1/9",
+      "contract": "VersionedRegistry",
+      "address": "0x67F8F023f6cFAe44353d797D6e0B157F2579301A",
+      "txHash": "0x77aff516f2b66e712c5d319a30c2444cd5c6d0f97f08f455d6fb09435622dbe5",
+      "timestamp": "2025-11-06T17:57:31.214Z"
+    },
+    {
+      "step": "2/9",
+      "contract": "ParameterStorage",
+      "address": "0x0FdcaCE9dEE78c70C92B243346cDf763A06fEdF8",
+      "txHash": "0xf1404f2a553afbee3b6806330caadfa961db860a841d0d0151d969b00fc638f4",
+      "timestamp": "2025-11-06T17:58:20.728Z"
+    },
+    {
+      "step": "3/9",
+      "contract": "AccessControlManager",
+      "address": "0x4d1afBb8E50e17F24dCbB4Fc3197537be646315A",
+      "txHash": "0x6ac957fbd09b24b76023c1d2828e3813c13c6594f8ebf637e3f7aabf24cb954d",
+      "timestamp": "2025-11-06T17:59:10.762Z"
+    },
+    {
+      "step": "4/9",
+      "contract": "ResolutionManager",
+      "address": "0x10daF33E321ED8977e369a36FcC6Beb3d3d106a0",
+      "txHash": "0xefef8617b1c46ccf02cd01b12758cc0ac6d318f7537134cc482d73a2fd354502",
+      "timestamp": "2025-11-06T18:00:20.858Z"
+    },
+    {
+      "step": "5/9",
+      "contract": "RewardDistributor",
+      "address": "0x3D274362423847B53E43a27b9E835d668754C96B",
+      "txHash": "0x7b5721c79f49a90fc3434f9dd254aea0c14e8014011b65dc42c0dfb26cfd0ae7",
+      "timestamp": "2025-11-06T18:01:20.782Z"
+    },
+    {
+      "step": "6/9",
+      "contract": "FlexibleMarketFactoryUnified",
+      "address": "0x3eaF643482Fe35d13DB812946E14F5345eb60d62",
+      "txHash": "0x89e69babddb6dd3ae6dc42ca477bfb2176736f7a4c667b19f9a6b296e28554e8",
+      "timestamp": "2025-11-06T18:02:11.328Z"
+    },
+    {
+      "step": "7/9",
+      "contract": "PredictionMarket",
+      "address": "0x1064f1FCeE5aA859468559eB9dC9564F0ef20111",
+      "txHash": "0x766ca31e7b6a9116a5a29995486bc4c07b6487ba0abb188fcbf149cd90eac9be",
+      "timestamp": "2025-11-06T18:03:00.968Z"
+    },
+    {
+      "step": "8/9",
+      "contract": "CurveRegistry",
+      "address": "0x0004ED9967F6a2b750a7456C25D29A88A184c2d7",
+      "txHash": "0xe9b5c135c97445425ae4fc2d1381b03874bcfe4433dffd31ac79a8c812985751",
+      "timestamp": "2025-11-06T18:03:51.091Z"
+    },
+    {
+      "step": "9/9",
+      "contract": "MarketTemplateRegistry",
+      "address": "0x420687494Dad8da9d058e9399cD401Deca17f6bd",
+      "txHash": "0xff36b8c8ee51fcc0516a3214b4be32b063ce0ee73febd21dd083e27abd3843b3",
+      "timestamp": "2025-11-06T18:04:50.489Z"
+    }
+  ],
+  "startBalance": "6123.878359511782026223",
+  "endBalance": "6123.87835951162606894",
+  "gasUsed": "0.000000000155957283",
+  "note": "All 8 contracts registered in VersionedRegistry successfully.",
+  "configurationTimestamp": "2025-11-06T18:27:41.173Z",
+  "registrationResults": [
+    {
+      "name": "AccessControlManager",
+      "address": "0x4d1afBb8E50e17F24dCbB4Fc3197537be646315A",
+      "version": "1",
+      "txHash": "0x4beaf307a70e906628de2076803e8bdbb8c19de5c58f0fdc9a655f4e4e2b9f3d",
+      "blockNumber": 2587591,
+      "gasUsed": "232589",
+      "status": "success"
+    },
+    {
+      "name": "ResolutionManager",
+      "address": "0x10daF33E321ED8977e369a36FcC6Beb3d3d106a0",
+      "version": "1",
+      "txHash": "0x20e76600818062f17c614027431b1cd9eef77ec8f7ea0979320f7fbd2a03d4dc",
+      "blockNumber": 2587593,
+      "gasUsed": "215489",
+      "status": "success"
+    },
+    {
+      "name": "ParameterStorage",
+      "address": "0x0FdcaCE9dEE78c70C92B243346cDf763A06fEdF8",
+      "version": "1",
+      "txHash": "0xeda3f82a3c677c15a3b8f0d6fab53143a7512de1186c1e4c76cda06e18b607a5",
+      "blockNumber": 2587595,
+      "gasUsed": "215489",
+      "status": "success"
+    },
+    {
+      "name": "RewardDistributor",
+      "address": "0x3D274362423847B53E43a27b9E835d668754C96B",
+      "version": "1",
+      "txHash": "0xf632e5fb66f3630d12a74da14bbf7e7f051c126dfa8f85fe2edf09813e0e004d",
+      "blockNumber": 2587597,
+      "gasUsed": "215489",
+      "status": "success"
+    },
+    {
+      "name": "MarketFactory",
+      "address": "0x3eaF643482Fe35d13DB812946E14F5345eb60d62",
+      "version": "1",
+      "txHash": "0x54dbe2883550dc32dd6683d877e0924b66dba498be84eb7561579202c1c38baa",
+      "blockNumber": 2587599,
+      "gasUsed": "215489",
+      "status": "success"
+    },
+    {
+      "name": "PredictionMarket",
+      "address": "0x1064f1FCeE5aA859468559eB9dC9564F0ef20111",
+      "version": "1",
+      "txHash": "0x8e856700134c4253cc5738b3623cb3967c6d5b4208d744997a6331e9f7c538b6",
+      "blockNumber": 2587601,
+      "gasUsed": "215477",
+      "status": "success"
+    },
+    {
+      "name": "CurveRegistry",
+      "address": "0x0004ED9967F6a2b750a7456C25D29A88A184c2d7",
+      "version": "1",
+      "txHash": "0x0bc5e0b534a0c50eda7f787d91c6595a8d3c74e6c68dc33ef8d94894f9c607b3",
+      "blockNumber": 2587603,
+      "gasUsed": "215465",
+      "status": "success"
+    },
+    {
+      "name": "MarketTemplateRegistry",
+      "address": "0x420687494Dad8da9d058e9399cD401Deca17f6bd",
+      "version": "1",
+      "txHash": "0xcddaf5df47bc2fbcd7d5a2d4604283e807acb21b4731966163c6a43873fde07a",
+      "blockNumber": 2587605,
+      "gasUsed": "215489",
+      "status": "success"
+    }
+  ],
+  "totalGasUsedForRegistration": "1740976",
+  "totalCostForRegistration": "0.000000000015668784",
+  "markets": {
+    "market1": {
+      "address": "0x31d2BC49A6FD4a066F5f8AC61Acd0E6c9105DD84",
+      "question": "Will BasedAI adoption increase?",
+      "description": "First KEKTECH 3.0 market on BasedAI mainnet",
+      "outcome1": "Yes",
+      "outcome2": "No",
+      "creatorBond": "0.1 BASED",
+      "createdAt": "2025-11-06T20:32:40.968Z",
+      "deploymentBlock": 2588248,
+      "transactionHash": "0x2c4b9804f9ad5753643cd37c3226c05017849a2b5e26f64813270de632624945",
+      "curveType": "LMSR",
+      "curveParams": "100"
+    }
+  },
+  "lastMarketCreated": "2025-11-06T20:32:40.970Z"
+}

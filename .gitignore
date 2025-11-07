@@ -32,7 +32,29 @@ tmp/
 temp/
 test-output.txt
 
-# Old/deprecated code (if you want to exclude)
-# contracts/
-# test/
-# scripts/
+# Prevent recreation of deleted directories
+/test/
+/scripts/
+/agents/
+/.scripts/
+expansion-packs/bmad-blockchain-dev/frontend/
+expansion-packs/bmad-blockchain-dev/backend/
+expansion-packs/bmad-blockchain-dev/expansion-packs/
+expansion-packs/bmad-blockchain-dev/deployments/
+expansion-packs/bmad-blockchain-dev/excluded/
+
+# Python virtual environments
+.venv/
+venv/
+*.pyc
+__pycache__/
+
+# Backup files
+*.backup
+*.bak
+*.bak[0-9]
+
+# Test outputs (keep structure, ignore content)
+test-results/logs/*
+test-results/gas/latest/*
+!**/.gitkeep

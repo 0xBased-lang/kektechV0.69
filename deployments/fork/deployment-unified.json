@@ -1,0 +1,65 @@
+{
+  "network": "fork",
+  "chainId": 32323,
+  "architecture": "UNIFIED",
+  "timestamp": "2025-11-05T21:35:46.614Z",
+  "contracts": {
+    "VersionedRegistry": "0x9E545E3C0baAB3E08CdfD552C960A1050f373042",
+    "ParameterStorage": "0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9",
+    "AccessControlManager": "0x851356ae760d987E095750cCeb3bC6014560891C",
+    "RewardDistributor": "0x70e0bA845a1A0F2DA3359C97E0285013525FFC49",
+    "PredictionMarketTemplate": "0x99bbA657f2BbC93c02D617f8bA121cB8Fc104Acf",
+    "FlexibleMarketFactoryUnified": "0x8f86403A4DE0BB5791fa46B8e795C547942fE4Cf",
+    "TestMarket": "0xf7b407BD806B9943C1b2281271B27DC3F3baE694"
+  },
+  "contractSizes": {
+    "VersionedRegistry": {
+      "bytes": 5959,
+      "kb": "5.82",
+      "underLimit": true
+    },
+    "ParameterStorage": {
+      "bytes": 4644,
+      "kb": "4.54",
+      "underLimit": true
+    },
+    "AccessControlManager": {
+      "bytes": 3558,
+      "kb": "3.47",
+      "underLimit": true
+    },
+    "RewardDistributor": {
+      "bytes": 5337,
+      "kb": "5.21",
+      "underLimit": true
+    },
+    "PredictionMarket": {
+      "bytes": 10256,
+      "kb": "10.02",
+      "underLimit": true
+    },
+    "FlexibleMarketFactoryUnified": {
+      "bytes": 7811,
+      "kb": "7.63",
+      "underLimit": true
+    }
+  },
+  "gasCosts": {
+    "createMarket": "688448",
+    "approveMarket": "89380",
+    "refundBond": "36733",
+    "activateMarket": "73453",
+    "totalLifecycle": "888014"
+  },
+  "validation": {
+    "marketCreated": true,
+    "marketApproved": true,
+    "bondRefunded": true,
+    "marketActivated": true,
+    "lifecycleComplete": true
+  },
+  "error": {
+    "message": "missing value for component resolutionTime",
+    "stack": "Error: missing value for component resolutionTime\n    at /Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/abi/fragments.ts:760:31\n    at Array.map (<anonymous>)\n    at ParamType.#walkAsync (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/abi/fragments.ts:757:37)\n    at ParamType.walkAsync (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/abi/fragments.ts:797:24)\n    at /Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/contract/contract.ts:170:22\n    at Array.map (<anonymous>)\n    at resolveArgs (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/contract/contract.ts:169:37)\n    at populateTransaction (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/contract/contract.ts:294:36)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at send (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/contract/contract.ts:313:49)"
+  }
+}

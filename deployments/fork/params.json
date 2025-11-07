@@ -1,0 +1,157 @@
+{
+  "network": "basedai_mainnet",
+  "chainId": 32323,
+  "rpc": "https://mainnet.basedaibridge.com/rpc/",
+  "explorer": "https://explorer.bf1337.org/",
+  "explorerApi": "https://explorer.bf1337.org/api-docs",
+
+  "addresses": {
+    "owner": "0xD90e78886b165d0a5497409528042Fc22bB33d2E",
+    "treasury": "0x3e9A4DD89312c599e565E5e369d6ABDd3d18cFc5",
+    "incentives": "0xb53b0f7cC73A17EF7D112c0277520d32EC844F68",
+    "initialResolver": "0xD90e78886b165d0a5497409528042Fc22bB33d2E"
+  },
+
+  "parameters": {
+    "bonds": {
+      "minCreatorBond": "100000000000000000",
+      "minDisputeBond": "100000000000000000",
+      "comment": "0.1 BASED for both creator and dispute bonds"
+    },
+
+    "timing": {
+      "disputeWindow": 86400,
+      "resolutionWindow": 172800,
+      "marketExpiryTime": 31536000,
+      "comment": "24h dispute, 48h resolution, 1 year max expiry"
+    },
+
+    "fees": {
+      "protocolFeeBps": 250,
+      "creatorFeeBps": 150,
+      "treasuryFeeBps": 50,
+      "stakerIncentiveBps": 50,
+      "totalFeeBps": 500,
+      "comment": "2.5% protocol, 1.5% creator, 0.5% treasury, 0.5% stakers = 5% total"
+    },
+
+    "betting": {
+      "minimumBet": "10000000000000000",
+      "maximumBet": "0",
+      "comment": "0.01 BASED minimum, no maximum (0 = unlimited)"
+    },
+
+    "governance": {
+      "votingPeriod": 259200,
+      "quorumBps": 1000,
+      "proposalExecutionDelay": 86400,
+      "approvalThresholdBps": 5000,
+      "minVotesRequired": 100,
+      "comment": "3 days voting, 10% quorum, 1 day timelock, 50% approval"
+    },
+
+    "features": {
+      "marketCreationActive": true,
+      "experimentalMarketsActive": false,
+      "emergencyPause": false,
+      "comment": "Start with standard markets only, no experimental features"
+    }
+  },
+
+  "deploymentOrder": [
+    {
+      "contract": "MasterRegistry",
+      "constructor": [],
+      "dependencies": []
+    },
+    {
+      "contract": "ParameterStorage",
+      "constructor": ["registry"],
+      "dependencies": ["MasterRegistry"]
+    },
+    {
+      "contract": "AccessControlManager",
+      "constructor": ["registry"],
+      "dependencies": ["MasterRegistry"]
+    },
+    {
+      "contract": "ProposalManagerV2",
+      "constructor": ["registry"],
+      "dependencies": ["MasterRegistry", "ParameterStorage", "AccessControlManager"]
+    },
+    {
+      "contract": "FlexibleMarketFactory",
+      "constructor": ["registry", "minCreatorBond"],
+      "dependencies": ["MasterRegistry", "ParameterStorage", "AccessControlManager"]
+    },
+    {
+      "contract": "ResolutionManager",
+      "constructor": ["registry", "disputeWindow", "minDisputeBond"],
+      "dependencies": ["MasterRegistry", "AccessControlManager"]
+    },
+    {
+      "contract": "RewardDistributor",
+      "constructor": ["registry"],
+      "dependencies": ["MasterRegistry", "ParameterStorage"]
+    }
+  ],
+
+  "postDeployment": {
+    "registerContracts": [
+      "ParameterStorage",
+      "AccessControlManager",
+      "ProposalManager",
+      "FlexibleMarketFactory",
+      "ResolutionManager",
+      "RewardDistributor"
+    ],
+
+    "setParameters": [
+      {"key": "TEAM_TREASURY", "value": "0x3e9A4DD89312c599e565E5e369d6ABDd3d18cFc5"},
+      {"key": "INCENTIVES_WALLET", "value": "0xb53b0f7cC73A17EF7D112c0277520d32EC844F68"},
+      {"key": "MIN_BET_AMOUNT", "value": "10000000000000000"},
+      {"key": "MAX_BET_AMOUNT", "value": "0"},
+      {"key": "PLATFORM_FEE_PERCENTAGE", "value": "5"},
+      {"key": "MIN_LIQUIDITY_THRESHOLD", "value": "100000000000000000"}
+    ],
+
+    "grantRoles": [
+      {"role": "RESOLVER_ROLE", "address": "0xD90e78886b165d0a5497409528042Fc22bB33d2E"},
+      {"role": "ADMIN_ROLE", "address": "0xD90e78886b165d0a5497409528042Fc22bB33d2E"}
+    ],
+
+    "transferOwnership": {
+      "to": "0xD90e78886b165d0a5497409528042Fc22bB33d2E",
+      "comment": "Transfer ownership AFTER all configuration is complete"
+    }
+  },
+
+  "testingPlan": {
+    "privateTestMarkets": [
+      {
+        "question": "Will BTC reach $100k by Dec 31, 2025?",
+        "creatorBond": "100000000000000000",
+        "resolutionTime": 1735689600,
+        "category": "CRYPTO"
+      },
+      {
+        "question": "Test Market - Will this deployment succeed?",
+        "creatorBond": "50000000000000000",
+        "resolutionTime": 86400,
+        "category": "TEST"
+      }
+    ],
+
+    "testBets": {
+      "minAmount": "10000000000000000",
+      "maxAmount": "100000000000000000",
+      "comment": "Test with 0.01 to 0.1 BASED"
+    }
+  },
+
+  "notes": {
+    "vultisigTransition": "Owner will later transition to Vultisig wallet for enhanced security",
+    "initialResolvers": "Only owner initially, will add more trusted resolvers after testing",
+    "gasEstimate": "Approximately 9-10M gas for full deployment (~100 BASED at standard gas prices)"
+  }
+}

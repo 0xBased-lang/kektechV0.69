@@ -1,0 +1,38 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "architecture": "UNIFIED",
+  "timestamp": "2025-11-06T17:21:48.970Z",
+  "contracts": {
+    "VersionedRegistry": "0x90695d53Fc83babd02AB53340355E4e97Cb6e4B8",
+    "ParameterStorage": "0xaa9D1Cc035027632a7B7BE844C8A41E642ae03f9",
+    "AccessControlManager": "0xC0D5ff6DE1548053Bf276e2C9F992838E7843105",
+    "ResolutionManager": "0xAEC19947D1601260738510943d8ab7ceC411f85e",
+    "RewardDistributor": "0x3b553a5a6F44d3A77c41D03639f779F15Cb8D297",
+    "FlexibleMarketFactoryUnified": "0x02f0C5F65EE82289A2FFB6E8cD609f3f9050F856",
+    "PredictionMarketTemplate": "0x12663D2C4aBFfe4761EAbc1B4cf5537Cb8F5e75F",
+    "CurveRegistry": "0x8b9E421105DD26A001DC5E2BE2569c38D69fB52A",
+    "MarketTemplateRegistry": "0xAe0d5a683698d54679Eea94f57c11D4C084f4CD5"
+  },
+  "contractSizes": {
+    "VersionedRegistry": {
+      "bytes": 5959,
+      "kb": "5.82",
+      "underLimit": true
+    },
+    "ParameterStorage": {
+      "bytes": 4644,
+      "kb": "4.54",
+      "underLimit": true
+    },
+    "AccessControlManager": {
+      "bytes": 3558,
+      "kb": "3.47",
+      "underLimit": true
+    }
+  },
+  "gasCosts": {},
+  "validation": {},
+  "status": "DEPLOYED_CONTRACTS",
+  "note": "Contracts deployed. Registry configuration needs to be completed manually."
+}

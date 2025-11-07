@@ -1,0 +1,151 @@
+{
+  "network": "basedai_mainnet",
+  "chainId": 32323,
+  "deployedContracts": {
+    "MasterRegistry": "0xfe5cfd04BCdA7682a8add46f57064bA782dbbB4A",
+    "ParameterStorage": "0xe69426a440E56389dc273a3aFB9719f3fF4b8e7a",
+    "AccessControlManager": "0xd11fc9d5b5b7E637fB3012d47549Efefa50ED90B",
+    "ProposalManagerV2": "0xDe6E8554304577AF4fd2040E3229F9d492df590a",
+    "FlexibleMarketFactory": "0x37c1b05427E3844B6c10aae15bDcb40A1bC378f8",
+    "ResolutionManager": "0x9391E78c36Bc407059158f4cb85a9EcD2dC58321",
+    "RewardDistributor": "0x3D72bDBcf3089B1404E76175073631dA92599A5f"
+  },
+  "transactions": [
+    {
+      "step": 1,
+      "contract": "MasterRegistry",
+      "txHash": "0x911366377ddb5ef88a48be4781f643a5ceb23b8f933383cd4e27fc27229e2ffc",
+      "address": "0xfe5cfd04BCdA7682a8add46f57064bA782dbbB4A",
+      "gasUsed": "1186016",
+      "timestamp": "2025-10-29T00:29:31.088Z"
+    },
+    {
+      "step": 2,
+      "contract": "ParameterStorage",
+      "txHash": "0x75727ccc3638fd3d25a8792dcd5a8bbbd82f9e0a8b1857cc229c5d62e4db13b3",
+      "address": "0xe69426a440E56389dc273a3aFB9719f3fF4b8e7a",
+      "gasUsed": "1192048",
+      "timestamp": "2025-10-29T00:29:41.042Z"
+    },
+    {
+      "step": 3,
+      "contract": "AccessControlManager",
+      "txHash": "0xbb7b3522b8c9ba1b78eb7564e19f646be1150b688a2c948965f7a5c40d1d605c",
+      "address": "0xd11fc9d5b5b7E637fB3012d47549Efefa50ED90B",
+      "gasUsed": "1002666",
+      "timestamp": "2025-10-29T00:29:53.928Z"
+    },
+    {
+      "step": 4,
+      "contract": "ProposalManagerV2",
+      "txHash": "0xcd86194aa6f9126a635c8c237717d5ac68307d9d26b03d03e72bd9dc730569df",
+      "address": "0xDe6E8554304577AF4fd2040E3229F9d492df590a",
+      "gasUsed": "2227990",
+      "timestamp": "2025-10-29T00:30:01.180Z"
+    },
+    {
+      "step": 5,
+      "contract": "FlexibleMarketFactory",
+      "txHash": "0x6ffcfd58c2288123a0578bf11589974ff6cd2d454e46bfc1ab09a7644337a0bd",
+      "address": "0x37c1b05427E3844B6c10aae15bDcb40A1bC378f8",
+      "gasUsed": "4297801",
+      "timestamp": "2025-10-29T00:30:11.271Z"
+    },
+    {
+      "step": 6,
+      "contract": "ResolutionManager",
+      "txHash": "0x4b161fcfa10f3fdd0faf3f76f33938a54304b966429813b83943f3524d48e732",
+      "address": "0x9391E78c36Bc407059158f4cb85a9EcD2dC58321",
+      "gasUsed": "2504962",
+      "timestamp": "2025-10-29T00:30:30.897Z"
+    },
+    {
+      "step": 7,
+      "contract": "RewardDistributor",
+      "txHash": "0x274d0ccc39039a7138cd24463742a7fc5951b97e4408396e2a5954b3430da1be",
+      "address": "0x3D72bDBcf3089B1404E76175073631dA92599A5f",
+      "gasUsed": "1740723",
+      "timestamp": "2025-10-29T00:30:40.801Z"
+    },
+    {
+      "step": "8.1",
+      "description": "Register ParameterStorage",
+      "txHash": "0x2e6fd870f67ff9944c492a637a0b30b547f92e9d053ccd92fa61549ca7eb0899",
+      "gasUsed": "121736",
+      "timestamp": "2025-10-29T00:40:11.190Z"
+    },
+    {
+      "step": "8.2",
+      "description": "Register AccessControlManager",
+      "txHash": "0x13effb0c2975073625068b5a97cf2f5effc59b46e361d27b8a718aabe49db0e8",
+      "gasUsed": "104636",
+      "timestamp": "2025-10-29T00:40:22.161Z"
+    },
+    {
+      "step": "8.3",
+      "description": "Register ProposalManagerV2",
+      "txHash": "0x041e8a0a6a6d9aaf6c3c868a4ba2887bdd30bcced8046a7a49037bd5f7615eec",
+      "gasUsed": "104636",
+      "timestamp": "2025-10-29T00:40:31.046Z"
+    },
+    {
+      "step": "8.4",
+      "description": "Register FlexibleMarketFactory",
+      "txHash": "0xb17fe2e522392cb6b66fcee012ff10f270c49be06e7e94a7a164919e6e610be6",
+      "gasUsed": "104624",
+      "timestamp": "2025-10-29T00:40:41.599Z"
+    },
+    {
+      "step": "8.5",
+      "description": "Register ResolutionManager",
+      "txHash": "0x10be6520afa15779a65bcd8f235bbb36c75ba5c9486392263c156af3c5c04597",
+      "gasUsed": "104636",
+      "timestamp": "2025-10-29T00:41:00.941Z"
+    },
+    {
+      "step": "8.6",
+      "description": "Register RewardDistributor",
+      "txHash": "0x104d92902102180843e418ec13ba317449603fa9eb5427bca165684e043d43b7",
+      "gasUsed": "104636",
+      "timestamp": "2025-10-29T00:41:11.206Z"
+    },
+    {
+      "step": "9.1",
+      "description": "Set Protocol Fee to 2%",
+      "txHash": "0x3aa7776bc5c0a81d9726f38dbcc57379c610f6986b09c0d85d45978a60bd45d0",
+      "gasUsed": "123125",
+      "timestamp": "2025-10-29T00:41:20.869Z"
+    },
+    {
+      "step": "9.2",
+      "description": "Set Creator Fee to 1%",
+      "txHash": "0xd1c9352ee6bf0c9cf8378f3f9e7a924d1faf216a3fd6dc0daf7bdfb33f6db003",
+      "gasUsed": "106025",
+      "timestamp": "2025-10-29T00:41:30.877Z"
+    },
+    {
+      "step": "9.3",
+      "description": "Set Minimum Bet to 0.01 BASED",
+      "txHash": "0xb6c3e334890e188efdd3469d8911c2becf30e91362d258e8bd7961d2242672da",
+      "gasUsed": "106073",
+      "timestamp": "2025-10-29T00:41:41.398Z"
+    },
+    {
+      "step": "10.1",
+      "description": "Grant RESOLVER_ROLE to owner",
+      "txHash": "0xcc6243462999c14cf881d7e6a7405a7197590b8549d2ac2b4b20606a23d0006f",
+      "gasUsed": "120764",
+      "timestamp": "2025-10-29T00:41:51.492Z"
+    },
+    {
+      "step": "10.2",
+      "description": "Grant ADMIN_ROLE to owner",
+      "txHash": "0x806449b6ba0c2abf3bde8d60f81da7a273913e31334f737170c4b72fa8cb1128",
+      "gasUsed": "120764",
+      "timestamp": "2025-10-29T00:42:10.784Z"
+    }
+  ],
+  "currentStep": 7,
+  "status": "fully_configured",
+  "configStep": 12
+}

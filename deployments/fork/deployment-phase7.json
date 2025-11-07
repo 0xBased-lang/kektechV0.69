@@ -1,0 +1,69 @@
+{
+  "network": "fork",
+  "chainId": 32323,
+  "architecture": "PHASE_7_COMPLETE",
+  "phase": "Phase 7: Integration Testing",
+  "timestamp": "2025-11-06T00:45:51.348Z",
+  "contracts": {
+    "VersionedRegistry": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "ParameterStorage": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "AccessControlManager": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+    "RewardDistributor": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+    "ResolutionManager": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+    "CurveRegistry": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+    "MarketTemplateRegistry": "0x9A676e781A523b5d0C0e43731313A708CB607508",
+    "PredictionMarketTemplate": "0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1",
+    "FlexibleMarketFactoryUnified": "0x68B1D87F95878fE05B998F19b66F4baba5De1aed"
+  },
+  "contractSizes": {
+    "VersionedRegistry": {
+      "bytes": 5959,
+      "kb": "5.819",
+      "underLimit": true
+    },
+    "ParameterStorage": {
+      "bytes": 4644,
+      "kb": "4.535",
+      "underLimit": true
+    },
+    "AccessControlManager": {
+      "bytes": 3558,
+      "kb": "3.475",
+      "underLimit": true
+    },
+    "RewardDistributor": {
+      "bytes": 5337,
+      "kb": "5.212",
+      "underLimit": true
+    },
+    "ResolutionManager": {
+      "bytes": 13317,
+      "kb": "13.005",
+      "underLimit": true
+    },
+    "CurveRegistry": {
+      "bytes": 0,
+      "kb": "0.000",
+      "underLimit": false
+    },
+    "MarketTemplateRegistry": {
+      "bytes": 0,
+      "kb": "0.000",
+      "underLimit": false
+    },
+    "PredictionMarket": {
+      "bytes": 13126,
+      "kb": "12.818",
+      "underLimit": true
+    },
+    "FlexibleMarketFactoryUnified": {
+      "bytes": 8022,
+      "kb": "7.834",
+      "underLimit": true
+    }
+  },
+  "gasCosts": {},
+  "validation": {},
+  "curves": {},
+  "templates": {}
+}

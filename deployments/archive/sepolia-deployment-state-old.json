@@ -1,0 +1,15 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "startTime": "2025-11-04T17:45:35.439Z",
+  "contracts": {
+    "MasterRegistry": "0xcc1e022Ab00321f2D8905dD7D053A591B3f1a273",
+    "AccessControlManager": "0x98a5cf5993D9348c89Dd58d806B437454eED3513",
+    "ParameterStorage": "0xeed9A50b64AC70e2DAE9EF21d3FF5c5a8396C340",
+    "RewardDistributor": "0xcbC389a39185E2760d44f465e600afa26DA62f06",
+    "ResolutionManager": "0x9A333Ce48c58efEdBe29CDa8E20a662F74ad3551"
+  },
+  "gasUsed": "0",
+  "attempts": 5,
+  "status": "IN_PROGRESS"
+}

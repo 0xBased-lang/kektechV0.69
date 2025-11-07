@@ -1,0 +1,70 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "architecture": "SPLIT",
+  "startTime": "2025-11-04T21:01:26.922Z",
+  "contracts": {
+    "MasterRegistry": "0xB38333A90F4D20EBA3b9e1c99B6c67011315A771",
+    "ParameterStorage": "0xfbc51Bd9fEc34187454784e7cDcC51A5546e7eE6",
+    "AccessControlManager": "0xC207a7560F324cda893002261EB54D6efC810a8d",
+    "MockBondingCurve": "0x60B83c1E416b2e3f0ddD5b89320525fe5B07168A",
+    "FlexibleMarketFactoryCore": "0x8468051CF859bdFF85f8535d7f62103dD612597c",
+    "FlexibleMarketFactoryExtensions": "0x5CebeE07b7dA83D9Bf8e5Ee21FB9a55bB03026D3",
+    "ResolutionManager": "0xF6C8D81c92035fEe6D40DEc75910914296134249",
+    "RewardDistributor": "0xBe57022E7A478f910a40CCAe5825DFF9e571cbBA",
+    "ProposalManager": "0x9BAc482caa7C39baE39Ee299C1F97a5C024e5bB4"
+  },
+  "contractSizes": {
+    "MasterRegistry": {
+      "bytes": 3938,
+      "kb": "3.85",
+      "underLimit": true
+    },
+    "ParameterStorage": {
+      "bytes": 4644,
+      "kb": "4.54",
+      "underLimit": true
+    },
+    "AccessControlManager": {
+      "bytes": 3558,
+      "kb": "3.47",
+      "underLimit": true
+    },
+    "MockBondingCurve": {
+      "bytes": 0,
+      "kb": "0.00",
+      "underLimit": false,
+      "error": "ENOENT: no such file or directory, open '/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/artifacts/contracts/core/MockBondingCurve.sol/MockBondingCurve.json'"
+    },
+    "FlexibleMarketFactoryCore": {
+      "bytes": 17127,
+      "kb": "16.73",
+      "underLimit": true
+    },
+    "FlexibleMarketFactoryExtensions": {
+      "bytes": 5319,
+      "kb": "5.19",
+      "underLimit": true
+    },
+    "ResolutionManager": {
+      "bytes": 9850,
+      "kb": "9.62",
+      "underLimit": true
+    },
+    "RewardDistributor": {
+      "bytes": 5337,
+      "kb": "5.21",
+      "underLimit": true
+    },
+    "ProposalManager": {
+      "bytes": 6386,
+      "kb": "6.24",
+      "underLimit": true
+    }
+  },
+  "gasUsed": "0",
+  "attempts": 9,
+  "status": "FAILED",
+  "endTime": "2025-11-04T21:05:25.176Z",
+  "error": "execution reverted"
+}

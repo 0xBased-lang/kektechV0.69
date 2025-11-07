@@ -1,0 +1,59 @@
+{
+  "network": "fork",
+  "chainId": 32323,
+  "architecture": "SPLIT",
+  "timestamp": "2025-11-05T17:37:47.464Z",
+  "contracts": {
+    "MasterRegistry": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+    "ParameterStorage": "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+    "AccessControlManager": "0x9A676e781A523b5d0C0e43731313A708CB607508",
+    "MockBondingCurve": "0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE",
+    "FlexibleMarketFactoryCore": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+    "FlexibleMarketFactoryExtensions": "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+    "ResolutionManager": "0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1",
+    "RewardDistributor": "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
+    "ProposalManager": "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f"
+  },
+  "contractSizes": {
+    "MasterRegistry": {
+      "bytes": 3938,
+      "kb": "3.85",
+      "underLimit": true
+    },
+    "ParameterStorage": {
+      "bytes": 4644,
+      "kb": "4.54",
+      "underLimit": true
+    },
+    "AccessControlManager": {
+      "bytes": 3558,
+      "kb": "3.47",
+      "underLimit": true
+    },
+    "FlexibleMarketFactoryCore": {
+      "bytes": 17270,
+      "kb": "16.87",
+      "underLimit": true
+    },
+    "FlexibleMarketFactoryExtensions": {
+      "bytes": 5319,
+      "kb": "5.19",
+      "underLimit": true
+    },
+    "ResolutionManager": {
+      "bytes": 12765,
+      "kb": "12.47",
+      "underLimit": true
+    },
+    "RewardDistributor": {
+      "bytes": 5337,
+      "kb": "5.21",
+      "underLimit": true
+    },
+    "ProposalManager": {
+      "bytes": 6386,
+      "kb": "6.24",
+      "underLimit": true
+    }
+  }
+}

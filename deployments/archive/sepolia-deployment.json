@@ -1,0 +1,60 @@
+{
+  "network": "sepolia",
+  "chainId": 11155111,
+  "deployer": "0xcDc4dfe66792cB8E288B3B44bCE23E0E6AdA1Fd8",
+  "timestamp": "2025-10-28T13:35:39.877Z",
+  "contracts": {
+    "MasterRegistry": {
+      "address": "0xa8B851Ba8a663eF1bFa3c0A5e5252Ab1b65476B8",
+      "contractName": "MasterRegistry",
+      "constructorArgs": [],
+      "txHash": "0xff991a3028776b2285c8b637a0d3091bb1a726b30cf19a05edff9ec776a3d486",
+      "blockNumber": 9508823,
+      "gasUsed": "1186338",
+      "cost": "0.000001186353422394",
+      "verified": true,
+      "timestamp": "2025-10-28T13:36:00.510Z"
+    },
+    "AccessControlManager": {
+      "address": "0xB7245B7CBa3520A67ca58380195b00e68D0E2508",
+      "contractName": "AccessControlManager",
+      "constructorArgs": [
+        "0xa8B851Ba8a663eF1bFa3c0A5e5252Ab1b65476B8"
+      ],
+      "txHash": "0x1d31ab08a84d4c21c464483546cd519981e493588e4bb91725cfd41ffbb76471",
+      "blockNumber": 9508825,
+      "gasUsed": "1002956",
+      "cost": "0.000001253711047296",
+      "verified": true,
+      "timestamp": "2025-10-28T13:36:24.737Z"
+    },
+    "ParameterStorage": {
+      "address": "0xC217873B7d9b051ab281f6b94a23af14e7Acd0b7",
+      "contractName": "ParameterStorage",
+      "constructorArgs": [
+        "0xa8B851Ba8a663eF1bFa3c0A5e5252Ab1b65476B8"
+      ],
+      "txHash": "0xe1d9ae387e962d1635957c61eb5e511b40c2561a25364fb9b48c3177961ffe25",
+      "blockNumber": 9508827,
+      "gasUsed": "1192402",
+      "cost": "0.00000125517600329",
+      "verified": true,
+      "timestamp": "2025-10-28T13:36:48.776Z"
+    },
+    "ProposalManagerV2": {
+      "address": "0x46b1eD7d75aFdbE3329e42C2e02D46FCAaf5CEE0",
+      "contractName": "ProposalManagerV2",
+      "constructorArgs": [
+        "0xa8B851Ba8a663eF1bFa3c0A5e5252Ab1b65476B8"
+      ],
+      "txHash": "0xc0a353618d71ba22c6e1db503fb1508fd3b5ac58e9cbf2a8b023b2b1815d1a7a",
+      "blockNumber": 9508829,
+      "gasUsed": "2228634",
+      "cost": "0.000002253180174876",
+      "verified": true,
+      "timestamp": "2025-10-28T13:37:13.366Z"
+    }
+  },
+  "gasUsed": "5610330",
+  "totalCost": "0.000006"
+}
