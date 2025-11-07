@@ -1,0 +1,20 @@
+{
+  "network": "basedai",
+  "chainId": 32323,
+  "contract": "KektvVouchersOffersV2",
+  "address": "0x4E8B375C717a136882071923F17Ea08E75DDBcb2",
+  "deployer": "0x25fD72154857Bd204345808a690d51a61A81EB0b",
+  "deployedAt": "2025-10-26T00:36:10.951Z",
+  "blockNumber": 2500672,
+  "parameters": {
+    "vouchersContract": "0x7FEF981beE047227f848891c6C9F9dad11767a48",
+    "minOfferValue": "1000000000000000",
+    "paymentToken": "BASED (native)"
+  },
+  "verification": {
+    "vouchersContract": "0x7FEF981beE047227f848891c6C9F9dad11767a48",
+    "minOfferValue": "1000000000000000",
+    "owner": "0x25fD72154857Bd204345808a690d51a61A81EB0b",
+    "paused": false
+  }
+}

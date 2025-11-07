@@ -1,0 +1,73 @@
+# Dependabot Configuration
+# Automated dependency updates and security vulnerability monitoring
+# Documentation: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates
+
+version: 2
+updates:
+  # Monitor npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    # Group updates for better PR management
+    groups:
+      # Group all minor and patch updates together
+      development-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      production-dependencies:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+    # Open pull requests for dependency updates
+    open-pull-requests-limit: 10
+    # Security updates
+    allow:
+      - dependency-type: "all"
+    # Commit message configuration
+    commit-message:
+      prefix: "chore"
+      prefix-development: "chore"
+      include: "scope"
+    # Labels for PRs
+    labels:
+      - "dependencies"
+      - "automated"
+    # Reviewers (optional - add GitHub usernames)
+    # reviewers:
+    #   - "your-github-username"
+    # Assignees (optional)
+    # assignees:
+    #   - "your-github-username"
+    # Pull request branch naming
+    pull-request-branch-name:
+      separator: "/"
+    # Rebase strategy
+    rebase-strategy: "auto"
+    # Version strategy
+    versioning-strategy: "auto"
+    # Ignore specific dependencies (if needed)
+    # ignore:
+    #   - dependency-name: "example-package"
+    #     versions: ["4.x", "5.x"]
+
+  # Monitor GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "github-actions"
+      - "automated"

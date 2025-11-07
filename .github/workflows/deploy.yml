@@ -1,0 +1,87 @@
+name: Deploy to BasedAI
+
+on:
+  workflow_dispatch:
+    inputs:
+      network:
+        description: 'Network to deploy to'
+        required: true
+        default: 'fork'
+        type: choice
+        options:
+          - fork
+          - mainnet
+      confirm:
+        description: 'Type "deploy" to confirm deployment'
+        required: true
+
+jobs:
+  deploy-contracts:
+    name: Deploy Smart Contracts
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm == 'deploy'
+    defaults:
+      run:
+        working-directory: ./expansion-packs/bmad-blockchain-dev
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: expansion-packs/bmad-blockchain-dev/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile contracts
+        run: npx hardhat compile
+
+      - name: Run tests
+        run: npm test
+
+      - name: Deploy to ${{ github.event.inputs.network }}
+        env:
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+          BASEDAI_RPC_URL: ${{ secrets.BASEDAI_RPC_URL }}
+        run: |
+          if [ "${{ github.event.inputs.network }}" = "mainnet" ]; then
+            echo "Deploying to BasedAI Mainnet..."
+            echo "⚠️ MAINNET DEPLOYMENT - Real funds will be used!"
+            # npm run deploy:mainnet
+          else
+            echo "Deploying to BasedAI Fork..."
+            # npm run deploy:fork
+          fi
+          echo "Deployment simulation complete"
+
+      - name: Verify contracts
+        if: github.event.inputs.network == 'mainnet'
+        run: |
+          echo "Verifying contracts on block explorer..."
+          # npm run verify:mainnet
+
+      - name: Update frontend configuration
+        if: github.event.inputs.network == 'mainnet'
+        run: |
+          echo "Updating frontend with new contract addresses..."
+          # This would update the frontend .env with deployed addresses
+
+  notify:
+    name: Notify Deployment Status
+    runs-on: ubuntu-latest
+    needs: deploy-contracts
+    if: always()
+
+    steps:
+      - name: Send notification
+        run: |
+          if [ "${{ needs.deploy-contracts.result }}" = "success" ]; then
+            echo "✅ Deployment successful to ${{ github.event.inputs.network }}"
+          else
+            echo "❌ Deployment failed"
+          fi

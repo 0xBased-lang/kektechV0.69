@@ -1,0 +1,55 @@
+{
+  "name": "kektech-nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint",
+    "generate-metadata": "node scripts/generate-metadata.js",
+    "prebuild:full": "npm run generate-metadata",
+    "test-rpc": "node scripts/test-rpc-connection.js",
+    "check-deployment": "node scripts/pre-deployment-check.js",
+    "deploy:offers": "hardhat run scripts/deploy-kektv-offers.js --network basedai",
+    "compile:contracts": "hardhat compile",
+    "test:contracts": "hardhat test"
+  },
+  "dependencies": {
+    "@reown/appkit": "^1.8.11",
+    "@reown/appkit-adapter-wagmi": "^1.8.11",
+    "@tanstack/react-query": "^5.90.5",
+    "@upstash/ratelimit": "^2.0.6",
+    "@upstash/redis": "^1.35.6",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.548.0",
+    "next": "15.5.5",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tailwind-merge": "^3.3.1",
+    "viem": "^2.38.4",
+    "wagmi": "^2.18.2",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^5.4.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^17.2.3",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.5",
+    "eslint-config-prettier": "^10.1.8",
+    "hardhat": "^2.26.3",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

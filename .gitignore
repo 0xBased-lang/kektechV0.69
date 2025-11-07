@@ -1,6 +1,11 @@
-# Git sub-repositories (maintain their own version control)
-expansion-packs/bmad-blockchain-dev/
-kektech-frontend/
+# Environment Variables (CRITICAL - Never commit!)
+**/.env
+**/.env.local
+**/.env.*.local
+**/.env.production
+**/.env.development
+**/secrets.json
+**/*private-key*
 
 # Backup directories
 backup/
@@ -8,14 +13,16 @@ CLEANUP_BACKUP/
 
 # Dependencies
 node_modules/
-*/node_modules/
+**/node_modules/
 
 # Build outputs
 *.log
 .DS_Store
 **/.DS_Store
-.env
-.env.local
+**/dist
+**/build
+**/.next
+**/out
 
 # Archive directories (historical reference, optional to exclude)
 docs/archive/session-reports/
@@ -32,16 +39,17 @@ tmp/
 temp/
 test-output.txt
 
-# Prevent recreation of deleted directories
-/test/
-/scripts/
-/agents/
-/.scripts/
-expansion-packs/bmad-blockchain-dev/frontend/
-expansion-packs/bmad-blockchain-dev/backend/
-expansion-packs/bmad-blockchain-dev/expansion-packs/
-expansion-packs/bmad-blockchain-dev/deployments/
-expansion-packs/bmad-blockchain-dev/excluded/
+# Blockchain specific
+**/artifacts
+**/cache
+**/typechain
+**/typechain-types
+**/.hardhat
+**/.solcover
+
+# Test coverage
+**/coverage
+**/.nyc_output
 
 # Python virtual environments
 .venv/

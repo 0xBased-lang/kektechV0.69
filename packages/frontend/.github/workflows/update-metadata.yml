@@ -1,0 +1,311 @@
+name: Update NFT Metadata
+
+# Runs every 6 hours to keep static metadata up-to-date with newly minted NFTs
+# Manual trigger available via GitHub Actions UI for immediate updates
+on:
+  schedule:
+    # Every 6 hours: 00:00, 06:00, 12:00, 18:00 UTC
+    - cron: '0 */6 * * *'
+
+  # Allow manual trigger from GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      force_update:
+        description: 'Force update even if no changes'
+        required: false
+        default: 'false'
+
+# Ensure only one workflow runs at a time to prevent conflicts
+concurrency:
+  group: metadata-update
+  cancel-in-progress: false
+
+jobs:
+  update-metadata:
+    name: Regenerate NFT Metadata
+    runs-on: ubuntu-latest
+
+    # 15 minute timeout (generation takes ~60-90 seconds normally)
+    timeout-minutes: 15
+
+    steps:
+      # ============================================
+      # STEP 1: Setup Environment
+      # ============================================
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # Full history for better git operations
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: |
+          echo "📦 Installing dependencies..."
+          npm ci --prefer-offline --no-audit
+          echo "✅ Dependencies installed"
+
+      # ============================================
+      # STEP 2: Pre-Generation Validation
+      # ============================================
+      - name: Validate Current Metadata File
+        id: validate_current
+        run: |
+          echo "🔍 Validating current metadata file..."
+
+          METADATA_FILE="public/data/minted-metadata.json"
+
+          if [ ! -f "$METADATA_FILE" ]; then
+            echo "❌ ERROR: Metadata file not found!"
+            exit 1
+          fi
+
+          # Extract current stats
+          CURRENT_SUPPLY=$(jq -r '.totalSupply' "$METADATA_FILE")
+          CURRENT_NFT_COUNT=$(jq -r '.nfts | length' "$METADATA_FILE")
+          CURRENT_SIZE=$(stat -f%z "$METADATA_FILE" 2>/dev/null || stat -c%s "$METADATA_FILE")
+
+          echo "current_supply=$CURRENT_SUPPLY" >> $GITHUB_OUTPUT
+          echo "current_nft_count=$CURRENT_NFT_COUNT" >> $GITHUB_OUTPUT
+          echo "current_size=$CURRENT_SIZE" >> $GITHUB_OUTPUT
+
+          echo "✅ Current metadata validated:"
+          echo "   - Total Supply: $CURRENT_SUPPLY"
+          echo "   - NFT Count: $CURRENT_NFT_COUNT"
+          echo "   - File Size: $(($CURRENT_SIZE / 1024))KB"
+
+      # ============================================
+      # STEP 3: Generate New Metadata
+      # ============================================
+      - name: Generate New Metadata
+        id: generate
+        run: |
+          echo "🚀 Generating new metadata..."
+
+          # Run generation script with timeout
+          timeout 600 node scripts/generate-metadata.js || {
+            EXIT_CODE=$?
+            if [ $EXIT_CODE -eq 124 ]; then
+              echo "❌ ERROR: Metadata generation timed out (10 minutes)"
+            else
+              echo "❌ ERROR: Metadata generation failed with exit code $EXIT_CODE"
+            fi
+            exit 1
+          }
+
+          echo "✅ Metadata generation completed"
+
+      # ============================================
+      # STEP 4: Comprehensive Validation
+      # ============================================
+      - name: Validate Generated Metadata
+        id: validate_new
+        run: |
+          echo "🔍 Validating generated metadata..."
+
+          METADATA_FILE="public/data/minted-metadata.json"
+          CURRENT_SUPPLY="${{ steps.validate_current.outputs.current_supply }}"
+          CURRENT_NFT_COUNT="${{ steps.validate_current.outputs.current_nft_count }}"
+
+          # ====== CHECK 1: File exists ======
+          if [ ! -f "$METADATA_FILE" ]; then
+            echo "❌ ERROR: Generated metadata file not found!"
+            exit 1
+          fi
+
+          # ====== CHECK 2: Valid JSON ======
+          if ! jq empty "$METADATA_FILE" 2>/dev/null; then
+            echo "❌ ERROR: Generated file is not valid JSON!"
+            exit 1
+          fi
+
+          # ====== CHECK 3: Required fields ======
+          REQUIRED_FIELDS=("generated" "totalSupply" "nfts" "traitStats")
+          for field in "${REQUIRED_FIELDS[@]}"; do
+            if ! jq -e ".$field" "$METADATA_FILE" >/dev/null 2>&1; then
+              echo "❌ ERROR: Missing required field: $field"
+              exit 1
+            fi
+          done
+
+          # ====== CHECK 4: Data integrity ======
+          NEW_SUPPLY=$(jq -r '.totalSupply' "$METADATA_FILE")
+          NEW_NFT_COUNT=$(jq -r '.nfts | length' "$METADATA_FILE")
+          NEW_SIZE=$(stat -f%z "$METADATA_FILE" 2>/dev/null || stat -c%s "$METADATA_FILE")
+
+          # totalSupply must match nfts array length
+          if [ "$NEW_SUPPLY" != "$NEW_NFT_COUNT" ]; then
+            echo "❌ ERROR: totalSupply ($NEW_SUPPLY) doesn't match nfts count ($NEW_NFT_COUNT)"
+            exit 1
+          fi
+
+          # NFT count must never decrease (blockchain is append-only)
+          if [ "$NEW_NFT_COUNT" -lt "$CURRENT_NFT_COUNT" ]; then
+            echo "❌ ERROR: NFT count decreased! Old: $CURRENT_NFT_COUNT, New: $NEW_NFT_COUNT"
+            echo "   This should never happen - blockchain is append-only!"
+            exit 1
+          fi
+
+          # ====== CHECK 5: File size sanity ======
+          MIN_SIZE=1000000    # 1 MB minimum
+          MAX_SIZE=10000000   # 10 MB maximum
+
+          if [ "$NEW_SIZE" -lt "$MIN_SIZE" ]; then
+            echo "❌ ERROR: File too small ($NEW_SIZE bytes), likely corrupted"
+            exit 1
+          fi
+
+          if [ "$NEW_SIZE" -gt "$MAX_SIZE" ]; then
+            echo "⚠️  WARNING: File unusually large ($NEW_SIZE bytes)"
+          fi
+
+          # ====== CHECK 6: NFT data structure ======
+          INVALID_NFTS=$(jq '[.nfts[] | select(.tokenId == null or .name == null or .rank == null or .rarityScore == null)] | length' "$METADATA_FILE")
+          if [ "$INVALID_NFTS" != "0" ]; then
+            echo "❌ ERROR: Found $INVALID_NFTS NFTs with missing required fields"
+            exit 1
+          fi
+
+          # ====== CHECK 7: Attribute data ======
+          NFTS_WITH_ATTRS=$(jq '[.nfts[] | select(.attributes != null and (.attributes | length) > 0)] | length' "$METADATA_FILE")
+          ATTR_PERCENTAGE=$(( NFTS_WITH_ATTRS * 100 / NEW_NFT_COUNT ))
+
+          if [ "$ATTR_PERCENTAGE" -lt 95 ]; then
+            echo "⚠️  WARNING: Only $ATTR_PERCENTAGE% of NFTs have attributes (expected >95%)"
+          fi
+
+          # Store outputs
+          echo "new_supply=$NEW_SUPPLY" >> $GITHUB_OUTPUT
+          echo "new_nft_count=$NEW_NFT_COUNT" >> $GITHUB_OUTPUT
+          echo "new_size=$NEW_SIZE" >> $GITHUB_OUTPUT
+
+          # Determine if there are changes
+          if [ "$NEW_NFT_COUNT" -gt "$CURRENT_NFT_COUNT" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            NEW_MINTS=$(( NEW_NFT_COUNT - CURRENT_NFT_COUNT ))
+            echo "new_mints=$NEW_MINTS" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "new_mints=0" >> $GITHUB_OUTPUT
+          fi
+
+          echo "✅ All validation checks passed:"
+          echo "   - Total Supply: $NEW_SUPPLY (was: $CURRENT_SUPPLY)"
+          echo "   - NFT Count: $NEW_NFT_COUNT (was: $CURRENT_NFT_COUNT)"
+          echo "   - File Size: $(($NEW_SIZE / 1024))KB"
+          echo "   - NFTs with Attributes: $NFTS_WITH_ATTRS ($ATTR_PERCENTAGE%)"
+
+      # ============================================
+      # STEP 5: Commit Changes (Only if Valid)
+      # ============================================
+      - name: Check for Changes
+        id: check_changes
+        run: |
+          if git diff --quiet public/data/minted-metadata.json; then
+            echo "changes_detected=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  No changes detected in metadata file"
+          else
+            echo "changes_detected=true" >> $GITHUB_OUTPUT
+            echo "✅ Changes detected in metadata file"
+          fi
+
+      - name: Commit and Push Changes
+        if: steps.check_changes.outputs.changes_detected == 'true' || github.event.inputs.force_update == 'true'
+        run: |
+          echo "📝 Committing changes..."
+
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Create detailed commit message
+          NEW_SUPPLY="${{ steps.validate_new.outputs.new_supply }}"
+          CURRENT_SUPPLY="${{ steps.validate_current.outputs.current_supply }}"
+          NEW_MINTS="${{ steps.validate_new.outputs.new_mints }}"
+          FILE_SIZE="${{ steps.validate_new.outputs.new_size }}"
+
+          COMMIT_MSG="chore: update NFT metadata - $NEW_SUPPLY total NFTs"
+
+          if [ "$NEW_MINTS" -gt "0" ]; then
+            COMMIT_MSG="$COMMIT_MSG (+$NEW_MINTS new)"
+          fi
+
+          COMMIT_BODY="Automated metadata update
+
+          - Total Supply: $NEW_SUPPLY (was: $CURRENT_SUPPLY)
+          - New Mints: $NEW_MINTS
+          - File Size: $(($FILE_SIZE / 1024))KB
+          - Generated: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+
+          🤖 Automated by GitHub Actions"
+
+          # Stage and commit
+          git add public/data/minted-metadata.json
+          git commit -m "$COMMIT_MSG" -m "$COMMIT_BODY"
+
+          # Push with retry logic
+          MAX_RETRIES=3
+          RETRY_COUNT=0
+
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if git push origin main; then
+              echo "✅ Changes pushed successfully"
+              exit 0
+            else
+              RETRY_COUNT=$((RETRY_COUNT + 1))
+              if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                echo "⚠️  Push failed, retrying ($RETRY_COUNT/$MAX_RETRIES)..."
+                sleep 5
+                git pull --rebase origin main
+              else
+                echo "❌ ERROR: Failed to push after $MAX_RETRIES attempts"
+                exit 1
+              fi
+            fi
+          done
+
+      # ============================================
+      # STEP 6: Summary and Notifications
+      # ============================================
+      - name: Workflow Summary
+        if: always()
+        run: |
+          echo "# 🎯 Metadata Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ **Status:** Success" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Status:** Failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Statistics" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Before | After | Change |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|--------|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Total Supply | ${{ steps.validate_current.outputs.current_supply }} | ${{ steps.validate_new.outputs.new_supply }} | +${{ steps.validate_new.outputs.new_mints }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| File Size | $((${{ steps.validate_current.outputs.current_size }} / 1024))KB | $((${{ steps.validate_new.outputs.new_size }} / 1024))KB | - |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.check_changes.outputs.changes_detected }}" == "true" ]; then
+            echo "✅ **Changes committed and pushed**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️  **No changes to commit**" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      # ============================================
+      # STEP 7: Error Recovery
+      # ============================================
+      - name: Rollback on Failure
+        if: failure()
+        run: |
+          echo "❌ Workflow failed - rolling back any uncommitted changes"
+          git reset --hard HEAD
+          git clean -fd
+          echo "✅ Rollback complete"

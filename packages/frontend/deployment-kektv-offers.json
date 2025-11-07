@@ -1,0 +1,14 @@
+{
+  "network": "basedai",
+  "chainId": "32323",
+  "deployer": "0x25fD72154857Bd204345808a690d51a61A81EB0b",
+  "timestamp": "2025-10-25T23:29:41.274Z",
+  "contracts": {
+    "KektvVouchersOffers": "0x591486eBd4CA9EFACB40BEb42e8c3D41d5364899",
+    "KektvVouchers": "0x7FEF981beE047227f848891c6C9F9dad11767a48",
+    "TECHToken": "0x62E8D022CAf673906e62904f7BB5ae467082b546"
+  },
+  "config": {
+    "minOfferValue": "0.001 TECH"
+  }
+}

@@ -8,6 +8,8 @@
 [![Solidity](https://img.shields.io/badge/Solidity-0.8.19+-orange)](https://soliditylang.org)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Security](https://img.shields.io/badge/Security-Institutional%20Grade-red)](docs/RESOLVER_SECURITY_ARCHITECTURE.md)
+![CI](https://github.com/0xBased-lang/kektechV0.69/workflows/CI%20-%20Full%20Stack%20Tests/badge.svg)
+![Security Audit](https://github.com/0xBased-lang/kektechV0.69/workflows/Security%20Audit/badge.svg)
 
 </div>
 
