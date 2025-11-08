@@ -1,5 +1,18 @@
 # KEKTECH 3.0 - Prediction Market Platform
 
+> ## ⚠️ CRITICAL UPDATE - November 8, 2025
+> **SYSTEM IS LIVE ON MAINNET** (Deployed November 6, 2025)
+>
+> **For Real Status**: See [MASTER_STATUS.md](./MASTER_STATUS.md) 📍
+> - ✅ Contracts deployed to BasedAI mainnet
+> - ✅ Frontend integrated and working
+> - ⚠️ Tests: 222/321 passing (69%)
+> - ⚠️ Documentation below may be OUTDATED
+>
+> **Quick Links**: [TODO_TRACKER](./TODO_TRACKER.md) | [DEPLOYMENT_REALITY](./DEPLOYMENT_REALITY.md) | [TEST_REALITY](./TEST_REALITY.md)
+
+---
+
 <div align="center">
 
 **Decentralized Prediction Markets on BasedAI Chain**

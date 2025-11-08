@@ -4,10 +4,28 @@ Quick navigation for the kektechV0.69 prediction market platform.
 
 ---
 
+## 🔴 DEPLOYMENT STATUS UPDATE
+**Navigation**: [→ MASTER_STATUS](./MASTER_STATUS.md) | [→ TODO_TRACKER](./TODO_TRACKER.md) | [→ DEPLOYMENT_REALITY](./DEPLOYMENT_REALITY.md) | [→ TEST_REALITY](./TEST_REALITY.md)
+
+- **Mainnet**: ✅ LIVE (November 6, 2025)
+- **Contracts**: 9 deployed and working
+- **Tests**: 222/321 passing (69%)
+- **Documentation**: BEING UPDATED (much is outdated)
+
+⚠️ **See [MASTER_STATUS.md](./MASTER_STATUS.md) for the REAL project status**
+
+---
+
 ## 🚀 QUICK LINKS (Most Used Files)
 
-### Essential Documents
-- [CLAUDE.md](/CLAUDE.md) ⭐⭐⭐ - Main AI instructions (START HERE!)
+### Essential Documents (NEW - Real Status)
+- [MASTER_STATUS.md](/MASTER_STATUS.md) ⭐⭐⭐⭐⭐ - **SINGLE SOURCE OF TRUTH**
+- [TODO_TRACKER.md](/TODO_TRACKER.md) ⭐⭐⭐⭐ - Real tasks needed
+- [DEPLOYMENT_REALITY.md](/DEPLOYMENT_REALITY.md) ⭐⭐⭐⭐ - Actual mainnet deployment
+- [TEST_REALITY.md](/TEST_REALITY.md) ⭐⭐⭐⭐ - Real test status
+
+### Legacy Documents (May be outdated)
+- [CLAUDE.md](/CLAUDE.md) ⭐⭐⭐ - Main AI instructions
 - [README.md](/README.md) - Project overview
 - [MAINNET_DEPLOYMENT_CHECKLIST.md](/MAINNET_DEPLOYMENT_CHECKLIST.md) - Deployment tracking
 
