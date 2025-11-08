@@ -8,8 +8,8 @@ import { useMarketList } from '@/lib/hooks/kektech';
 import { useWallet } from '@/lib/hooks/kektech';
 import { PositionCard } from './PositionCard';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
-import { ErrorDisplay } from '../ui/ErrorDisplay';
 import { Wallet, TrendingUp } from 'lucide-react';
+import type { Address } from 'viem';
 
 interface PositionListProps {
   filter?: 'all' | 'active' | 'won' | 'lost';
@@ -20,7 +20,7 @@ interface PositionListProps {
  */
 export function PositionList({ filter = 'all' }: PositionListProps) {
   const { address, isConnected, connect } = useWallet();
-  const { markets, isLoading, error, refetch } = useMarketList();
+  const { markets, isLoading } = useMarketList();
 
   // Wallet connection required
   if (!isConnected || !address) {
@@ -44,17 +44,6 @@ export function PositionList({ filter = 'all' }: PositionListProps) {
       <div className="flex justify-center py-12">
         <LoadingSpinner size="lg" text="Loading your positions..." />
       </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <ErrorDisplay
-        title="Failed to Load Positions"
-        message="Unable to fetch your positions from the blockchain"
-        details={error.message}
-        onRetry={refetch}
-      />
     );
   }
 
@@ -95,7 +84,7 @@ export function PositionList({ filter = 'all' }: PositionListProps) {
 
       {/* Position grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {markets.map((marketAddress) => (
+        {markets.map((marketAddress: Address) => (
           <PositionCard
             key={marketAddress}
             marketAddress={marketAddress}

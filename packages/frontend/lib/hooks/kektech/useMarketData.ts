@@ -80,6 +80,12 @@ export function useMarketInfo(marketAddress: Address, watch = false) {
     watch,
   });
 
+  const { data: createdAt } = usePredictionMarketRead<bigint>({
+    marketAddress,
+    functionName: 'createdAt',
+    watch,
+  });
+
   return {
     question,
     description,
@@ -92,6 +98,7 @@ export function useMarketInfo(marketAddress: Address, watch = false) {
     totalYesShares,
     totalNoShares,
     totalVolume,
+    createdAt,
     isLoading: !question, // Simple loading check
   };
 }
@@ -114,6 +121,9 @@ export function useUserPosition(marketAddress: Address, userAddress?: Address, w
     noShares: position?.noShares || 0n,
     totalInvested: position?.totalInvested || 0n,
     claimed: position?.claimed || false,
+    // TODO: Calculate from position history/events
+    yesInvestment: 0n,
+    noInvestment: 0n,
     isLoading,
   };
 }
@@ -129,9 +139,12 @@ export function useMarketList(watch = false) {
   });
 
   // Note: This would need pagination in production
-  // For now, just return the count
+  // For now, return empty array (components will show "No markets" message)
   return {
     marketCount: marketCount ? Number(marketCount) : 0,
+    markets: [] as Address[], // TODO: Implement market enumeration
+    error: undefined,
+    refetch: () => Promise.resolve(),
     isLoading: marketCount === undefined,
   };
 }

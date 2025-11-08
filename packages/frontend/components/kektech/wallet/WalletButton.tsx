@@ -122,9 +122,9 @@ export function WalletButton({
       <div className={cn('flex flex-col gap-2', className)}>
         <ErrorDisplay
           title="Connection Error"
-          message={error}
+          message={error.message || 'Failed to connect wallet'}
           type="error"
-          onRetry={connect}
+          onRetry={() => connect()}
         />
       </div>
     );
@@ -133,7 +133,7 @@ export function WalletButton({
   // Disconnected state - show connect button
   return (
     <button
-      onClick={connect}
+      onClick={() => connect()}
       className={cn(
         'px-6 py-3 rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-bold',
         'hover:scale-105 transition flex items-center gap-2',
@@ -165,7 +165,7 @@ export function CompactWalletButton() {
 
   return (
     <button
-      onClick={connect}
+      onClick={() => connect()}
       className="px-4 py-2 rounded-lg bg-[#3fb8bd] text-black font-semibold hover:bg-[#3fb8bd]/90 transition text-sm"
     >
       Connect

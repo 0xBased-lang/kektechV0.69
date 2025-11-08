@@ -7,9 +7,9 @@
 import { useMarketList } from '@/lib/hooks/kektech';
 import { MarketCard } from './MarketCard';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
-import { ErrorDisplay } from '../ui/ErrorDisplay';
 import { MarketState } from '@/lib/contracts/types';
 import { useState } from 'react';
+import type { Address } from 'viem';
 
 interface MarketListProps {
   filterState?: MarketState;
@@ -20,7 +20,7 @@ interface MarketListProps {
  * List of all markets with optional filtering
  */
 export function MarketList({ filterState, limit }: MarketListProps) {
-  const { markets, isLoading, error, refetch } = useMarketList();
+  const { markets, isLoading } = useMarketList();
   const [filter, setFilter] = useState<MarketState | undefined>(filterState);
 
   if (isLoading) {
@@ -28,17 +28,6 @@ export function MarketList({ filterState, limit }: MarketListProps) {
       <div className="flex justify-center py-12">
         <LoadingSpinner size="lg" text="Loading markets..." />
       </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <ErrorDisplay
-        title="Failed to Load Markets"
-        message="Unable to fetch market list from the blockchain"
-        details={error.message}
-        onRetry={refetch}
-      />
     );
   }
 
@@ -88,7 +77,7 @@ export function MarketList({ filterState, limit }: MarketListProps) {
 
       {/* Market grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredMarkets.map((marketAddress) => (
+        {filteredMarkets.map((marketAddress: Address) => (
           <MarketCard key={marketAddress} marketAddress={marketAddress} />
         ))}
       </div>

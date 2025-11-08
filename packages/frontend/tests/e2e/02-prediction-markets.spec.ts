@@ -55,9 +55,6 @@ test.describe('Prediction Markets - Navigation & Pages', () => {
   test('05. Filter controls present', async ({ page }) => {
     await page.goto('/markets');
 
-    // Check for filter UI elements
-    const filterSection = page.locator('text=Filter').first();
-
     // Page should have loaded
     const body = page.locator('body');
     await expect(body).toBeVisible();
@@ -124,9 +121,6 @@ test.describe('Prediction Markets - Create Market Page', () => {
 
   test('10. Bond requirement information visible', async ({ page }) => {
     await page.goto('/markets/create');
-
-    // Check for bond information (0.1 BASED)
-    const bondInfo = page.locator('text=/0\\.1.*BASED/i').first();
 
     // Page should contain bond information
     const body = page.locator('body');
@@ -228,9 +222,6 @@ test.describe('Prediction Markets - Integration with Existing Platform', () => {
   test('17. Markets link in mobile navigation', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/');
-
-    // Try to find mobile menu button
-    const mobileMenuButton = page.locator('[aria-label*="menu" i], button:has-text("Menu")').first();
 
     // Check if mobile menu exists
     const header = page.locator('header');

@@ -103,7 +103,7 @@ export function MarketCard({ marketAddress, compact = false }: MarketCardProps) 
             <div>
               <p className="text-xs text-gray-400">Volume</p>
               <p className="text-sm font-semibold text-white">
-                {formatBasedAmount(market.totalYesShares + market.totalNoShares)} BASED
+                {formatBasedAmount((market.totalYesShares ?? 0n) + (market.totalNoShares ?? 0n))} BASED
               </p>
             </div>
           </div>

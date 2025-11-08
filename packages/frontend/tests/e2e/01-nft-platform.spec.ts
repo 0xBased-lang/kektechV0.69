@@ -81,9 +81,6 @@ test.describe('NFT Platform - Core Functionality', () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/');
 
-    // Check mobile menu button exists
-    const mobileMenuButton = page.locator('[aria-label*="menu" i], button:has-text("Menu")').first();
-
     // Header should still be visible
     const header = page.locator('header');
     await expect(header).toBeVisible();

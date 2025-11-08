@@ -74,6 +74,8 @@ export function useWallet() {
     // Errors
     connectError,
     switchError,
+    error: connectError || switchError, // Compatibility alias
+    isWrongNetwork: !isCorrectNetwork && isConnected, // Compatibility alias
 
     // Convenience
     isReady: isConnected && isCorrectNetwork,
