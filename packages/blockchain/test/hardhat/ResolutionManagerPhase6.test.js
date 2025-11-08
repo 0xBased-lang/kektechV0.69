@@ -197,7 +197,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     });
 
     it("should only allow resolver to propose resolution", async function () {
-      const { resolutionManager, factory, admin, user1 } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, admin, backend, user1 } = await loadFixture(deployFixture);
 
       const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
@@ -211,7 +211,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
   describe("Signal Aggregation Logic", function () {
     async function setupProposedResolution() {
       const fixture = await loadFixture(deployFixture);
-      const marketAddr = await createMockMarket(fixture.factory, fixture.admin);
+      const marketAddr = await createMockMarket(fixture.factory, fixture.admin, fixture.backend);
       await time.increase(86400);
       await fixture.resolutionManager.connect(fixture.resolver).proposeResolution(marketAddr, 1, "Evidence");
       return { ...fixture, marketAddr };
@@ -225,7 +225,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       ).to.emit(resolutionManager, "MarketAutoFinalized");
 
       const resolution = await resolutionManager.getResolutionData(marketAddr);
-      expect(resolution.status).to.equal(2); // FINALIZED
+      expect(resolution.status).to.equal(3); // FINALIZED
     });
 
     it("should mark disputed with >40% disagreement", async function () {
@@ -236,7 +236,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       ).to.emit(resolutionManager, "CommunityDisputeFlagged");
 
       const resolution = await resolutionManager.getResolutionData(marketAddr);
-      expect(resolution.status).to.equal(1); // DISPUTED
+      expect(resolution.status).to.equal(2); // DISPUTED
     });
 
     it("should wait if signals are mixed (50-50)", async function () {
@@ -266,7 +266,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 75, 25);
 
       const resolution = await resolutionManager.getResolutionData(marketAddr);
-      expect(resolution.status).to.equal(2); // FINALIZED
+      expect(resolution.status).to.equal(3); // FINALIZED
     });
 
     it("should allow multiple signal submissions (updates)", async function () {
@@ -290,7 +290,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 100, 0);
 
       const resolution = await resolutionManager.getResolutionData(marketAddr);
-      expect(resolution.status).to.equal(2); // FINALIZED
+      expect(resolution.status).to.equal(3); // FINALIZED
     });
 
     it("should handle edge case: 100% disagreement", async function () {
@@ -299,7 +299,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 0, 100);
 
       const resolution = await resolutionManager.getResolutionData(marketAddr);
-      expect(resolution.status).to.equal(1); // DISPUTED
+      expect(resolution.status).to.equal(2); // DISPUTED
     });
 
     it("should only allow backend to submit signals", async function () {
@@ -322,7 +322,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
   describe("Auto-Finalization", function () {
     async function setupProposedResolution() {
       const fixture = await loadFixture(deployFixture);
-      const marketAddr = await createMockMarket(fixture.factory, fixture.admin);
+      const marketAddr = await createMockMarket(fixture.factory, fixture.admin, fixture.backend);
       await time.increase(86400);
       await fixture.resolutionManager.connect(fixture.resolver).proposeResolution(marketAddr, 1, "Evidence");
       return { ...fixture, marketAddr };
@@ -371,7 +371,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 80, 20);
 
       const resolution = await resolutionManager.getResolutionData(marketAddr);
-      expect(resolution.status).to.equal(2); // FINALIZED
+      expect(resolution.status).to.equal(3); // FINALIZED
     });
   });
 
@@ -394,7 +394,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
 
       const resolution = await resolutionManager.getResolutionData(marketAddr);
       expect(resolution.outcome).to.equal(2);
-      expect(resolution.status).to.equal(2); // FINALIZED
+      expect(resolution.status).to.equal(3); // FINALIZED
     });
 
     it("should close community dispute window on override", async function () {
@@ -429,7 +429,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       await resolutionManager.connect(admin).adminResolveMarket(marketAddr, 2, "Override");
 
       const resolution = await resolutionManager.getResolutionData(marketAddr);
-      expect(resolution.status).to.equal(2); // FINALIZED
+      expect(resolution.status).to.equal(3); // FINALIZED
     });
 
     it("should revert with invalid outcome", async function () {
@@ -585,7 +585,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
   describe("Gas Benchmarking", function () {
     async function setupProposedResolution() {
       const fixture = await loadFixture(deployFixture);
-      const marketAddr = await createMockMarket(fixture.factory, fixture.admin);
+      const marketAddr = await createMockMarket(fixture.factory, fixture.admin, fixture.backend);
       await time.increase(86400);
       await fixture.resolutionManager.connect(fixture.resolver).proposeResolution(marketAddr, 1, "Evidence");
       return { ...fixture, marketAddr };
