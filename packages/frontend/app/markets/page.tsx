@@ -4,15 +4,11 @@
  */
 'use client';
 
-import { useState } from 'react';
 import { MarketList } from '@/components/kektech/markets/MarketList';
-import { TrendingUp, Plus, Filter } from 'lucide-react';
+import { TrendingUp, Plus } from 'lucide-react';
 import Link from 'next/link';
 
-type MarketFilter = 'all' | 'active' | 'resolving' | 'finalized';
-
 export default function MarketsPage() {
-  const [filter, setFilter] = useState<MarketFilter>('active');
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black">
@@ -48,37 +44,8 @@ export default function MarketsPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Filters */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <Filter className="w-5 h-5 text-gray-400" />
-            <span className="text-sm font-medium text-gray-400">Filter by:</span>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            {[
-              { key: 'all', label: 'All Markets' },
-              { key: 'active', label: 'Active' },
-              { key: 'resolving', label: 'Resolving' },
-              { key: 'finalized', label: 'Finalized' },
-            ].map(({ key, label }) => (
-              <button
-                key={key}
-                onClick={() => setFilter(key as MarketFilter)}
-                className={`px-4 py-2 rounded-lg font-medium transition ${
-                  filter === key
-                    ? 'bg-[#3fb8bd] text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Market List */}
-        <MarketList filter={filter} />
+        {/* Market List (with built-in filters) */}
+        <MarketList />
 
         {/* Info Footer */}
         <div className="mt-12 p-6 bg-gray-900/50 rounded-xl border border-gray-800">
