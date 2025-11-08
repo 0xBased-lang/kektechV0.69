@@ -733,6 +733,19 @@ contract ResolutionManager is IResolutionManager, ReentrancyGuard {
         return _minDisputeBond;
     }
 
+    /**
+     * @notice Get community dispute window data for a market
+     * @param marketAddress The market address
+     * @return Community dispute window data
+     */
+    function getCommunityDisputeWindow(address marketAddress)
+        external
+        view
+        returns (CommunityDisputeWindow memory)
+    {
+        return _communityDisputes[marketAddress];
+    }
+
     // ============= Enumeration =============
 
     /**

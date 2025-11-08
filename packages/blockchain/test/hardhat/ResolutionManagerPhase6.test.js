@@ -86,7 +86,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     };
   }
 
-  async function createMockMarket(factory, creator) {
+  async function createMockMarket(factory, creator, backend) {
     const LMSRBondingCurve = await ethers.getContractFactory("LMSRBondingCurve");
     const bondingCurve = await LMSRBondingCurve.deploy();
 
@@ -113,18 +113,22 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     const marketAddress = event.args.marketAddress;
 
     // FIX: Activate market so it's ready for resolution (PROPOSED → APPROVED → ACTIVE)
-    await factory.adminApproveMarket(marketAddress);
+    // adminApproveMarket requires ADMIN_ROLE
+    // activateMarket requires BACKEND_ROLE
+    // Get admin from signers (account #0)
+    const [adminAccount] = await ethers.getSigners();
+    await factory.connect(adminAccount).adminApproveMarket(marketAddress);
     await factory.refundCreatorBond(marketAddress, "Approved for testing");
-    await factory.connect(creator).activateMarket(marketAddress);
+    await factory.connect(backend).activateMarket(marketAddress); // backend has BACKEND_ROLE
 
     return marketAddress;
   }
 
   describe("Community Dispute Window", function () {
     it("should open community dispute window when resolution proposed", async function () {
-      const { resolutionManager, factory, resolver, admin } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, resolver, admin, backend } = await loadFixture(deployFixture);
 
-      const marketAddr = await createMockMarket(factory, admin);
+      const marketAddr = await createMockMarket(factory, admin, backend);
 
       // Fast forward past resolution time
       await time.increase(86400);
@@ -135,28 +139,28 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       ).to.emit(resolutionManager, "CommunityDisputeWindowOpened");
 
       // Check window is active
-      const window = await resolutionManager._communityDisputes(marketAddr);
+      const window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.isActive).to.be.true;
     });
 
     it("should set correct end time (48 hours default)", async function () {
-      const { resolutionManager, factory, resolver, admin } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, resolver, admin, backend } = await loadFixture(deployFixture);
 
-      const marketAddr = await createMockMarket(factory, admin);
+      const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
 
       const tx = await resolutionManager.connect(resolver).proposeResolution(marketAddr, 1, "Evidence");
       const receipt = await tx.wait();
       const block = await ethers.provider.getBlock(receipt.blockNumber);
 
-      const window = await resolutionManager._communityDisputes(marketAddr);
+      const window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.endTime).to.equal(BigInt(block.timestamp) + BigInt(48 * 3600));
     });
 
     it("should prevent duplicate windows for same market", async function () {
-      const { resolutionManager, factory, resolver, admin } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, resolver, admin, backend } = await loadFixture(deployFixture);
 
-      const marketAddr = await createMockMarket(factory, admin);
+      const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
 
       await resolutionManager.connect(resolver).proposeResolution(marketAddr, 1, "Evidence");
@@ -168,26 +172,26 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     });
 
     it("should store proposed outcome correctly", async function () {
-      const { resolutionManager, factory, resolver, admin } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, resolver, admin, backend } = await loadFixture(deployFixture);
 
-      const marketAddr = await createMockMarket(factory, admin);
+      const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
 
       await resolutionManager.connect(resolver).proposeResolution(marketAddr, 2, "Outcome 2 won");
 
-      const window = await resolutionManager._communityDisputes(marketAddr);
+      const window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.proposedOutcome).to.equal(2);
     });
 
     it("should initialize vote counts to zero", async function () {
-      const { resolutionManager, factory, resolver, admin } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, resolver, admin, backend } = await loadFixture(deployFixture);
 
-      const marketAddr = await createMockMarket(factory, admin);
+      const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
 
       await resolutionManager.connect(resolver).proposeResolution(marketAddr, 1, "Evidence");
 
-      const window = await resolutionManager._communityDisputes(marketAddr);
+      const window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.agreeCount).to.equal(0);
       expect(window.disagreeCount).to.equal(0);
     });
@@ -195,7 +199,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     it("should only allow resolver to propose resolution", async function () {
       const { resolutionManager, factory, admin, user1 } = await loadFixture(deployFixture);
 
-      const marketAddr = await createMockMarket(factory, admin);
+      const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
 
       await expect(
@@ -240,7 +244,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
 
       await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 60, 40);
 
-      const window = await resolutionManager._communityDisputes(marketAddr);
+      const window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.isActive).to.be.true; // Still active, waiting
     });
 
@@ -251,7 +255,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
         resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 0, 0)
       ).to.emit(resolutionManager, "DisputeSignalsSubmitted");
 
-      const window = await resolutionManager._communityDisputes(marketAddr);
+      const window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.isActive).to.be.true; // Still active
     });
 
@@ -270,12 +274,12 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
 
       // First submission: 50-50 (no action)
       await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 50, 50);
-      let window = await resolutionManager._communityDisputes(marketAddr);
+      let window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.isActive).to.be.true;
 
       // Second submission: 80-20 (auto-finalize)
       await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 80, 20);
-      window = await resolutionManager._communityDisputes(marketAddr);
+      window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.isActive).to.be.false;
       expect(window.autoFinalized).to.be.true;
     });
@@ -329,7 +333,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
 
       await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 80, 20);
 
-      const window = await resolutionManager._communityDisputes(marketAddr);
+      const window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.isActive).to.be.false;
       expect(window.autoFinalized).to.be.true;
     });
@@ -398,7 +402,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
 
       await resolutionManager.connect(admin).adminResolveMarket(marketAddr, 2, "Override");
 
-      const window = await resolutionManager._communityDisputes(marketAddr);
+      const window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.isActive).to.be.false;
     });
 
@@ -521,7 +525,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     it("should still allow bond-based disputes", async function () {
       const { resolutionManager, factory, resolver, admin, user1 } = await loadFixture(deployFixture);
 
-      const marketAddr = await createMockMarket(factory, admin);
+      const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
 
       // Use old resolveMarket (bond-based)
@@ -541,7 +545,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     it("should not interfere with bond-based workflow", async function () {
       const { resolutionManager, factory, resolver, admin, user1 } = await loadFixture(deployFixture);
 
-      const marketAddr = await createMockMarket(factory, admin);
+      const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
 
       await resolutionManager.connect(resolver).resolveMarket(marketAddr, 1, "Evidence");
@@ -556,10 +560,10 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     });
 
     it("should allow choosing between systems", async function () {
-      const { resolutionManager, factory, resolver, admin } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, resolver, admin, backend } = await loadFixture(deployFixture);
 
-      const market1 = await createMockMarket(factory, admin);
-      const market2 = await createMockMarket(factory, admin);
+      const market1 = await createMockMarket(factory, admin, backend);
+      const market2 = await createMockMarket(factory, admin, backend);
 
       await time.increase(86400);
 
@@ -570,7 +574,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       await resolutionManager.connect(resolver).resolveMarket(market2, 1, "Evidence");
 
       // Both should work independently
-      const window1 = await resolutionManager._communityDisputes(market1);
+      const window1 = await resolutionManager.getCommunityDisputeWindow(market1);
       expect(window1.isActive).to.be.true;
 
       const resolution2 = await resolutionManager.getResolutionData(market2);
@@ -588,9 +592,9 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     }
 
     it("should measure gas for proposeResolution()", async function () {
-      const { resolutionManager, factory, resolver, admin } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, resolver, admin, backend } = await loadFixture(deployFixture);
 
-      const marketAddr = await createMockMarket(factory, admin);
+      const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
 
       const tx = await resolutionManager.connect(resolver).proposeResolution(marketAddr, 1, "Evidence");

@@ -30,10 +30,24 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
     const LMSRCurve = await ethers.getContractFactory("LMSRCurve");
     const lmsrCurve = await LMSRCurve.deploy();
 
+    // FIX: Deploy PredictionMarket template (required by factory)
+    const PredictionMarket = await ethers.getContractFactory("PredictionMarket");
+    const marketTemplate = await PredictionMarket.deploy();
+
+    // FIX: Deploy RewardDistributor (required by factory)
+    const RewardDistributor = await ethers.getContractFactory("RewardDistributor");
+    const rewardDistributor = await RewardDistributor.deploy(registry.target);
+
     // Register contracts
     await registry.setContract(ethers.id("ParameterStorage"), params.target, 1);
     await registry.setContract(ethers.id("AccessControlManager"), accessControl.target, 1);
     await registry.setContract(ethers.id("ResolutionManager"), resolutionManager.target, 1);
+    // FIX: Register PredictionMarket template in registry
+    await registry.setContract(ethers.id("PredictionMarket"), marketTemplate.target, 1);
+    // FIX: Register RewardDistributor in registry
+    await registry.setContract(ethers.id("RewardDistributor"), rewardDistributor.target, 1);
+    // FIX: Register LMSRCurve in registry
+    await registry.setContract(ethers.id("LMSRCurve"), lmsrCurve.target, 1);
 
     // Setup roles
     await accessControl.grantRole(ethers.id("OPERATOR_ROLE"), operator.address);
@@ -51,7 +65,8 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
     const minCreatorBond = ethers.parseEther("0.1");
     const factory = await FlexibleMarketFactoryUnified.deploy(registry.target, minCreatorBond);
 
-    // Grant factory the OPERATOR_ROLE so it can deploy markets
+    // FIX: Grant factory the FACTORY_ROLE and OPERATOR_ROLE
+    await accessControl.grantRole(ethers.id("FACTORY_ROLE"), factory.target);
     await accessControl.grantRole(ethers.id("OPERATOR_ROLE"), factory.target);
 
     return {
@@ -73,44 +88,55 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
 
   async function createMarketFixture() {
     const contracts = await deployFixture();
-    const { registry, owner, creator, lmsrCurve } = contracts;
+    const { factory, owner, creator, lmsrCurve, registry, accessControl } = contracts;
 
-    // Deploy PredictionMarket directly (simpler for lifecycle testing)
-    const PredictionMarket = await ethers.getContractFactory("PredictionMarket");
-    const market = await PredictionMarket.connect(owner).deploy(); // Owner becomes factory
-
-    // Initialize market with correct parameters
+    // FIX: Use factory.createMarket() instead of direct deployment
+    // This ensures proper factory integration and state management
     const question = "Will ETH reach $5000 by end of 2024?";
+    const description = "Price prediction market";
     const outcome1 = "YES";
     const outcome2 = "NO";
     const resolutionTime = Math.floor(Date.now() / 1000) + 86400 * 30; // 30 days
+    const minCreatorBond = ethers.parseEther("0.1");
 
-    await market.initialize(
-      registry.target,        // _registry
-      question,              // _questionText
-      outcome1,              // _outcome1
-      outcome2,              // _outcome2
-      creator.address,       // _creator
-      resolutionTime,        // _resolutionTime
-      lmsrCurve.target,      // bondingCurve
-      ethers.parseEther("100") // curveParams (b = 100 BASED)
-    );
+    // Grant BACKEND_ROLE to owner so they can approve markets
+    await accessControl.grantRole(ethers.id("BACKEND_ROLE"), owner.address);
 
-    return { ...contracts, market, marketAddress: market.target };
+    // FIX: Create MarketConfig struct as expected by createMarket()
+    const marketConfig = {
+      question,
+      description,
+      resolutionTime,
+      creatorBond: minCreatorBond,
+      category: ethers.id("PREDICTION"),
+      outcome1,
+      outcome2
+    };
+
+    // Create market through factory with struct parameter
+    const tx = await factory.connect(creator).createMarket(marketConfig, { value: minCreatorBond });
+
+    const receipt = await tx.wait();
+    const event = receipt.logs.find(log => log.fragment && log.fragment.name === "MarketCreated");
+    const marketAddress = event.args.marketAddress;
+
+    const market = await ethers.getContractAt("PredictionMarket", marketAddress);
+
+    return { ...contracts, market, marketAddress };
   }
 
   // ============= Valid Transition Tests =============
 
   describe("Valid State Transitions", function () {
     it("5.2.1: Should transition PROPOSED → APPROVED on approval", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
       // Verify initial state is PROPOSED
       const initialState = await market.currentState();
       expect(initialState).to.equal(0); // 0 = PROPOSED
 
-      // Approve market (owner deployed, so owner is factory)
-      const tx = await market.connect(owner).approve();
+      // FIX: Use factory.adminApproveMarket() instead of market.approve()
+      const tx = await factory.connect(owner).adminApproveMarket(marketAddress);
       await tx.wait();
 
       // Verify state transitioned to APPROVED
@@ -124,17 +150,18 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
     });
 
     it("5.2.2: Should transition APPROVED → ACTIVE on activation", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
-      // First approve the market
-      await market.connect(owner).approve();
+      // FIX: First approve the market through factory
+      await factory.connect(owner).adminApproveMarket(marketAddress);
+      await factory.refundCreatorBond(marketAddress, "Approved for testing");
 
       // Verify state is APPROVED
       let currentState = await market.currentState();
       expect(currentState).to.equal(1); // 1 = APPROVED
 
-      // Activate market
-      const tx = await market.connect(owner).activate();
+      // FIX: Activate market through factory
+      const tx = await factory.connect(owner).activateMarket(marketAddress);
       await tx.wait();
 
       // Verify state transitioned to ACTIVE
@@ -162,30 +189,30 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
 
   describe("Invalid State Transitions", function () {
     it("5.2.7: Should revert PROPOSED → ACTIVE (must be approved first)", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
       // Verify state is PROPOSED
       const currentState = await market.currentState();
       expect(currentState).to.equal(0); // 0 = PROPOSED
 
-      // Try to activate directly (should fail)
+      // FIX: Try to activate directly through factory (should fail)
       await expect(
-        market.connect(owner).activate()
+        factory.connect(owner).activateMarket(marketAddress)
       ).to.be.revertedWithCustomError(market, "InvalidStateTransition");
     });
 
     it("5.2.8: Should revert APPROVED → FINALIZED (invalid transition)", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
-      // Approve market
-      await market.connect(owner).approve();
+      // FIX: Approve market through factory
+      await factory.connect(owner).adminApproveMarket(marketAddress);
 
       // Verify state is APPROVED
       const currentState = await market.currentState();
       expect(currentState).to.equal(1); // 1 = APPROVED
 
-      // Try to reject (should work) - APPROVED can transition to FINALIZED via reject
-      const tx = await market.connect(owner).reject("Testing rejection");
+      // FIX: Try to reject through factory (should work) - APPROVED can transition to FINALIZED via reject
+      const tx = await factory.connect(owner).adminRejectMarket(marketAddress, "Testing rejection");
       await tx.wait();
 
       // Verify state is FINALIZED
@@ -200,42 +227,43 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
     });
 
     it("5.2.10: Should revert FINALIZED → any state (terminal state)", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
-      // Reject market to get to FINALIZED state
-      await market.connect(owner).reject("Testing finality");
+      // FIX: Reject market through factory to get to FINALIZED state
+      await factory.connect(owner).adminRejectMarket(marketAddress, "Testing finality");
 
       // Verify state is FINALIZED
       const currentState = await market.currentState();
       expect(currentState).to.equal(5); // 5 = FINALIZED
 
-      // Try to approve (should fail)
+      // FIX: Try to approve through factory (should fail)
       await expect(
-        market.connect(owner).approve()
+        factory.connect(owner).adminApproveMarket(marketAddress)
       ).to.be.revertedWithCustomError(market, "InvalidStateTransition");
 
-      // Try to activate (should fail)
+      // FIX: Try to activate through factory (should fail)
       await expect(
-        market.connect(owner).activate()
+        factory.connect(owner).activateMarket(marketAddress)
       ).to.be.revertedWithCustomError(market, "InvalidStateTransition");
     });
 
     it("5.2.11: Should revert backwards transitions", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
-      // Approve market (PROPOSED → APPROVED)
-      await market.connect(owner).approve();
+      // FIX: Approve market through factory (PROPOSED → APPROVED)
+      await factory.connect(owner).adminApproveMarket(marketAddress);
+      await factory.refundCreatorBond(marketAddress, "Approved for testing");
 
-      // Activate market (APPROVED → ACTIVE)
-      await market.connect(owner).activate();
+      // FIX: Activate market through factory (APPROVED → ACTIVE)
+      await factory.connect(owner).activateMarket(marketAddress);
 
       // Verify state is ACTIVE
       const currentState = await market.currentState();
       expect(currentState).to.equal(2); // 2 = ACTIVE
 
-      // Try to approve again (should fail - can't go backwards)
+      // FIX: Try to approve again through factory (should fail - can't go backwards)
       await expect(
-        market.connect(owner).approve()
+        factory.connect(owner).adminApproveMarket(marketAddress)
       ).to.be.revertedWithCustomError(market, "InvalidStateTransition");
     });
 
@@ -263,10 +291,10 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
 
   describe("Event Emissions", function () {
     it("5.2.13: Should emit MarketStateChanged with correct data", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
-      // Approve market
-      const tx = await market.connect(owner).approve();
+      // FIX: Approve market through factory
+      const tx = await factory.connect(owner).adminApproveMarket(marketAddress);
 
       // Check event was emitted with correct data
       await expect(tx)
@@ -275,35 +303,41 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
     });
 
     it("5.2.14: Should emit events for all transitions", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
-      // Test PROPOSED → APPROVED
-      const approveTx = await market.connect(owner).approve();
+      // FIX: Test PROPOSED → APPROVED through factory
+      const approveTx = await factory.connect(owner).adminApproveMarket(marketAddress);
       await expect(approveTx)
         .to.emit(market, "MarketStateChanged")
         .withArgs(1, await time.latest()); // newState=APPROVED
 
-      // Test APPROVED → ACTIVE
-      const activateTx = await market.connect(owner).activate();
+      // FIX: Refund bond before activation
+      await factory.refundCreatorBond(marketAddress, "Approved for testing");
+
+      // FIX: Test APPROVED → ACTIVE through factory
+      const activateTx = await factory.connect(owner).activateMarket(marketAddress);
       await expect(activateTx)
         .to.emit(market, "MarketStateChanged")
         .withArgs(2, await time.latest()); // newState=ACTIVE
     });
 
     it("5.2.15: Should return correct state from getMarketState()", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
       // Check initial state
       let state = await market.getMarketState();
       expect(state).to.equal(0); // PROPOSED
 
-      // Approve and check
-      await market.connect(owner).approve();
+      // FIX: Approve through factory and check
+      await factory.connect(owner).adminApproveMarket(marketAddress);
       state = await market.getMarketState();
       expect(state).to.equal(1); // APPROVED
 
-      // Activate and check
-      await market.connect(owner).activate();
+      // FIX: Refund bond before activation
+      await factory.refundCreatorBond(marketAddress, "Approved for testing");
+
+      // FIX: Activate through factory and check
+      await factory.connect(owner).activateMarket(marketAddress);
       state = await market.getMarketState();
       expect(state).to.equal(2); // ACTIVE
     });
@@ -313,23 +347,24 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
 
   describe("State-Gated Operations", function () {
     it("Should only allow placeBet when ACTIVE", async function () {
-      const { market, owner, user1 } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner, user1 } = await loadFixture(createMarketFixture);
 
       // Try to bet in PROPOSED state (should fail)
       await expect(
         market.connect(user1).placeBet(1, 0, { value: ethers.parseEther("1") }) // outcome=OUTCOME1(1), minOdds=0
       ).to.be.revertedWithCustomError(market, "MarketNotActive");
 
-      // Approve market
-      await market.connect(owner).approve();
+      // FIX: Approve market through factory
+      await factory.connect(owner).adminApproveMarket(marketAddress);
 
       // Try to bet in APPROVED state (should fail)
       await expect(
         market.connect(user1).placeBet(1, 0, { value: ethers.parseEther("1") })
       ).to.be.revertedWithCustomError(market, "MarketNotActive");
 
-      // Activate market
-      await market.connect(owner).activate();
+      // FIX: Refund bond and activate market through factory
+      await factory.refundCreatorBond(marketAddress, "Approved for testing");
+      await factory.connect(owner).activateMarket(marketAddress);
 
       // Now betting should work in ACTIVE state
       const tx = await market.connect(user1).placeBet(1, 0, { value: ethers.parseEther("1") });
@@ -355,10 +390,10 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
     });
 
     it("Should allow factory (deployer) to call approve()", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
-      // Owner deployed market, so owner is factory
-      const tx = await market.connect(owner).approve();
+      // FIX: Use factory.adminApproveMarket() instead of market.approve()
+      const tx = await factory.connect(owner).adminApproveMarket(marketAddress);
       await tx.wait();
 
       // Verify market state changed
@@ -367,13 +402,14 @@ describe("PredictionMarket Lifecycle (Phase 5.2)", function () {
     });
 
     it("Should allow factory (deployer) to call activate()", async function () {
-      const { market, owner } = await loadFixture(createMarketFixture);
+      const { market, factory, marketAddress, owner } = await loadFixture(createMarketFixture);
 
-      // Approve first
-      await market.connect(owner).approve();
+      // FIX: Approve first through factory
+      await factory.connect(owner).adminApproveMarket(marketAddress);
+      await factory.refundCreatorBond(marketAddress, "Approved for testing");
 
-      // Activate
-      const tx = await market.connect(owner).activate();
+      // FIX: Activate through factory
+      const tx = await factory.connect(owner).activateMarket(marketAddress);
       await tx.wait();
 
       // Verify market state changed
