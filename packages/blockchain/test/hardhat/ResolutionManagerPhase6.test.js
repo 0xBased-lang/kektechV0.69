@@ -12,24 +12,23 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
 
     // Deploy AccessControlManager
     const AccessControlManager = await ethers.getContractFactory("AccessControlManager");
-    const accessControl = await AccessControlManager.deploy();
+    const accessControl = await AccessControlManager.deploy(registry.target);
 
     // Deploy ParameterStorage
     const ParameterStorage = await ethers.getContractFactory("ParameterStorage");
-    const params = await ParameterStorage.deploy();
+    const params = await ParameterStorage.deploy(registry.target);
 
-    // Register contracts
-    await registry.setContract(ethers.id("AccessControlManager"), accessControl.target, 1);
-    await registry.setContract(ethers.id("ParameterStorage"), params.target, 1);
+    // Deploy PredictionMarket Template
+    const PredictionMarket = await ethers.getContractFactory("PredictionMarket");
+    const marketTemplate = await PredictionMarket.deploy();
 
-    // Grant roles
-    const ADMIN_ROLE = ethers.id("ADMIN_ROLE");
-    const BACKEND_ROLE = ethers.id("BACKEND_ROLE");
-    const RESOLVER_ROLE = ethers.id("RESOLVER_ROLE");
+    // Deploy LMSR Curve
+    const LMSRCurve = await ethers.getContractFactory("LMSRCurve");
+    const lmsrCurve = await LMSRCurve.deploy();
 
-    await accessControl.grantRole(ADMIN_ROLE, admin.address);
-    await accessControl.grantRole(BACKEND_ROLE, backend.address);
-    await accessControl.grantRole(RESOLVER_ROLE, resolver.address);
+    // Deploy RewardDistributor
+    const RewardDistributor = await ethers.getContractFactory("RewardDistributor");
+    const rewardDistributor = await RewardDistributor.deploy(registry.target);
 
     // Deploy ResolutionManager
     const ResolutionManager = await ethers.getContractFactory("ResolutionManager");
@@ -39,15 +38,36 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       ethers.parseEther("0.1") // min dispute bond
     );
 
-    // Register ResolutionManager
-    await registry.setContract(ethers.id("ResolutionManager"), resolutionManager.target, 1);
-
-    // Deploy mock PredictionMarket
-    const PredictionMarket = await ethers.getContractFactory("PredictionMarket");
+    // Deploy Factory
     const factory = await (await ethers.getContractFactory("FlexibleMarketFactoryUnified")).deploy(
       registry.target,
       ethers.parseEther("0.1")
     );
+
+    // Register contracts
+    await registry.setContract(ethers.id("AccessControlManager"), accessControl.target, 1);
+    await registry.setContract(ethers.id("ParameterStorage"), params.target, 1);
+    await registry.setContract(ethers.id("PredictionMarketTemplate"), marketTemplate.target, 1);
+    await registry.setContract(ethers.id("LMSRCurve"), lmsrCurve.target, 1);
+    await registry.setContract(ethers.id("RewardDistributor"), rewardDistributor.target, 1);
+    await registry.setContract(ethers.id("ResolutionManager"), resolutionManager.target, 1);
+    await registry.setContract(ethers.id("FlexibleMarketFactoryUnified"), factory.target, 1);
+
+    // Grant roles
+    const ADMIN_ROLE = ethers.id("ADMIN_ROLE");
+    const BACKEND_ROLE = ethers.id("BACKEND_ROLE");
+    const RESOLVER_ROLE = ethers.id("RESOLVER_ROLE");
+
+    await accessControl.grantRole(ADMIN_ROLE, admin.address);
+    await accessControl.grantRole(BACKEND_ROLE, backend.address);
+    await accessControl.grantRole(RESOLVER_ROLE, resolver.address);
+    await accessControl.grantRole(ethers.id("FACTORY_ROLE"), factory.target);
+
+    // Set platform fee
+    await params.setParameter(ethers.id("platformFeePercent"), 500); // 5%
+
+    // Set default curve on factory
+    await factory.setDefaultCurve(lmsrCurve.target);
 
     return {
       resolutionManager,
