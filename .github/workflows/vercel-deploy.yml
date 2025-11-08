@@ -43,10 +43,16 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
+      - name: Link to Vercel Project
+        working-directory: ./packages/frontend
+        run: |
+          # Link happens automatically via .vercel/project.json
+          echo "Using project configuration from .vercel/project.json"
+
       - name: Pull Vercel Environment Information
+        working-directory: ./packages/frontend
         run: |
           vercel pull --yes \
-            --cwd ./packages/frontend \
             --environment=${{ github.event.inputs.environment || 'production' }} \
             --token=${{ secrets.VERCEL_TOKEN }}
         env:
@@ -54,9 +60,9 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Build Project Artifacts
+        working-directory: ./packages/frontend
         run: |
           vercel build \
-            --cwd ./packages/frontend \
             ${{ github.event.inputs.environment == 'production' && '--prod' || '' }} \
             --token=${{ secrets.VERCEL_TOKEN }}
         env:
@@ -64,10 +70,10 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
       - name: Deploy to Vercel
+        working-directory: ./packages/frontend
         id: deploy
         run: |
           DEPLOYMENT_URL=$(vercel deploy --prebuilt \
-            --cwd ./packages/frontend \
             ${{ github.event.inputs.environment == 'production' && '--prod' || '' }} \
             --token=${{ secrets.VERCEL_TOKEN }})
           echo "url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
