@@ -378,7 +378,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
   describe("Admin Override", function () {
     async function setupDisputedMarket() {
       const fixture = await loadFixture(deployFixture);
-      const marketAddr = await createMockMarket(fixture.factory, fixture.admin);
+      const marketAddr = await createMockMarket(fixture.factory, fixture.admin, fixture.backend);
       await time.increase(86400);
       await fixture.resolutionManager.connect(fixture.resolver).proposeResolution(marketAddr, 1, "Evidence");
       await fixture.resolutionManager.connect(fixture.backend).submitDisputeSignals(marketAddr, 40, 60);
