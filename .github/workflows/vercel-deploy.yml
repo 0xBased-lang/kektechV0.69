@@ -54,11 +54,10 @@ jobs:
           }' > ./packages/frontend/.vercel/project.json
 
       - name: Deploy to Vercel
-        working-directory: ./packages/frontend
         id: deploy
         run: |
-          # Deploy directly - no pull needed!
-          DEPLOYMENT_URL=$(vercel deploy \
+          # Deploy directly from root, specifying the path
+          DEPLOYMENT_URL=$(vercel deploy ./packages/frontend \
             ${{ github.event.inputs.environment == 'production' && '--prod' || '' }} \
             --token=${{ secrets.VERCEL_TOKEN }} \
             --yes)
