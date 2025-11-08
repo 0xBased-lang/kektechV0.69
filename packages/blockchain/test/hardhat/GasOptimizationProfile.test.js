@@ -202,8 +202,9 @@ describe("Gas Optimization Profiling", function() {
             }
         }
 
-        // Get actual bet to analyze
-        const betTx = await market.connect(user2).placeBet(2, 0, { value: ethers.parseEther("0.01") });
+        // FIX: Use larger bet amount to ensure shares are calculated
+        // LMSR with b=100*10^18 might return 0 shares for very small bets like 0.01 ETH
+        const betTx = await market.connect(user2).placeBet(2, 0, { value: ethers.parseEther("1.0") });
         const betReceipt = await betTx.wait();
 
         console.log(`\n   ✅ Total placeBet:     ${betReceipt.gasUsed.toString().padStart(8)} gas`);
@@ -232,8 +233,9 @@ describe("Gas Optimization Profiling", function() {
         const finalizeReceipt = await finalizeTx.wait();
         console.log(`   Auto-Finalize:         ${finalizeReceipt.gasUsed.toString().padStart(8)} gas`);
 
-        // Claim winnings
-        const claimTx = await market.connect(user2).claimWinnings();
+        // FIX: user1 bet on outcome 1 and won, user2 bet on outcome 2 and lost
+        // Only winners can claim winnings
+        const claimTx = await market.connect(user1).claimWinnings();
         const claimReceipt = await claimTx.wait();
         console.log(`   Claim Winnings:        ${claimReceipt.gasUsed.toString().padStart(8)} gas`);
     });
