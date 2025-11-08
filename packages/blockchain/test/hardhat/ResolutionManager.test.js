@@ -633,6 +633,12 @@ describe("ResolutionManager", function () {
         markets.push(factory.interface.parseLog(event).args.marketAddress);
       }
 
+      // FIX: Approve and activate all markets before resolving
+      for (const marketAddress of markets) {
+        await factory.adminApproveMarket(marketAddress);
+        await factory.activateMarket(marketAddress);
+      }
+
       await time.increaseTo(resolutionTime + 1);
 
       // Resolve all
