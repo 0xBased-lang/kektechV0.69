@@ -74,12 +74,20 @@ describe("ResolutionManager", function () {
     // PHASE 5 FIX: Set default curve
     await factory.setDefaultCurve(lmsrCurve.target);
 
+    // FIX: Deploy and register RewardDistributor (required for dispute resolution)
+    // ResolutionManager.resolveDispute() needs RewardDistributor for rejected disputes
+    const RewardDistributor = await ethers.getContractFactory("RewardDistributor");
+    const rewardDistributor = await RewardDistributor.deploy(registry.target);
+    await rewardDistributor.waitForDeployment();
+    await registry.setContract(ethers.id("RewardDistributor"), rewardDistributor.target, 1);
+
     return {
       registry,
       params,
       accessControl,
       resolutionManager,
       factory,
+      rewardDistributor,
       owner,
       admin,
       resolver1,
