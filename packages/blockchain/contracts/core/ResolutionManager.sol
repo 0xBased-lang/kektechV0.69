@@ -550,8 +550,8 @@ contract ResolutionManager is IResolutionManager, ReentrancyGuard {
                 return;
             }
         }
-        // Flag for admin review if strong disagreement (>=40%)
-        else if (disagreementPercent >= disagreementThreshold) {
+        // Flag for admin review if strong disagreement (>40%)
+        else if (disagreementPercent > disagreementThreshold) {
             // PHASE 6 INTEGRATION: Call market.dispute() to transition RESOLVING → DISPUTED
             try IPredictionMarket(marketAddress).dispute("Community disagreement threshold reached") {
                 // Market disputed successfully

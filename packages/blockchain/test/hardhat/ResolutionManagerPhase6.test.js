@@ -272,12 +272,12 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     it("should allow multiple signal submissions (updates)", async function () {
       const { resolutionManager, marketAddr, backend } = await setupProposedResolution();
 
-      // First submission: 50-50 (no action)
-      await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 50, 50);
+      // First submission: 65-35 (no action - 35% disagreement < 40% threshold, 65% agreement < 75% threshold)
+      await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 65, 35);
       let window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.isActive).to.be.true;
 
-      // Second submission: 80-20 (auto-finalize)
+      // Second submission: 80-20 (auto-finalize - 80% agreement >= 75% threshold)
       await resolutionManager.connect(backend).submitDisputeSignals(marketAddr, 80, 20);
       window = await resolutionManager.getCommunityDisputeWindow(marketAddr);
       expect(window.isActive).to.be.false;
@@ -578,7 +578,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       expect(window1.isActive).to.be.true;
 
       const resolution2 = await resolutionManager.getResolutionData(market2);
-      expect(resolution2.status).to.equal(0); // RESOLVED
+      expect(resolution2.status).to.equal(1); // RESOLVED
     });
   });
 
