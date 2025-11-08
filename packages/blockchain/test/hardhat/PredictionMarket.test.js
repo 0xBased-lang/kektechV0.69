@@ -212,24 +212,26 @@ describe("PredictionMarket", function () {
     });
 
     it("Should require valid resolution time", async function () {
-      const { registry, lmsrCurve, defaultLMSRParams, owner } = await loadFixture(deployFixture);
-      const PredictionMarket = await ethers.getContractFactory("PredictionMarket");
-      const market = await PredictionMarket.deploy();
+      const { factory, user1 } = await loadFixture(deployFixture);
 
+      // FIX: Test via factory.createMarket() with past resolution time
+      // Cannot test template.initialize() directly due to _disableInitializers() security feature
       const pastTime = (await time.latest()) - 1000;
 
+      const marketConfig = {
+        question: "Will ETH reach $5000?",
+        description: "Test market",
+        resolutionTime: pastTime, // Past time - should revert
+        creatorBond: ethers.parseEther("0.1"),
+        category: ethers.id("PREDICTION"),
+        outcome1: "YES",
+        outcome2: "NO"
+      };
+
+      // Use user1 as creator (any signer will work for this validation test)
       await expect(
-        market.initialize(
-          registry.target,
-          "Question?",
-          "Yes",
-          "No",
-          owner.address,        // Use valid creator address
-          pastTime,
-          lmsrCurve.target,      // PHASE 3: Required curve parameter
-          defaultLMSRParams      // PHASE 3: Required params parameter
-        )
-      ).to.be.revertedWithCustomError(market, "InvalidResolutionTime");
+        factory.connect(user1).createMarket(marketConfig, { value: ethers.parseEther("0.1") })
+      ).to.be.revertedWithCustomError(factory, "InvalidResolutionTime");
     });
   });
 
