@@ -134,15 +134,36 @@ describe("PredictionMarket", function () {
 
   async function deployResolvedMarketFixture() {
     const fixture = await deployWithBetsFixture();
-    const { market, resolver, resolutionTime, resolutionManager } = fixture;
+    const { market, resolver, resolutionTime, resolutionManager, owner } = fixture;
 
     // Fast forward past resolution time
     await time.increaseTo(resolutionTime + 1);
 
-    // FIX: Use correct function name - proposeResolution, not proposeOutcome
-    await resolutionManager.connect(resolver).proposeResolution(market.target, 1, "OUTCOME1 wins"); // OUTCOME1 wins
-    // Note: finalizeMarket doesn't exist - use finalizeResolution
-    await resolutionManager.finalizeResolution(market.target);
+    // FIX: Propose resolution (requires RESOLVER_ROLE, sets market to RESOLVING)
+    await resolutionManager.connect(resolver).proposeResolution(market.target, 1, "OUTCOME1 wins");
+
+    // FIX: Wait for dispute window to pass (86400 seconds = 1 day)
+    const disputeWindow = 86400;
+    await time.increase(disputeWindow + 1);
+
+    // FIX: Finalize resolution in ResolutionManager (updates ResolutionData status)
+    await resolutionManager.connect(owner).finalizeResolution(market.target);
+
+    // FIX: Finalize market contract (transitions market from RESOLVING → FINALIZED)
+    // market.finalize() can only be called by ResolutionManager or Factory
+    // Impersonate the ResolutionManager contract to call finalize
+    await ethers.provider.send("hardhat_impersonateAccount", [resolutionManager.target]);
+
+    // Give the impersonated account ETH for gas
+    await ethers.provider.send("hardhat_setBalance", [
+      resolutionManager.target,
+      "0x" + ethers.parseEther("10").toString(16) // 10 ETH in hex
+    ]);
+
+    const resolutionManagerSigner = await ethers.getSigner(resolutionManager.target);
+    await market.connect(resolutionManagerSigner).finalize(1); // OUTCOME1
+
+    await ethers.provider.send("hardhat_stopImpersonatingAccount", [resolutionManager.target]);
 
     return fixture;
   }
