@@ -18,6 +18,7 @@ export {
   useMarketAddress,
   useBuyPrice,
   useSellPrice,
+  useMarketOdds,
 } from './useMarketData';
 
 // Market action hooks

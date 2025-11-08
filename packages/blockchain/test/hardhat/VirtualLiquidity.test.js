@@ -15,7 +15,7 @@ const { loadFixture, time } = require("@nomicfoundation/hardhat-network-helpers"
 describe("PredictionMarket - Virtual Liquidity", function () {
   // ============= Constants =============
 
-  const VIRTUAL_LIQUIDITY = ethers.parseEther("100"); // 100 BASED per side
+  const VIRTUAL_LIQUIDITY = 100n; // 100 shares per side (NOT ether!)
   const ONE_ETH = ethers.parseEther("1");
   const TEN_ETH = ethers.parseEther("10");
   const HUNDRED_ETH = ethers.parseEther("100");
@@ -47,49 +47,84 @@ describe("PredictionMarket - Virtual Liquidity", function () {
       minDisputeBond
     );
 
-    // Register contracts
-    await registry.setContract(ethers.id("ParameterStorage"), params.target, 1);
-    await registry.setContract(ethers.id("AccessControlManager"), accessControl.target, 1);
-    await registry.setContract(ethers.id("ResolutionManager"), resolutionManager.target, 1);
-
-    // Setup roles
-    await accessControl.grantRole(ethers.id("OPERATOR_ROLE"), operator.address);
-    await accessControl.grantRole(ethers.id("RESOLVER_ROLE"), resolver.address);
-    await accessControl.grantRole(ethers.id("ADMIN_ROLE"), owner.address);
-    await accessControl.grantRole(ethers.id("FACTORY_ROLE"), owner.address); // For approve/activate in tests
-
-    // Set platform fee to 5% for testing
-    await params.setParameter(ethers.id("platformFeePercent"), 500); // 5% = 500 basis points
+    // Deploy RewardDistributor (required by factory)
+    const RewardDistributor = await ethers.getContractFactory("RewardDistributor");
+    const rewardDistributor = await RewardDistributor.deploy(registry.target);
 
     // Deploy LMSR Curve (needed for share price calculations)
     const LMSRCurve = await ethers.getContractFactory("LMSRCurve");
     const lmsrCurve = await LMSRCurve.deploy();
     await lmsrCurve.waitForDeployment();
 
-    // Deploy PredictionMarket
+    // Deploy PredictionMarket TEMPLATE (not for direct use)
     const PredictionMarket = await ethers.getContractFactory("PredictionMarket");
-    const market = await PredictionMarket.deploy();
-    await market.waitForDeployment();  // ← FIXED: Wait for deployment to complete
+    const marketTemplate = await PredictionMarket.deploy();
 
+    // Deploy FlexibleMarketFactoryUnified
+    const Factory = await ethers.getContractFactory("FlexibleMarketFactoryUnified");
+    const minCreatorBond = ethers.parseEther("0.01");
+    const factory = await Factory.deploy(registry.target, minCreatorBond);
+
+    // Register contracts in registry
+    await registry.setContract(ethers.id("ParameterStorage"), params.target, 1);
+    await registry.setContract(ethers.id("AccessControlManager"), accessControl.target, 1);
+    await registry.setContract(ethers.id("ResolutionManager"), resolutionManager.target, 1);
+    await registry.setContract(ethers.id("RewardDistributor"), rewardDistributor.target, 1);
+    // CRITICAL: Factory looks for "PredictionMarketTemplate", not "PredictionMarket"
+    await registry.setContract(ethers.id("PredictionMarketTemplate"), marketTemplate.target, 1);
+    await registry.setContract(ethers.id("FlexibleMarketFactoryUnified"), factory.target, 1);
+    await registry.setContract(ethers.id("LMSRCurve"), lmsrCurve.target, 1);
+
+    // Setup roles
+    await accessControl.grantRole(ethers.id("OPERATOR_ROLE"), operator.address);
+    await accessControl.grantRole(ethers.id("RESOLVER_ROLE"), resolver.address);
+    await accessControl.grantRole(ethers.id("ADMIN_ROLE"), owner.address);
+    await accessControl.grantRole(ethers.id("TREASURY_ROLE"), treasury.address);
+    // Grant factory and backend roles for market creation
+    await accessControl.grantRole(ethers.id("FACTORY_ROLE"), factory.target);
+    await accessControl.grantRole(ethers.id("BACKEND_ROLE"), owner.address);
+
+    // Set platform fee to 5% for testing
+    await params.setParameter(ethers.id("platformFeePercent"), 500); // 5% = 500 basis points
+
+    // CRITICAL: Set default LMSR curve for betting functionality
+    await factory.setDefaultCurve(lmsrCurve.target);
+
+    // Create market through factory (EIP-1167 clone pattern)
     const resolutionTime = (await time.latest()) + 86400; // 1 day from now
+    const config = {
+      question: "Will Bitcoin reach $100k by Dec 31?",
+      description: "Test market for VirtualLiquidity tests",
+      resolutionTime: resolutionTime,
+      creatorBond: ethers.parseEther("0.01"),
+      category: ethers.id("TEST"),
+      outcome1: "Yes",
+      outcome2: "No"
+    };
 
-    // Initialize market with LMSR curve
-    // LMSR parameter b=100 provides balanced price discovery
-    const lmsrB = ethers.parseEther("100"); // b = 100 BASED
-    await market.initialize(
-      registry.target,
-      "Will Bitcoin reach $100k by Dec 31?",
-      "Yes",
-      "No",
-      owner.address,
-      resolutionTime,
-      lmsrCurve.target, // LMSR bonding curve
-      lmsrB // Curve parameter b = 100
-    );
+    const tx = await factory.createMarket(config, { value: ethers.parseEther("0.01") });
+    const receipt = await tx.wait();
 
-    // Activate market for testing (owner has FACTORY_ROLE)
-    await market.connect(owner).approve();
-    await market.connect(owner).activate();
+    // Get market address from event
+    const marketCreatedEvent = receipt.logs.find(log => {
+      try {
+        const parsed = factory.interface.parseLog(log);
+        return parsed.name === "MarketCreated";
+      } catch (e) {
+        return false;
+      }
+    });
+    const parsedEvent = factory.interface.parseLog(marketCreatedEvent);
+    const marketAddr = parsedEvent.args[0]; // First argument is market address
+
+    // Get market contract instance
+    const market = await ethers.getContractAt("PredictionMarket", marketAddr);
+
+    // Approve market using admin privileges (owner has ADMIN_ROLE)
+    await factory.connect(owner).adminApproveMarket(marketAddr);
+
+    // Activate market through factory (owner has BACKEND_ROLE)
+    await factory.connect(owner).activateMarket(marketAddr);
 
     return {
       registry,

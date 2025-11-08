@@ -211,3 +211,64 @@ export function useSellPrice(
     refetch,
   };
 }
+
+/**
+ * Get current odds from the contract
+ *
+ * CRITICAL: This uses the contract's getOdds() function which includes VirtualLiquidity!
+ * - Empty market: Returns (20000, 20000) = 2.0x odds on both sides
+ * - After bets: Returns dynamically calculated odds based on share distribution
+ * - Values are in basis points (10000 = 1.0x = 100%)
+ *
+ * DO NOT calculate odds manually from shares - always use this hook!
+ *
+ * @param marketAddress - The market contract address
+ * @param watch - Whether to watch for updates
+ * @returns Odds for both outcomes in basis points and percentage format
+ */
+export function useMarketOdds(marketAddress: Address, watch = false) {
+  const { data, isLoading, refetch } = usePredictionMarketRead<readonly [bigint, bigint]>({
+    marketAddress,
+    functionName: 'getOdds',
+    watch,
+  });
+
+  // Parse odds from contract (returns [odds1, odds2] in basis points)
+  const odds1BasisPoints = data?.[0] || 20000n; // Default: 2.0x = 20000 basis points
+  const odds2BasisPoints = data?.[1] || 20000n; // Default: 2.0x = 20000 basis points
+
+  // Convert to percentages (20000 basis points = 200% = 2.0x multiplier)
+  const odds1Percentage = Number(odds1BasisPoints) / 100; // e.g., 20000 → 200%
+  const odds2Percentage = Number(odds2BasisPoints) / 100; // e.g., 20000 → 200%
+
+  // Convert to decimal multipliers (e.g., 2.0x)
+  const odds1Multiplier = Number(odds1BasisPoints) / 10000; // e.g., 20000 → 2.0
+  const odds2Multiplier = Number(odds2BasisPoints) / 10000; // e.g., 20000 → 2.0
+
+  // Calculate implied probabilities (inverse of odds)
+  // For 2.0x odds: probability = 1/2.0 = 0.5 = 50%
+  const odds1Probability = odds1Multiplier > 0 ? (1 / odds1Multiplier) * 100 : 50;
+  const odds2Probability = odds2Multiplier > 0 ? (1 / odds2Multiplier) * 100 : 50;
+
+  return {
+    // Raw contract values (basis points)
+    odds1BasisPoints: Number(odds1BasisPoints),
+    odds2BasisPoints: Number(odds2BasisPoints),
+
+    // Percentage format (200% = 2.0x)
+    odds1Percentage,
+    odds2Percentage,
+
+    // Multiplier format (2.0x)
+    odds1Multiplier,
+    odds2Multiplier,
+
+    // Implied probabilities (50% for 2.0x odds)
+    odds1Probability,
+    odds2Probability,
+
+    // State
+    isLoading,
+    refetch,
+  };
+}
