@@ -8,7 +8,6 @@ import { useParams } from 'next/navigation';
 import { MarketHeader } from '@/components/kektech/market-details/MarketHeader';
 import { MarketStats } from '@/components/kektech/market-details/MarketStats';
 import { BettingInterface } from '@/components/kektech/market-details/BettingInterface';
-import { PositionList } from '@/components/kektech/positions/PositionList';
 import { LiveBetFeed } from '@/components/kektech/live/LiveBetFeed';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -46,12 +45,6 @@ export default function MarketDetailPage() {
 
             {/* Betting Interface */}
             <BettingInterface marketAddress={marketAddress} />
-
-            {/* Your Positions */}
-            <div>
-              <h2 className="text-xl font-bold text-white mb-4">Your Positions</h2>
-              <PositionList marketAddress={marketAddress} />
-            </div>
           </div>
 
           {/* Right Column - Live Activity */}
