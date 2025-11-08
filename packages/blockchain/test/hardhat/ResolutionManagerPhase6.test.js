@@ -523,7 +523,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
 
   describe("Integration with Existing System", function () {
     it("should still allow bond-based disputes", async function () {
-      const { resolutionManager, factory, resolver, admin, user1 } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, resolver, admin, backend, user1 } = await loadFixture(deployFixture);
 
       const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
@@ -543,7 +543,7 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     });
 
     it("should not interfere with bond-based workflow", async function () {
-      const { resolutionManager, factory, resolver, admin, user1 } = await loadFixture(deployFixture);
+      const { resolutionManager, factory, resolver, admin, backend, user1 } = await loadFixture(deployFixture);
 
       const marketAddr = await createMockMarket(factory, admin, backend);
       await time.increase(86400);
@@ -601,7 +601,8 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       const receipt = await tx.wait();
       console.log(`proposeResolution() gas: ${receipt.gasUsed}`);
 
-      expect(receipt.gasUsed).to.be.lt(250000); // Should be < 250k gas
+      // Phase 6: Higher gas due to external contract calls (opens community dispute window)
+      expect(receipt.gasUsed).to.be.lt(450000); // Should be < 450k gas
     });
 
     it("should measure gas for submitDisputeSignals()", async function () {
@@ -611,7 +612,8 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       const receipt = await tx.wait();
       console.log(`submitDisputeSignals() gas: ${receipt.gasUsed}`);
 
-      expect(receipt.gasUsed).to.be.lt(150000); // Should be < 150k gas
+      // Phase 6: Higher gas due to market.finalize() external call
+      expect(receipt.gasUsed).to.be.lt(160000); // Should be < 160k gas
     });
 
     it("should measure gas for adminResolveMarket()", async function () {
@@ -624,7 +626,8 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
       const receipt = await tx.wait();
       console.log(`adminResolveMarket() gas: ${receipt.gasUsed}`);
 
-      expect(receipt.gasUsed).to.be.lt(100000); // Should be < 100k gas
+      // Phase 6: Higher gas due to market.finalize() external call
+      expect(receipt.gasUsed).to.be.lt(120000); // Should be < 120k gas
     });
   });
 });
