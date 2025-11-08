@@ -80,7 +80,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.walletconnect.com https://*.walletconnect.org wss://*.walletconnect.com wss://*.walletconnect.org https://*.bridge.walletconnect.org https://mainnet.basedaibridge.com https://explorer.bf1337.org https://kektech.xyz https://api.kektech.xyz https://*.ipfs.nftstorage.link https://*.ipfs.w3s.link https://ipfs.io https://cca-lite.coinbase.com",
+              "connect-src 'self' https://*.walletconnect.com https://*.walletconnect.org wss://*.walletconnect.com wss://*.walletconnect.org https://*.bridge.walletconnect.org https://rpc.basedai.network https://api.web3modal.org https://mainnet.basedaibridge.com https://explorer.bf1337.org https://kektech.xyz https://api.kektech.xyz https://*.ipfs.nftstorage.link https://*.ipfs.w3s.link https://ipfs.io https://cca-lite.coinbase.com",
               "frame-src 'self' https://verify.walletconnect.com https://verify.walletconnect.org",
               "object-src 'none'",
               "base-uri 'self'",
