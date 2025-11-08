@@ -110,7 +110,14 @@ describe("ResolutionManager - Phase 6: Community Voting", function () {
     const event = receipt.logs.find(
       log => log.fragment && log.fragment.name === "MarketCreated"
     );
-    return event.args.marketAddress;
+    const marketAddress = event.args.marketAddress;
+
+    // FIX: Activate market so it's ready for resolution (PROPOSED → APPROVED → ACTIVE)
+    await factory.adminApproveMarket(marketAddress);
+    await factory.refundCreatorBond(marketAddress, "Approved for testing");
+    await factory.connect(creator).activateMarket(marketAddress);
+
+    return marketAddress;
   }
 
   describe("Community Dispute Window", function () {
