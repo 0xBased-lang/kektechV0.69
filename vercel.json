@@ -5,11 +5,5 @@
   "devCommand": "cd packages/frontend && npm run dev",
   "installCommand": "npm install --prefix packages/frontend",
   "framework": "nextjs",
-  "regions": ["iad1"],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/packages/frontend/$1"
-    }
-  ]
+  "regions": ["iad1"]
 }
