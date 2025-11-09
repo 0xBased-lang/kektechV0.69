@@ -134,18 +134,22 @@ export function useUserPosition(marketAddress: Address, userAddress?: Address, w
 export function useMarketList(watch = false) {
   const { data: marketCount } = useContractRead<bigint>({
     contractName: 'MarketFactory',
-    functionName: 'marketCount',
+    functionName: 'getMarketCount',
     watch,
   });
 
-  // Note: This would need pagination in production
-  // For now, return empty array (components will show "No markets" message)
+  const { data: markets, isLoading: marketsLoading, refetch } = useContractRead<Address[]>({
+    contractName: 'MarketFactory',
+    functionName: 'getAllMarkets',
+    watch,
+  });
+
   return {
     marketCount: marketCount ? Number(marketCount) : 0,
-    markets: [] as Address[], // TODO: Implement market enumeration
+    markets: markets || [],
     error: undefined,
-    refetch: () => Promise.resolve(),
-    isLoading: marketCount === undefined,
+    refetch,
+    isLoading: marketCount === undefined || marketsLoading,
   };
 }
 
