@@ -1,11 +1,13 @@
 /**
  * KEKTECH 3.0 - Proposal Voting API
- * POST /api/proposals/[marketAddress]/vote
- * GET /api/proposals/[marketAddress]/vote
+ * POST /api/proposals/[marketAddress]/vote - 🔒 REQUIRES AUTHENTICATION
+ * GET /api/proposals/[marketAddress]/vote - Public (shows user's vote if authenticated)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db/prisma';
+import { verifyAuth } from '@/lib/auth/api-auth';
+import { createClient } from '@/lib/supabase/server';
 
 // GET - Get vote counts for a market proposal
 export async function GET(
@@ -23,11 +25,13 @@ export async function GET(
     const likes = votes.filter((v) => v.vote === 'like').length;
     const dislikes = votes.filter((v) => v.vote === 'dislike').length;
 
-    // Get user's vote if authenticated
-    // TODO: Get user address from session/auth
-    const userId = request.headers.get('x-wallet-address');
-    const userVote = userId
-      ? votes.find((v) => v.userId === userId)?.vote
+    // Get user's vote if authenticated (optional)
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    const walletAddress = user?.user_metadata?.wallet_address || user?.email?.split('@')[0];
+
+    const userVote = walletAddress
+      ? votes.find((v) => v.userId === walletAddress)?.vote
       : null;
 
     return NextResponse.json({
@@ -49,22 +53,21 @@ export async function GET(
 }
 
 // POST - Submit a vote for a market proposal
+// 🔒 REQUIRES AUTHENTICATION
 export async function POST(
   request: NextRequest,
   { params }: { params: { marketAddress: string } }
 ) {
   try {
+    // 🔒 AUTHENTICATION CHECK
+    const auth = await verifyAuth();
+    if (auth.error) return auth.error;
+
+    const walletAddress = auth.walletAddress!; // ✅ Verified wallet from Supabase
+
     const { marketAddress } = params;
     const body = await request.json();
-    const { userId, vote } = body;
-
-    // Validate input
-    if (!userId) {
-      return NextResponse.json(
-        { success: false, error: 'User ID is required' },
-        { status: 400 }
-      );
-    }
+    const { vote } = body; // userId now comes from authenticated session
 
     if (vote !== 'like' && vote !== 'dislike') {
       return NextResponse.json(
@@ -78,7 +81,7 @@ export async function POST(
       where: {
         marketAddress_userId: {
           marketAddress,
-          userId,
+          userId: walletAddress, // ✅ Using verified wallet address
         },
       },
       update: {
@@ -87,7 +90,7 @@ export async function POST(
       },
       create: {
         marketAddress,
-        userId,
+        userId: walletAddress, // ✅ Using verified wallet address
         vote,
       },
     });
@@ -95,7 +98,7 @@ export async function POST(
     // Track user activity
     await prisma.userActivity.create({
       data: {
-        userId,
+        userId: walletAddress, // ✅ Using verified wallet address
         activityType: 'proposal_vote',
         marketAddress,
       },

@@ -1,11 +1,13 @@
 /**
  * KEKTECH 3.0 - Resolution Voting API
- * POST /api/resolution/[marketAddress]/vote
- * GET /api/resolution/[marketAddress]/vote
+ * POST /api/resolution/[marketAddress]/vote - 🔒 REQUIRES AUTHENTICATION
+ * GET /api/resolution/[marketAddress]/vote - Public (shows user's vote if authenticated)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db/prisma';
+import { verifyAuth } from '@/lib/auth/api-auth';
+import { createClient } from '@/lib/supabase/server';
 
 // GET - Get resolution votes for a market
 export async function GET(
@@ -29,10 +31,13 @@ export async function GET(
     const agreePercentage = total > 0 ? (agreeCount / total) * 100 : 0;
     const disagreePercentage = total > 0 ? (disagreeCount / total) * 100 : 0;
 
-    // Get user's vote if authenticated
-    const userId = request.headers.get('x-wallet-address');
-    const userVote = userId
-      ? votes.find((v) => v.userId === userId)
+    // Get user's vote if authenticated (optional)
+    const supabase = createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    const walletAddress = user?.user_metadata?.wallet_address || user?.email?.split('@')[0];
+
+    const userVote = walletAddress
+      ? votes.find((v) => v.userId === walletAddress)
       : null;
 
     return NextResponse.json({
@@ -62,22 +67,21 @@ export async function GET(
 }
 
 // POST - Submit a resolution vote with mandatory comment
+// 🔒 REQUIRES AUTHENTICATION
 export async function POST(
   request: NextRequest,
   { params }: { params: { marketAddress: string } }
 ) {
   try {
+    // 🔒 AUTHENTICATION CHECK
+    const auth = await verifyAuth();
+    if (auth.error) return auth.error;
+
+    const walletAddress = auth.walletAddress!; // ✅ Verified wallet from Supabase
+
     const { marketAddress } = params;
     const body = await request.json();
-    const { userId, vote, comment } = body;
-
-    // Validate input
-    if (!userId) {
-      return NextResponse.json(
-        { success: false, error: 'User ID is required' },
-        { status: 400 }
-      );
-    }
+    const { vote, comment } = body; // userId now comes from authenticated session
 
     if (vote !== 'agree' && vote !== 'disagree') {
       return NextResponse.json(
@@ -98,7 +102,7 @@ export async function POST(
       where: {
         marketAddress_userId: {
           marketAddress,
-          userId,
+          userId: walletAddress, // ✅ Using verified wallet address
         },
       },
     });
@@ -114,7 +118,7 @@ export async function POST(
     const result = await prisma.resolutionVote.create({
       data: {
         marketAddress,
-        userId,
+        userId: walletAddress, // ✅ Using verified wallet address
         vote,
         comment: comment.trim(),
       },
@@ -124,7 +128,7 @@ export async function POST(
     await prisma.comment.create({
       data: {
         marketAddress,
-        userId,
+        userId: walletAddress, // ✅ Using verified wallet address
         comment: comment.trim(),
         type: 'resolution_vote',
       },
@@ -133,7 +137,7 @@ export async function POST(
     // Track user activity
     await prisma.userActivity.create({
       data: {
-        userId,
+        userId: walletAddress, // ✅ Using verified wallet address
         activityType: 'resolution_vote',
         marketAddress,
       },

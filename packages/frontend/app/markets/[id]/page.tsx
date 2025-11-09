@@ -9,6 +9,13 @@ import { MarketHeader } from '@/components/kektech/market-details/MarketHeader';
 import { MarketStats } from '@/components/kektech/market-details/MarketStats';
 import { BettingInterface } from '@/components/kektech/market-details/BettingInterface';
 import { LiveBetFeed } from '@/components/kektech/live/LiveBetFeed';
+import {
+  CommentSection,
+  ProposalVoteButtons,
+  ResolutionVoteForm,
+  ResolutionVoteDisplay,
+} from '@/components/engagement';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import type { Address } from 'viem';
@@ -45,6 +52,51 @@ export default function MarketDetailPage() {
 
             {/* Betting Interface */}
             <BettingInterface marketAddress={marketAddress} />
+
+            {/* Community Engagement Section */}
+            <div className="mt-8">
+              <Tabs defaultValue="comments" className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="comments">Discussion</TabsTrigger>
+                  <TabsTrigger value="sentiment">Sentiment</TabsTrigger>
+                  <TabsTrigger value="resolution">Resolution</TabsTrigger>
+                </TabsList>
+
+                {/* Comments Tab */}
+                <TabsContent value="comments" className="mt-6">
+                  <CommentSection marketAddress={marketAddress} />
+                </TabsContent>
+
+                {/* Sentiment Tab - Proposal Voting */}
+                <TabsContent value="sentiment" className="mt-6">
+                  <div className="space-y-4">
+                    <div>
+                      <h2 className="text-2xl font-bold mb-2">Community Sentiment</h2>
+                      <p className="text-muted-foreground">
+                        Vote on whether you like or dislike this market proposal
+                      </p>
+                    </div>
+                    <ProposalVoteButtons marketAddress={marketAddress} />
+                  </div>
+                </TabsContent>
+
+                {/* Resolution Tab - Resolution Voting */}
+                <TabsContent value="resolution" className="mt-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h2 className="text-2xl font-bold mb-2">Market Resolution</h2>
+                      <p className="text-muted-foreground">
+                        Vote on the proposed resolution and view community votes
+                      </p>
+                    </div>
+                    {/* Resolution Vote Form */}
+                    <ResolutionVoteForm marketAddress={marketAddress} />
+                    {/* Resolution Vote Results */}
+                    <ResolutionVoteDisplay marketAddress={marketAddress} />
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
 
           {/* Right Column - Live Activity */}

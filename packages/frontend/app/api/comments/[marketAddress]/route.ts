@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db/prisma';
+import { createClient } from '@/lib/supabase/server';
 
 // GET - Get comments for a market
 export async function GET(
@@ -74,24 +75,38 @@ export async function GET(
   }
 }
 
-// POST - Create a new comment
+// POST - Create a new comment (⚠️ REQUIRES AUTHENTICATION)
 export async function POST(
   request: NextRequest,
   { params }: { params: { marketAddress: string } }
 ) {
   try {
-    const { marketAddress } = params;
-    const body = await request.json();
-    const { userId, comment } = body;
+    // 🔒 AUTHENTICATION CHECK
+    const supabase = createClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-    // Validate input
-    if (!userId) {
+    if (authError || !user) {
       return NextResponse.json(
-        { success: false, error: 'User ID is required' },
+        { success: false, error: 'Unauthorized - Please sign in with your wallet' },
+        { status: 401 }
+      );
+    }
+
+    // Extract wallet address from authenticated user metadata
+    const walletAddress = user.user_metadata?.wallet_address || user.email?.split('@')[0];
+
+    if (!walletAddress) {
+      return NextResponse.json(
+        { success: false, error: 'Wallet address not found in session' },
         { status: 400 }
       );
     }
 
+    const { marketAddress } = params;
+    const body = await request.json();
+    const { comment } = body; // userId now comes from authenticated session
+
+    // Validate input
     if (!comment || comment.trim().length < 1) {
       return NextResponse.json(
         { success: false, error: 'Comment cannot be empty' },
@@ -106,11 +121,11 @@ export async function POST(
       );
     }
 
-    // Create the comment
+    // Create the comment using authenticated wallet address
     const result = await prisma.comment.create({
       data: {
         marketAddress,
-        userId,
+        userId: walletAddress, // ✅ Using verified wallet address
         comment: comment.trim(),
         type: 'general',
       },
@@ -119,7 +134,7 @@ export async function POST(
     // Track user activity
     await prisma.userActivity.create({
       data: {
-        userId,
+        userId: walletAddress, // ✅ Using verified wallet address
         activityType: 'comment',
         marketAddress,
       },

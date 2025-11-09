@@ -1,28 +1,30 @@
 /**
  * KEKTECH 3.0 - Comment Voting API
  * POST /api/comments/[commentId]/vote - Upvote or downvote a comment
+ *
+ * 🔒 REQUIRES AUTHENTICATION
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/db/prisma';
+import { verifyAuth } from '@/lib/auth/api-auth';
 
 // POST - Vote on a comment (upvote or downvote)
+// 🔒 REQUIRES AUTHENTICATION
 export async function POST(
   request: NextRequest,
   { params }: { params: { commentId: string } }
 ) {
   try {
+    // 🔒 AUTHENTICATION CHECK
+    const auth = await verifyAuth();
+    if (auth.error) return auth.error;
+
+    const walletAddress = auth.walletAddress!; // ✅ Verified wallet from Supabase
+
     const { commentId } = params;
     const body = await request.json();
-    const { userId, vote } = body;
-
-    // Validate input
-    if (!userId) {
-      return NextResponse.json(
-        { success: false, error: 'User ID is required' },
-        { status: 400 }
-      );
-    }
+    const { vote } = body; // userId now comes from authenticated session
 
     if (vote !== 'upvote' && vote !== 'downvote') {
       return NextResponse.json(
@@ -48,7 +50,7 @@ export async function POST(
       where: {
         commentId_userId: {
           commentId,
-          userId,
+          userId: walletAddress, // ✅ Using verified wallet address
         },
       },
     });
@@ -73,7 +75,7 @@ export async function POST(
         where: {
           commentId_userId: {
             commentId,
-            userId,
+            userId: walletAddress, // ✅ Using verified wallet address
           },
         },
         data: {
@@ -86,7 +88,7 @@ export async function POST(
       await prisma.commentVote.create({
         data: {
           commentId,
-          userId,
+          userId: walletAddress, // ✅ Using verified wallet address
           vote,
         },
       });
