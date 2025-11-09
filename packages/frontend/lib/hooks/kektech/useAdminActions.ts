@@ -6,7 +6,7 @@
 'use client';
 
 import { useContractWrite } from './useContractWrite';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useAccount, useReadContract } from 'wagmi';
 import type { Address } from 'viem';
 import { CONTRACT_ADDRESSES } from '@/lib/contracts/addresses';
@@ -21,35 +21,30 @@ const ADMIN_ROLE = keccak256(toBytes('ADMIN_ROLE'));
 
 /**
  * Hook to check if the connected wallet has admin role
+ *
+ * Fixed: Removed manual state management to prevent infinite re-render loop.
+ * Added staleTime to cache the admin role check for 60 seconds.
  */
 export function useAdminRole() {
   const { address } = useAccount();
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const { data, isError, isSuccess } = useReadContract({
+  const { data, isLoading, isError } = useReadContract({
     address: CONTRACT_ADDRESSES.AccessControlManager as Address,
     abi: AccessControlManagerABI.abi,
     functionName: 'hasRole',
     args: [ADMIN_ROLE, address],
     query: {
       enabled: !!address,
+      staleTime: 60_000, // Cache for 60 seconds to prevent constant re-fetching
+      retry: 3,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     },
   });
 
-  useEffect(() => {
-    if (isSuccess && data !== undefined) {
-      setIsAdmin(data as boolean);
-      setIsLoading(false);
-    } else if (isError) {
-      setIsAdmin(false);
-      setIsLoading(false);
-    }
-  }, [data, isSuccess, isError]);
-
   return {
-    isAdmin,
-    isLoading,
+    isAdmin: data ?? false,
+    isLoading: isLoading || !address, // Loading if querying OR no wallet connected
+    isError,
     address,
   };
 }
