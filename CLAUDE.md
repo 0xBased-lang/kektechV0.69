@@ -1,7 +1,8 @@
 # KEKTECH 3.0 - Live Prediction Market Platform on BasedAI
 
 ## 🟢 SYSTEM STATUS - LIVE ON MAINNET
-**Deployed**: November 6, 2025 | **Network**: BasedAI (32323) | **Frontend**: https://kektech.vercel.app
+**Deployed**: November 6, 2025 (Updated: Nov 8, 2025) | **Network**: BasedAI (32323)
+**Frontend**: https://kektech-frontend-ovu1g98lj-kektech1.vercel.app
 
 ### Quick Status Dashboard
 - **Contracts**: [Live Addresses](./deployments/basedai-mainnet/contracts.json) ✅
@@ -33,11 +34,27 @@
 - **Admin Functions**: [scripts/live/admin-functions.js](./scripts/live/admin-functions.js)
 - **Monitoring**: [docs/operations/MONITORING.md](./docs/operations/MONITORING.md)
 
-### For Testing
-- **Run All Tests**: `npm test` (100% should pass!)
-- **Test Specific File**: `npm test -- test/hardhat/[TestFile].test.js`
-- **Coverage Report**: `npm run coverage`
-- **Gas Report**: `npm run test:gas`
+### For Testing 🧪
+- **Testing Hub**: [docs/testing/README.md](./docs/testing/README.md) - START HERE
+- **Master Guide**: [docs/testing/TESTING_MASTER_GUIDE.md](./docs/testing/TESTING_MASTER_GUIDE.md)
+- **Playwright Tests**: [docs/testing/PLAYWRIGHT_TESTS.md](./docs/testing/PLAYWRIGHT_TESTS.md) - 52 E2E tests
+- **Contract Tests**: [docs/testing/CONTRACT_TESTS.md](./docs/testing/CONTRACT_TESTS.md) - 347 tests
+- **Deployment Testing**: [docs/testing/DEPLOYMENT_TESTING.md](./docs/testing/DEPLOYMENT_TESTING.md)
+
+**Quick Commands**:
+```bash
+# Smart contract tests
+cd packages/blockchain && npm test                # 320/347 passing
+
+# Frontend E2E tests
+cd packages/frontend && npm run test:e2e          # 50/52 passing
+
+# Gas report
+npm run test:gas
+
+# Coverage
+npm run coverage
+```
 
 ---
 
