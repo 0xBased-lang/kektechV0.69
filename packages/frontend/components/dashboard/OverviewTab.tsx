@@ -14,8 +14,8 @@ interface OverviewTabProps {
  * - Feels Good summary (active positions, P&L) [TODO: Add prediction market data]
  * - Total value (coming soon)
  */
-export function OverviewTab({ address, onTabChange }: OverviewTabProps) {
-  const portfolio = usePortfolioData(address)
+export function OverviewTab({ address: _address, onTabChange }: OverviewTabProps) {
+  const portfolio = usePortfolioData()
 
   // Calculate portfolio stats
   const nftCount = portfolio.nfts.data?.length || 0
