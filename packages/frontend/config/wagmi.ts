@@ -1,7 +1,8 @@
+import '@rainbow-me/rainbowkit/styles.css'  // ← Must be first import!
 import { http, cookieStorage, createConfig, createStorage } from 'wagmi'
 import { mainnet } from 'wagmi/chains'
 import { basedChain } from './chains'
-import { walletConnect, injected, coinbaseWallet } from 'wagmi/connectors'
+import { getDefaultWallets } from '@rainbow-me/rainbowkit'
 
 /**
  * Fixed Wagmi Configuration
@@ -57,62 +58,16 @@ const metadata = {
   ],
 }
 
-// Safe connector initialization with error handling
-const createConnectors = () => {
-  const connectors = []
+// RainbowKit wallet configuration - Provides 100+ wallet options!
+const { connectors } = getDefaultWallets({
+  appName: metadata.name,
+  projectId: REOWN_PROJECT_ID,
+})
 
-  try {
-    // Injected wallets (MetaMask, etc.) with enhanced config
-    connectors.push(
-      injected({
-        shimDisconnect: true,
-        target: {
-          id: 'metaMask',
-          name: 'MetaMask',
-          provider: (window: any) => window?.ethereum?.isMetaMask ? window.ethereum : undefined,
-        },
-      })
-    )
-  } catch (error) {
-    console.warn('Could not initialize injected connector:', error)
-  }
-
-  try {
-    // WalletConnect with proper configuration
-    connectors.push(
-      walletConnect({
-        projectId: REOWN_PROJECT_ID, // Use the correct project ID
-        metadata,
-        showQrModal: true,
-        qrModalOptions: {
-          themeMode: 'dark',
-        },
-      })
-    )
-  } catch (error) {
-    console.warn('Could not initialize WalletConnect:', error)
-  }
-
-  try {
-    // Coinbase Wallet
-    connectors.push(
-      coinbaseWallet({
-        appName: metadata.name,
-        appLogoUrl: metadata.icons[0],
-        darkMode: true,
-      })
-    )
-  } catch (error) {
-    console.warn('Could not initialize Coinbase Wallet:', error)
-  }
-
-  return connectors
-}
-
-// Create Wagmi configuration with error boundaries
+// Create Wagmi configuration with RainbowKit connectors
 export const config = createConfig({
   chains: [basedChain, mainnet],
-  connectors: createConnectors(),
+  connectors,  // ← RainbowKit connectors (100+ wallets!)
   storage: createStorage({
     storage: cookieStorage,
   }),
