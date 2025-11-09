@@ -30,7 +30,7 @@ export default function AboutPage() {
               </div>
               <p className="text-lg text-gray-300 leading-relaxed">
                 KEKTECH is revolutionizing decentralized markets on the BasedAI blockchain.
-                We're building a platform where prediction markets, NFTs, and DeFi come together
+                We&apos;re building a platform where prediction markets, NFTs, and DeFi come together
                 to create unprecedented opportunities for our community.
               </p>
             </div>
@@ -44,7 +44,7 @@ export default function AboutPage() {
                 </h3>
                 <p className="text-gray-300 mb-4">
                   Trade on real-world events with ultra-low fees. Our prediction markets
-                  are 1000x cheaper than competitors thanks to BasedAI's efficiency.
+                  are 1000x cheaper than competitors thanks to BasedAI&apos;s efficiency.
                 </p>
                 <Link
                   href="/feels-good-markets/kek-futures"
