@@ -148,7 +148,7 @@ export default function DashboardPage() {
                     <h2 className="text-2xl font-fredoka font-bold text-white mb-6">
                       My Prediction Market Positions
                     </h2>
-                    <PositionList address={address} />
+                    <PositionList />
                   </div>
                 )}
 
