@@ -18,7 +18,7 @@ export function OverviewTab({ address: _address, onTabChange }: OverviewTabProps
   const portfolio = usePortfolioData()
 
   // Calculate portfolio stats
-  const nftCount = portfolio.nfts.data?.length || 0
+  const nftCount = portfolio.nfts.all?.length || 0
   const techBalance = portfolio.techBalance.data?.formatted || '0'
   const voucherCount = portfolio.voucherBalance.data?.total || 0
 
