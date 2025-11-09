@@ -75,7 +75,7 @@ export function MarketCard({ marketAddress, compact = false }: MarketCardProps) 
   const config = stateConfig[market.state || MarketState.PROPOSED];
 
   return (
-    <Link href={`/markets/${marketAddress}`}>
+    <Link href={`/feels-good-markets/kek-futures/market/${marketAddress}`}>
       <div className="group p-6 bg-gray-900 rounded-xl border border-gray-800 hover:border-[#3fb8bd] transition cursor-pointer">
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
