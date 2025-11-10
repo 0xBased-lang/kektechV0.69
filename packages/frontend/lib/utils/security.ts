@@ -15,7 +15,9 @@ export function validateOrigin(request: Request): boolean {
   // Allowed origins (update for production)
   const allowedOrigins = [
     'http://localhost:3000',
+    'http://localhost:3001', // Dev server alternative port
     'http://127.0.0.1:3000',
+    'http://127.0.0.1:3001',
     'https://kektech-frontend.vercel.app',
     'https://kektech.xyz',
     'https://www.kektech.xyz',
