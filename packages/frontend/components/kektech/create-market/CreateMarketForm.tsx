@@ -323,7 +323,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
             <p className="text-gray-400 mb-6">
               Choose when betting should close and resolution can begin
             </p>
-            {/* Separate date and time inputs for better stability */}
+            {/* Stable date and time inputs - no jumping! */}
             <div className="space-y-4">
               {/* Date selection */}
               <div>
@@ -332,20 +332,21 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
                 </label>
                 <input
                   type="date"
-                  value={formData.endTime > 0
-                    ? new Date(formData.endTime * 1000).toISOString().split('T')[0]
-                    : ''
-                  }
-                  onChange={(e) => {
-                    const currentDate = formData.endTime > 0
-                      ? new Date(formData.endTime * 1000)
-                      : new Date();
-                    const [year, month, day] = e.target.value.split('-').map(Number);
-                    currentDate.setFullYear(year, month - 1, day);
-                    setFormData({
-                      ...formData,
-                      endTime: Math.floor(currentDate.getTime() / 1000)
-                    });
+                  id="endDate"
+                  defaultValue={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
+                  onBlur={(e) => {
+                    const dateInput = e.target;
+                    const timeInput = document.getElementById('endTime') as HTMLInputElement;
+                    const dateStr = dateInput.value;
+                    const timeStr = timeInput?.value || '12:00';
+
+                    if (dateStr) {
+                      const combined = new Date(`${dateStr}T${timeStr}`);
+                      setFormData({
+                        ...formData,
+                        endTime: Math.floor(combined.getTime() / 1000)
+                      });
+                    }
                   }}
                   min={new Date(Date.now() + 3600000).toISOString().split('T')[0]}
                   className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd]"
@@ -359,24 +360,39 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
                 </label>
                 <input
                   type="time"
-                  value={formData.endTime > 0
-                    ? new Date(formData.endTime * 1000).toTimeString().slice(0, 5)
-                    : '12:00'
-                  }
-                  onChange={(e) => {
-                    const currentDate = formData.endTime > 0
-                      ? new Date(formData.endTime * 1000)
-                      : new Date();
-                    const [hours, minutes] = e.target.value.split(':').map(Number);
-                    currentDate.setHours(hours, minutes, 0, 0);
-                    setFormData({
-                      ...formData,
-                      endTime: Math.floor(currentDate.getTime() / 1000)
-                    });
+                  id="endTime"
+                  defaultValue="12:00"
+                  onBlur={(e) => {
+                    const timeInput = e.target;
+                    const dateInput = document.getElementById('endDate') as HTMLInputElement;
+                    const dateStr = dateInput?.value || new Date(Date.now() + 86400000).toISOString().split('T')[0];
+                    const timeStr = timeInput.value;
+
+                    if (dateStr && timeStr) {
+                      const combined = new Date(`${dateStr}T${timeStr}`);
+                      setFormData({
+                        ...formData,
+                        endTime: Math.floor(combined.getTime() / 1000)
+                      });
+                    }
                   }}
                   className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd]"
                 />
               </div>
+
+              {/* Display selected datetime for confirmation */}
+              {formData.endTime > 0 && (
+                <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700/50">
+                  <p className="text-sm text-gray-400">
+                    Selected: <span className="text-[#3fb8bd] font-medium">
+                      {new Date(formData.endTime * 1000).toLocaleString('en-US', {
+                        dateStyle: 'medium',
+                        timeStyle: 'short'
+                      })}
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
             {errors.endTime && (
               <div className="mt-2">
