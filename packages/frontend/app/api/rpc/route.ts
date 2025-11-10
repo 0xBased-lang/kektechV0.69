@@ -3,23 +3,25 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * Bulletproof RPC Proxy for BasedAI Chain
  *
- * Single-RPC architecture with maximum reliability:
- * - Aggressive retries with exponential backoff
+ * Single-RPC architecture optimized for Vercel Edge (10s limit):
+ * - Fast retries (4s timeout, 2 retries = ~9s worst case)
  * - Intelligent caching to reduce RPC load
  * - Circuit breaker to prevent cascading failures
  * - Connection pooling for better performance
  * - Graceful degradation with stale cache fallback
  *
  * BasedAI Chain (32323) has only ONE RPC endpoint, so we make it bulletproof.
+ * RPC typically responds in ~0.15s, so 4s timeout is more than enough.
  */
 
 // Single RPC endpoint for BasedAI chain
-const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.basedaibridge.com/rpc/';
+// .trim() removes any newline characters that could cause fetch errors
+const RPC_URL = (process.env.NEXT_PUBLIC_RPC_URL || 'https://mainnet.basedaibridge.com/rpc/').trim();
 
-// Bulletproof configuration
-const REQUEST_TIMEOUT = 15000; // 15 seconds (3x longer for slow responses)
-const MAX_RETRIES = 5; // Aggressive retries for single RPC
-const RETRY_DELAYS = [500, 1000, 2000, 4000, 8000]; // Exponential backoff
+// Vercel Edge-optimized configuration (10s total execution limit)
+const REQUEST_TIMEOUT = 4000; // 4 seconds (RPC responds in ~0.15s typically)
+const MAX_RETRIES = 2; // 2 retries = 3 total attempts max
+const RETRY_DELAYS = [200, 400]; // Fast retries (0.6s total delay)
 
 // Circuit breaker configuration
 const CIRCUIT_BREAKER_THRESHOLD = 10; // Open circuit after 10 consecutive failures
