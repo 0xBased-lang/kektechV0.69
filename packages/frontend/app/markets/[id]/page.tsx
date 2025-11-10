@@ -9,6 +9,7 @@ import { MarketHeader } from '@/components/kektech/market-details/MarketHeader';
 import { MarketStats } from '@/components/kektech/market-details/MarketStats';
 import { BettingInterface } from '@/components/kektech/market-details/BettingInterface';
 import { LiveBetFeed } from '@/components/kektech/live/LiveBetFeed';
+import { LiveEventsFeed } from '@/components/real-time/LiveEventsFeed';
 import {
   CommentSection,
   ProposalVoteButtons,
@@ -100,10 +101,18 @@ export default function MarketDetailPage() {
           </div>
 
           {/* Right Column - Live Activity */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24">
+          <div className="lg:col-span-1 space-y-6">
+            <div className="sticky top-24 space-y-6">
               <h2 className="text-xl font-bold text-white mb-4">Live Bet Feed</h2>
               <LiveBetFeed marketAddress={marketAddress} />
+
+              {/* Real-time Events Feed */}
+              <LiveEventsFeed
+                marketAddress={marketAddress}
+                subscribeToAll={true}
+                maxEvents={5}
+                className="mt-6"
+              />
             </div>
           </div>
         </div>
