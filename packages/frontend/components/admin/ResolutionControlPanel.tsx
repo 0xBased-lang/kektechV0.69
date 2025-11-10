@@ -29,10 +29,13 @@ export function ResolutionControlPanel() {
   const { markets, isLoading } = useMarketList(true);
   const [selectedMarket, setSelectedMarket] = useState<Address | null>(null);
 
+  // Call hooks for ALL markets at top level (required by React rules)
+  const marketInfos = markets.map((address) => useMarketInfo(address, true));
+
   // Filter for RESOLVING markets (state = 4 or 5 in old system, or RESOLVING/DISPUTED states)
-  const resolvingMarkets = markets.filter((address) => {
-    const info = useMarketInfo(address, true);
-    return info.state === 4 || info.state === 5; // RESOLVING or DISPUTED
+  const resolvingMarkets = markets.filter((_, index) => {
+    const state = marketInfos[index]?.state;
+    return state === 4 || state === 5; // RESOLVING or DISPUTED
   });
 
   if (isLoading) {

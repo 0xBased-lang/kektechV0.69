@@ -234,3 +234,169 @@ This is your single source of truth for:
 - What evidence to collect
 
 If CHECKPOINT.md and this file conflict, **CHECKPOINT.md wins!**
+
+---
+
+## 🏗️ KEKTECH 3.0 SYSTEM ARCHITECTURE
+
+### Vision
+Transform KEKTECH into a **social prediction markets platform** where community engagement drives market creation, validation, and resolution through the lifecycle: **Proposal → Discussion → Activation → Trading → Resolution → Settlement**.
+
+### Infrastructure Overview
+- **Frontend**: Vercel (kektech-frontend.vercel.app)
+- **Backend**: VPS (ssh kek) - Being rebuilt
+- **Smart Contracts**: BasedAI Mainnet (Chain ID: 32323)
+- **Database**: Supabase
+- **WebSocket**: wss://ws.kektech.xyz (Nginx + SSL configured)
+- **RPC**: https://mainnet.basedaibridge.com/rpc/
+
+### System Architecture Diagram
+```
+┌──────────────────────────────────────────────────────────────┐
+│                     USER INTERFACE (Vercel)                   │
+│                   kektech-frontend.vercel.app                 │
+└────────────────────┬─────────────────────────────────────────┘
+                     │ API Calls
+┌────────────────────▼─────────────────────────────────────────┐
+│                    VPS BACKEND (ssh kek)                      │
+│  • Event Indexer (WebSocket) - Blockchain event listener      │
+│  • Auto-Activation Service - 10+ votes trigger activation     │
+│  • Market State Manager - Track lifecycle states              │
+│  • Social Features API - Comments, votes, feed                │
+│  • Resolution Consensus Engine - Calculate outcomes           │
+└────────────────────┬─────────────────────────────────────────┘
+                     │ Contract Calls
+┌────────────────────▼─────────────────────────────────────────┐
+│               BASEDAI MAINNET CONTRACTS                       │
+│  • MarketFactory: 0x3eaF643482Fe35d13DB812946E14F5345eb60d62 │
+│  • PredictionMarkets: [Created via factory]                   │
+│  • Resolution: Community consensus + admin override           │
+└────────────────────┬─────────────────────────────────────────┘
+                     │ Data Storage
+┌────────────────────▼─────────────────────────────────────────┐
+│                    SUPABASE DATABASE                          │
+│  • proposal_votes - Track likes/dislikes                      │
+│  • comments - Threaded discussions with evidence              │
+│  • resolution_votes - Community consensus                     │
+│  • activity_feed - Global social activity                     │
+└───────────────────────────────────────────────────────────────┘
+```
+
+### Market Lifecycle States
+```
+1. PROPOSED (0) → Market created, awaiting community validation
+2. APPROVED (1) → Admin approved, awaiting activation
+3. ACTIVE (2)   → Trading open, users can bet
+4. RESOLVING (3)→ 48h window for resolution voting
+5. DISPUTED (4) → Under admin review
+6. FINALIZED (5)→ Settled, winners can claim
+```
+
+### VPS Backend Structure (Rebuild in Progress)
+```
+/var/www/kektech/
+├── backend/
+│   ├── src/
+│   │   ├── services/
+│   │   │   ├── event-indexer.js      # Listen to blockchain events
+│   │   │   ├── websocket-server.js   # Real-time updates to frontend
+│   │   │   ├── auto-activation.js    # Monitor votes, auto-activate at 10+
+│   │   │   └── resolution-engine.js  # Calculate consensus from votes
+│   │   ├── api/
+│   │   │   ├── server.js            # Express API server
+│   │   │   ├── routes/
+│   │   │   │   ├── proposals.js     # Vote on proposals
+│   │   │   │   ├── comments.js      # Discussion threads
+│   │   │   │   ├── resolution.js    # Vote on outcomes
+│   │   │   │   └── feed.js          # Global activity
+│   │   │   └── middleware/
+│   │   └── utils/
+│   ├── dist/                         # Compiled TypeScript
+│   ├── logs/
+│   └── package.json
+```
+
+### Key Features Implementation
+
+#### Social Validation
+- **Upvote Threshold**: 10+ net upvotes trigger auto-activation
+- **Vote Type**: Simple like/dislike system
+- **Auto-Activation**: VPS cron job checks every 5 minutes
+
+#### UI/UX Design
+- **Three-Column Layout**: Left sidebar (navigation), Main content (markets), Right sidebar (global feed)
+- **Tab System**: [🔥 HOT] [💡 PROPOSALS] [📈 ACTIVE] [⏳ RESOLVING] [✅ RESOLVED]
+- **Mobile Responsive**: Columns stack vertically on mobile
+
+#### Comment System
+- **Threaded Comments**: Reddit-style nested discussions
+- **Evidence Links**: Attach sources for resolution votes
+- **Highlighting**: Most interesting comments featured
+
+### Service Management
+```bash
+# PM2 Process Management
+pm2 start kektech-indexer
+pm2 start kektech-websocket
+pm2 start auto-activation
+pm2 save
+pm2 startup
+
+# Nginx Configuration
+# Already exists at: /etc/nginx/sites-available/kektech-websocket
+# SSL certificates at: /etc/letsencrypt/live/ws.kektech.xyz/
+```
+
+### Critical Bug Fixes Needed
+
+#### React Hooks Violations
+**Files with illegal hook calls in filters:**
+- `components/admin/ActiveMarketsPanel.tsx`
+- `components/admin/ProposalManagementPanel.tsx`
+- `components/admin/ResolutionControlPanel.tsx`
+- `components/admin/MarketOverridePanel.tsx`
+
+**Fix Pattern:**
+```typescript
+// ❌ WRONG - hooks inside filter
+const active = markets.filter(addr => {
+  const info = useMarketInfo(addr); // ILLEGAL!
+  return info.state === 2;
+});
+
+// ✅ CORRECT - hooks at top level
+const infos = markets.map(addr => useMarketInfo(addr));
+const active = markets.filter((_, i) => infos[i]?.state === 2);
+```
+
+### Implementation Timeline
+
+**Phase 1: Infrastructure (Week 1)**
+- Rebuild VPS backend
+- Fix React hooks violations
+- Get markets displaying
+
+**Phase 2: Social Core (Week 2)**
+- Proposal voting system
+- Auto-activation service
+- Basic comments
+
+**Phase 3: Full Social (Week 3)**
+- Global activity feed
+- Threaded discussions
+- Evidence system
+
+**Phase 4: Resolution (Week 4)**
+- Community voting
+- Consensus engine
+- Admin overrides
+
+**Phase 5: Polish (Week 5)**
+- Performance optimization
+- Mobile UX
+- Testing
+
+### Success Metrics
+- **Engagement**: 50+ proposals/week, 500+ votes/week
+- **Performance**: <2s load time, <100ms WebSocket updates
+- **Quality**: 100% mobile responsive, WCAG 2.1 AA compliant

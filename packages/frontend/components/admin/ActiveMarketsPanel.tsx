@@ -39,10 +39,12 @@ export function ActiveMarketsPanel() {
   const [loadingMetrics, setLoadingMetrics] = useState(false);
   const [sortBy, setSortBy] = useState<'volume' | 'activity' | 'expiry'>('volume');
 
-  // Filter for ACTIVE markets (state = 2)
-  const activeMarkets = markets.filter((address) => {
-    const info = useMarketInfo(address, true);
-    return info.state === 2;
+  // Call hooks for ALL markets at top level (required by React rules)
+  const marketInfos = markets.map((address) => useMarketInfo(address, true));
+
+  // Filter for ACTIVE markets (state = 2) using the pre-fetched info
+  const activeMarkets = markets.filter((_, index) => {
+    return marketInfos[index]?.state === 2;
   });
 
   useEffect(() => {
@@ -83,20 +85,24 @@ export function ActiveMarketsPanel() {
   }, [activeMarkets.length]);
 
   // Sort markets based on selected criteria
-  const sortedMarkets = [...activeMarkets].sort((a, b) => {
+  // Note: We already have marketInfos from above for all markets
+  const sortedMarkets = [...activeMarkets].sort((aAddress, bAddress) => {
+    const aIndex = markets.indexOf(aAddress);
+    const bIndex = markets.indexOf(bAddress);
+
     if (sortBy === 'volume') {
-      const volumeA = metrics[a]?.volume24h || 0n;
-      const volumeB = metrics[b]?.volume24h || 0n;
+      const volumeA = metrics[aAddress]?.volume24h || 0n;
+      const volumeB = metrics[bAddress]?.volume24h || 0n;
       return volumeB > volumeA ? 1 : -1;
     } else if (sortBy === 'activity') {
-      const betsA = metrics[a]?.totalBets || 0;
-      const betsB = metrics[b]?.totalBets || 0;
+      const betsA = metrics[aAddress]?.totalBets || 0;
+      const betsB = metrics[bAddress]?.totalBets || 0;
       return betsB - betsA;
     } else {
-      // Sort by expiry (soonest first)
-      const infoA = useMarketInfo(a, true);
-      const infoB = useMarketInfo(b, true);
-      return (infoA.expiryTime || 0) - (infoB.expiryTime || 0);
+      // Sort by expiry (soonest first) using pre-fetched market info
+      const infoA = marketInfos[aIndex];
+      const infoB = marketInfos[bIndex];
+      return (infoA?.expiryTime || 0) - (infoB?.expiryTime || 0);
     }
   });
 

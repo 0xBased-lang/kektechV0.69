@@ -38,9 +38,13 @@ export function MarketOverridePanel() {
   const [filterState, setFilterState] = useState<number | null>(null);
   const [selectedMarket, setSelectedMarket] = useState<Address | null>(null);
 
+  // Call hooks for ALL markets at top level (required by React rules)
+  const marketInfos = markets.map((address) => useMarketInfo(address, true));
+
   // Filter markets based on search and state filter
-  const filteredMarkets = markets.filter((address) => {
-    const info = useMarketInfo(address, true);
+  const filteredMarkets = markets.filter((address, index) => {
+    const info = marketInfos[index];
+    if (!info) return false;
 
     // State filter
     if (filterState !== null && info.state !== filterState) {

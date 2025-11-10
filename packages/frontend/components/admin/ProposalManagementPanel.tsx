@@ -19,10 +19,12 @@ import type { Address } from "viem";
 export function ProposalManagementPanel() {
   const { markets, isLoading } = useMarketList(true);
 
-  // Filter for PROPOSED markets (state = 0)
-  const proposedMarkets = markets.filter((address) => {
-    const info = useMarketInfo(address, true);
-    return info.state === 0;
+  // Call hooks for ALL markets at top level (required by React rules)
+  const marketInfos = markets.map((address) => useMarketInfo(address, true));
+
+  // Filter for PROPOSED markets (state = 0) using pre-fetched info
+  const proposedMarkets = markets.filter((_, index) => {
+    return marketInfos[index]?.state === 0;
   });
 
   if (isLoading) {
