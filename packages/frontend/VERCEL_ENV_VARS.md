@@ -122,6 +122,14 @@ Copy and paste these into your Vercel Dashboard:
 
 ---
 
+### 16. NEXT_PUBLIC_WS_URL
+- **Name**: `NEXT_PUBLIC_WS_URL`
+- **Value**: `wss://ws.kektech.xyz/ws`
+- **Environments**: ✅ Production, ✅ Preview, ✅ Development
+- **Purpose**: WebSocket connection for real-time market updates
+
+---
+
 ## Verification
 
 After adding all variables, run:
