@@ -82,6 +82,14 @@ export function Header() {
             Feels Good Markets
           </Link>
           <Link
+            href="/proposals"
+            className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
+              pathname === '/proposals' ? 'text-[#3fb8bd] font-bold' : 'text-gray-300'
+            }`}
+          >
+            💡 Proposals
+          </Link>
+          <Link
             href="/dashboard"
             className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
               pathname === '/dashboard' ? 'text-[#3fb8bd] font-bold' : 'text-gray-300'
@@ -217,6 +225,17 @@ export function Header() {
             }`}
           >
             Feels Good Markets
+          </Link>
+          <Link
+            href="/proposals"
+            onClick={closeMobileMenu}
+            className={`font-fredoka text-lg font-medium py-4 px-5 rounded-lg transition-colors touch-manipulation ${
+              pathname === '/proposals'
+                ? 'bg-[#3fb8bd]/20 text-[#3fb8bd] font-bold'
+                : 'text-gray-300 hover:bg-gray-900/60 hover:text-[#3fb8bd]'
+            }`}
+          >
+            💡 Proposals
           </Link>
           <Link
             href="/dashboard"
