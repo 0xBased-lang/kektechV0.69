@@ -1,8 +1,42 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { FeaturedNFTs } from '@/components/sections/FeaturedNFTs'
+
+// Lazy load FeaturedNFTs (Context7 Next.js 15 pattern)
+// This component makes API calls and renders many images - load it only when needed
+const FeaturedNFTs = dynamic(
+  () => import('@/components/sections/FeaturedNFTs').then((mod) => ({ default: mod.FeaturedNFTs })),
+  {
+    loading: () => (
+      <section className="bg-gradient-to-b from-gray-900 to-gray-950 py-16 sm:py-24 overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-[#3fb8bd] sm:text-4xl mb-4 font-fredoka">
+              Featured NFTs
+            </h2>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto font-fredoka">
+              Loading featured NFTs...
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 animate-pulse">
+                <div className="aspect-square bg-gray-700" />
+                <div className="p-3">
+                  <div className="h-4 bg-gray-700 rounded mb-2" />
+                  <div className="h-3 bg-gray-700 rounded w-16" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ),
+    ssr: false, // Don't render on server (Context7 recommendation for heavy components)
+  }
+)
 
 /**
  * KEKTECH Homepage
@@ -19,7 +53,7 @@ export default function Homepage() {
       <section className="relative py-20 overflow-hidden">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Hero GIF */}
+            {/* Hero GIF - Above fold: priority loading (Context7 optimized) */}
             <div className="mb-8 flex justify-center">
               <Image
                 src="/images/tech.gif"
@@ -29,6 +63,7 @@ export default function Homepage() {
                 className="max-w-full h-auto rounded-lg"
                 unoptimized
                 priority
+                quality={90}
               />
             </div>
 
@@ -78,7 +113,7 @@ export default function Homepage() {
             ROADMAP
           </h2>
 
-          {/* Visual Roadmap Image */}
+          {/* Visual Roadmap Image - Below fold: lazy loading (Context7 optimized) */}
           <div className="max-w-5xl mx-auto mb-12">
             <div className="rounded-2xl overflow-hidden border border-[#3fb8bd]/30 shadow-lg shadow-[#3fb8bd]/10">
               <Image
@@ -87,7 +122,8 @@ export default function Homepage() {
                 width={1400}
                 height={800}
                 className="w-full h-auto"
-                unoptimized
+                loading="lazy"
+                quality={85}
               />
             </div>
           </div>
@@ -180,6 +216,8 @@ export default function Homepage() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
+                loading="lazy"
+                quality={85}
               />
             </div>
           </div>
@@ -193,6 +231,8 @@ export default function Homepage() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
+                loading="lazy"
+                quality={85}
               />
             </div>
 
@@ -221,7 +261,7 @@ export default function Homepage() {
               We&apos;re committed to engaging with our community at every step. We value your feedback and will adapt our vision to create the best experience for our holders. Above all, we&apos;re dedicated to our highest utility: spreading dank Pepe art throughout the space, bringing creative joy to the broader crypto community. 🐸🎨🔥 We strongly believe in collaborations and will pursue partnerships with other $Based NFT communities to create opportunities that strengthen the entire ecosystem.
             </p>
 
-            {/* Making Of GIF */}
+            {/* Making Of GIF - Below fold: lazy loading (Context7 optimized) */}
             <div className="rounded-2xl overflow-hidden border border-[#3fb8bd]/20 mt-8">
               <Image
                 src="/images/makingof.gif"
@@ -230,6 +270,7 @@ export default function Homepage() {
                 height={675}
                 className="w-full h-auto"
                 unoptimized
+                loading="lazy"
               />
             </div>
             <p className="text-center text-gray-400 mt-4 text-sm">
