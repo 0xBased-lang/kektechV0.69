@@ -10,6 +10,7 @@ export * from './ui';
 
 // Market list components
 export { MarketCard, CompactMarketCard } from './markets/MarketCard';
+export { ProposalCard, CompactProposalCard } from './markets/ProposalCard';
 export { MarketList } from './markets/MarketList';
 
 // Market details components
