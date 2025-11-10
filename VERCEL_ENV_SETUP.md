@@ -1,6 +1,10 @@
 # Vercel Environment Variables - Copy & Paste Guide
 
+**Last Updated**: 2025-11-10 (Single project setup)
+**Production URL**: https://kektech-frontend.vercel.app
 **Dashboard URL**: https://vercel.com/kektech1/kektech-frontend/settings/environment-variables
+
+**Note**: All environment variables have been configured via CLI. This document serves as reference.
 
 **Instructions**:
 1. Go to dashboard URL above
