@@ -49,6 +49,7 @@ export function useContractWrite({ contractName }: UseContractWriteParams) {
         functionName,
         args,
         value,
+        gas: 1_000_000n, // Universal gas limit - bypasses estimation issues
       });
     },
     [writeContract, address, abi]
@@ -98,6 +99,7 @@ export function usePredictionMarketWrite({ marketAddress }: { marketAddress: Add
         functionName,
         args,
         value,
+        gas: 1_000_000n, // Universal gas limit - bypasses estimation issues
       });
     },
     [writeContract, marketAddress, abi]
