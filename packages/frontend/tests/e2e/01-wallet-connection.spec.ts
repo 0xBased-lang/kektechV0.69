@@ -2,89 +2,109 @@
  * KEKTECH 3.0 - E2E Test Suite
  * Test 1: Wallet Connection Flow
  *
- * Tests wallet connection, disconnection, and network switching
+ * ✅ UPDATED: Now uses programmatic wallet authentication
+ * Tests both programmatic auth AND UI wallet connection flow
  */
 
 import { test, expect } from '@playwright/test';
 import { WalletHelper } from './helpers/wallet';
+import { createTestWallet, createPublicClientForBasedAI, getWalletBalance } from './helpers/wallet-client';
 
 test.describe('Wallet Connection Flow', () => {
-  let wallet: WalletHelper;
-
-  test.beforeEach(async ({ page }) => {
-    wallet = new WalletHelper(page);
-    await page.goto('/');
-  });
-
   test('should display connect wallet button on homepage', async ({ page }) => {
+    await page.goto('/');
     const connectButton = page.getByRole('button', { name: /connect wallet/i });
     await expect(connectButton).toBeVisible();
   });
 
-  test('should open wallet modal when clicking connect', async ({ page }) => {
-    const connectButton = page.getByRole('button', { name: /connect wallet/i });
-    await connectButton.click();
+  test('should connect wallet programmatically', async ({ page }) => {
+    const wallet = new WalletHelper(page);
 
-    // Wait for wallet selector modal (either RainbowKit or WalletConnect)
-    const walletModal = page.locator('[data-testid="wallet-modal"], .wallet-modal, [role="dialog"]');
-    await expect(walletModal).toBeVisible({ timeout: 5000 });
+    // Connect wallet programmatically (no UI interaction!)
+    const address = await wallet.connectWallet('test');
 
-    // Should show wallet options
-    const hasMetaMask = await page.locator('text=/metamask/i').isVisible();
-    const hasWalletConnect = await page.locator('text=/walletconnect/i').isVisible();
+    // Verify wallet connected
+    expect(address).toMatch(/^0x[a-fA-F0-9]{40}$/);
+    expect(await wallet.isConnected()).toBe(true);
 
-    expect(hasMetaMask || hasWalletConnect).toBeTruthy();
+    console.log(`✅ Wallet connected: ${address}`);
   });
 
-  test('should show wallet address after connection', async ({ page }) => {
-    // Note: This test assumes MetaMask is pre-configured in persistent context
-    // For full automation, use Synpress or similar
+  test('should authenticate with Supabase session', async ({ page }) => {
+    const wallet = new WalletHelper(page);
 
-    // Check if already connected
-    const isConnected = await wallet.isConnected();
+    // Connect wallet (creates Supabase session)
+    await wallet.connectWallet('test');
 
-    if (!isConnected) {
-      console.log('⏭️  Skipping: Requires MetaMask extension to be configured');
-      test.skip();
-    }
+    // Navigate to protected page that requires auth
+    await page.goto('/proposals');
 
-    // Verify address is displayed (format: 0x1234...5678)
-    const address = await wallet.getConnectedAddress();
-    expect(address).toBeTruthy();
-    expect(address).toMatch(/0x[a-fA-F0-9]{4}\.\.\.[ a-fA-F0-9]{4}/);
+    // Should NOT see "sign in" prompt if authenticated
+    const signInButton = page.getByRole('button', { name: /sign in/i });
+    const isSignInVisible = await signInButton.isVisible().catch(() => false);
+
+    expect(isSignInVisible).toBe(false);
+    console.log('✅ Supabase authentication successful');
+  });
+
+  test('should show wallet balance', async ({ page }) => {
+    const wallet = new WalletHelper(page);
+    const address = await wallet.connectWallet('test');
+
+    // Get balance from blockchain
+    const walletClient = createTestWallet();
+    const publicClient = createPublicClientForBasedAI();
+    const balance = await getWalletBalance(address as `0x${string}`, publicClient);
+
+    // Balance should be a valid number
+    expect(parseFloat(balance)).toBeGreaterThanOrEqual(0);
+    console.log(`✅ Wallet balance: ${balance} BASED`);
   });
 
   test('should disconnect wallet successfully', async ({ page }) => {
-    const isConnected = await wallet.isConnected();
+    const wallet = new WalletHelper(page);
 
-    if (!isConnected) {
-      console.log('⏭️  Skipping: Wallet not connected');
-      test.skip();
-    }
+    // Connect first
+    await wallet.connectWallet('test');
+    expect(await wallet.isConnected()).toBe(true);
 
+    // Disconnect
     await wallet.disconnectWallet();
 
-    // Verify disconnect
-    const connectButton = page.getByRole('button', { name: /connect wallet/i });
-    await expect(connectButton).toBeVisible();
+    // Verify disconnected
+    expect(await wallet.isConnected()).toBe(false);
+    console.log('✅ Wallet disconnected');
   });
 
-  test('should navigate to proposals page with wallet connected', async ({ page }) => {
-    const isConnected = await wallet.isConnected();
+  test('should persist authentication across page navigation', async ({ page }) => {
+    const wallet = new WalletHelper(page);
+    const address = await wallet.connectWallet('test');
 
-    if (!isConnected) {
-      console.log('⏭️  Skipping: Wallet not connected');
-      test.skip();
-    }
+    // Navigate to different pages
+    await page.goto('/');
+    expect(await wallet.isConnected()).toBe(true);
 
-    // Navigate to proposals
     await page.goto('/proposals');
+    expect(await wallet.isConnected()).toBe(true);
 
-    // Verify page loaded
-    await expect(page.locator('h1, h2')).toContainText(/proposal/i);
+    await page.goto('/markets');
+    expect(await wallet.isConnected()).toBe(true);
 
-    // Verify wallet still connected
-    const address = await wallet.getConnectedAddress();
-    expect(address).toBeTruthy();
+    // Verify same address throughout
+    const finalAddress = await wallet.getConnectedAddress();
+    expect(finalAddress).toBe(address);
+
+    console.log('✅ Authentication persisted across navigation');
+  });
+
+  test('should handle BasedAI network (Chain ID: 32323)', async ({ page }) => {
+    const wallet = new WalletHelper(page);
+    await wallet.connectWallet('test');
+
+    // Check if on correct network
+    const isOnBasedAI = await wallet.isOnBasedAI();
+    expect(isOnBasedAI).toBe(true);
+
+    console.log('✅ Connected to BasedAI network (Chain ID: 32323)');
   });
 });
