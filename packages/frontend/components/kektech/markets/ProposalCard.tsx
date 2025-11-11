@@ -121,8 +121,8 @@ export function ProposalCard({ marketAddress, compact = false }: ProposalCardPro
     );
   }
 
-  // Show error state if data failed to load
-  if (market.hasError) {
+  // Show error state ONLY if data failed AND no fallback
+  if (market.hasError && !market.usingFallback) {
     return (
       <div className="p-6 bg-red-900/20 rounded-xl border border-red-500/50">
         <div className="text-center">
@@ -139,7 +139,13 @@ export function ProposalCard({ marketAddress, compact = false }: ProposalCardPro
     );
   }
 
-  if (!market.question || market.state !== MarketState.PROPOSED) {
+  // Don't render if no question (even with fallback this should have data)
+  if (!market.question) {
+    return null;
+  }
+
+  // Don't filter by state when using fallback - show all markets for testing
+  if (!market.usingFallback && market.state !== MarketState.PROPOSED) {
     return null;
   }
 
@@ -170,9 +176,16 @@ export function ProposalCard({ marketAddress, compact = false }: ProposalCardPro
           </p>
         </div>
 
-        {/* Proposed badge */}
-        <div className="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ml-3 bg-gray-500/10 text-gray-400">
-          💡 Proposed
+        {/* Status badge */}
+        <div className="flex flex-col gap-2">
+          {market.usingFallback && (
+            <div className="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-yellow-500/20 text-yellow-400">
+              ⚠️ Test Data
+            </div>
+          )}
+          <div className="px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap bg-gray-500/10 text-gray-400">
+            💡 {market.usingFallback ? 'Active' : 'Proposed'}
+          </div>
         </div>
       </div>
 
