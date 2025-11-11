@@ -1,31 +1,27 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 "use client";
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ThumbsUp, ThumbsDown, Check, X, Clock, TrendingUp } from "lucide-react";
 import { useMarketList, useMarketInfo } from "@/lib/hooks/kektech/useMarketData";
-import { useApproveMarket, useRejectMarket } from "@/lib/hooks/kektech";
+import { useAdminApproveMarket, useRejectMarket } from "@/lib/hooks/kektech";
 import { useProposalVotes } from "@/lib/api/engagement";
 import { formatDistanceToNow } from "date-fns";
 import type { Address } from "viem";
+import { MarketState } from "@/lib/contracts/types";
 
 export function ProposalManagementPanel() {
   const { markets, isLoading } = useMarketList(true);
 
-  // Call hooks for ALL markets at top level (required by React rules)
-  const marketInfos = markets.map((address) => useMarketInfo(address, true));
-
-  // Filter for PROPOSED markets (state = 0) using pre-fetched info
-  const proposedMarkets = markets.filter((_, index) => {
-    return marketInfos[index]?.state === 0;
-  });
+  // ✅ FIXED: No longer calling hooks inside .map()
+  // ProposalCard component will handle hooks at top level for each market
+  // Only render ProposalCard for each market, let it filter itself
 
   if (isLoading) {
     return (
@@ -43,21 +39,21 @@ export function ProposalManagementPanel() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <span>📋 Proposal Management</span>
-          <Badge variant="secondary">{proposedMarkets.length} Pending</Badge>
+          <Badge variant="secondary">{markets.length} Markets</Badge>
         </CardTitle>
         <CardDescription>
           Review and manage market proposals. Markets need 10 likes within 24 hours to auto-approve.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {proposedMarkets.length === 0 ? (
+        {markets.length === 0 ? (
           <Alert>
             <AlertDescription>
-              No pending market proposals. All markets have been approved or rejected.
+              No markets found. Create a market to get started.
             </AlertDescription>
           </Alert>
         ) : (
-          proposedMarkets.map((address) => (
+          markets.map((address) => (
             <ProposalCard
               key={address}
               marketAddress={address}
@@ -69,16 +65,21 @@ export function ProposalManagementPanel() {
   );
 }
 
-function ProposalCard({
+const ProposalCard = memo(function ProposalCard({
   marketAddress
 }: {
   marketAddress: Address;
 }) {
   const marketInfo = useMarketInfo(marketAddress, true);
-  const approveMarket = useApproveMarket(marketAddress);
+  const approveMarket = useAdminApproveMarket(marketAddress); // ✅ FIXED: Use Admin hook that calls Factory
   const rejectMarket = useRejectMarket(marketAddress);
   const { votes, isLoading: loadingVotes, refetch } = useProposalVotes(marketAddress);
   const [rejectReason, setRejectReason] = useState("");
+
+  // ✅ FIXED: Filter at component level - only render PROPOSED markets
+  if (marketInfo.state !== MarketState.PROPOSED && !marketInfo.isLoading) {
+    return null;
+  }
 
   const likes = votes?.likes || 0;
   const dislikes = votes?.dislikes || 0;
@@ -226,4 +227,4 @@ function ProposalCard({
       )}
     </div>
   );
-}
+});

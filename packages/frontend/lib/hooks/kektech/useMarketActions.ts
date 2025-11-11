@@ -156,6 +156,9 @@ export function useDisputeMarket(marketAddress: Address) {
 
 /**
  * Hook for approving a proposed market (admin only)
+ *
+ * ⚠️ DEPRECATED: This directly calls market.approve() which requires onlyFactory modifier
+ * Use useAdminApproveMarket() instead which correctly calls factory.approveMarket()
  */
 export function useApproveMarket(marketAddress: Address) {
   const { write, hash, isLoading, isSuccess, isError, error } =
@@ -164,6 +167,35 @@ export function useApproveMarket(marketAddress: Address) {
   const approveMarket = useCallback(() => {
     write('approve', []);
   }, [write]);
+
+  return {
+    approveMarket,
+    hash,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  };
+}
+
+/**
+ * Hook for admin approving a proposed market via MarketFactory
+ *
+ * This is the CORRECT way to approve markets from the frontend.
+ * The PredictionMarket.approve() function has an onlyFactory modifier,
+ * meaning it can only be called by the MarketFactory contract.
+ *
+ * This hook calls MarketFactory.approveMarket(marketAddress) which then
+ * internally calls market.approve() with the proper authorization.
+ */
+export function useAdminApproveMarket(marketAddress: Address) {
+  const { write, hash, isLoading, isSuccess, isError, error } = useContractWrite({
+    contractName: 'MarketFactory',
+  });
+
+  const approveMarket = useCallback(() => {
+    write('approveMarket', [marketAddress]);
+  }, [write, marketAddress]);
 
   return {
     approveMarket,
