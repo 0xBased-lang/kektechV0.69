@@ -88,7 +88,7 @@ export async function POST(
     if (securityError) return securityError;
 
     // 🔒 STEP 2: AUTHENTICATION CHECK
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {

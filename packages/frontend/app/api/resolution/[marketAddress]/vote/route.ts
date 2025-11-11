@@ -34,7 +34,7 @@ export async function GET(
     const disagreePercentage = total > 0 ? (disagreeCount / total) * 100 : 0;
 
     // Get user's vote if authenticated (optional)
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
     const walletAddress = user?.user_metadata?.wallet_address || user?.email?.split('@')[0];
 
