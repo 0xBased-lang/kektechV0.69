@@ -121,6 +121,24 @@ export function ProposalCard({ marketAddress, compact = false }: ProposalCardPro
     );
   }
 
+  // Show error state if data failed to load
+  if (market.hasError) {
+    return (
+      <div className="p-6 bg-red-900/20 rounded-xl border border-red-500/50">
+        <div className="text-center">
+          <p className="text-red-400 mb-4">Failed to load market data</p>
+          <p className="text-gray-400 text-sm mb-4">Address: {marketAddress}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (!market.question || market.state !== MarketState.PROPOSED) {
     return null;
   }

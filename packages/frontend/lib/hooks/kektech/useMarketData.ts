@@ -14,7 +14,7 @@ import type { MarketState, Outcome, Position } from '@/lib/contracts/types';
  * Get market information
  */
 export function useMarketInfo(marketAddress: Address, watch = false) {
-  const { data: question } = usePredictionMarketRead<string>({
+  const { data: question, isLoading: questionLoading, isError: questionError } = usePredictionMarketRead<string>({
     marketAddress,
     functionName: 'question',
     watch,
@@ -32,7 +32,7 @@ export function useMarketInfo(marketAddress: Address, watch = false) {
     watch,
   });
 
-  const { data: state } = usePredictionMarketRead<MarketState>({
+  const { data: state, isLoading: stateLoading, isError: stateError } = usePredictionMarketRead<MarketState>({
     marketAddress,
     functionName: 'state',
     watch,
@@ -86,11 +86,15 @@ export function useMarketInfo(marketAddress: Address, watch = false) {
     watch,
   });
 
+  // Better loading logic: Check critical fields and their loading states
+  const isLoading = (questionLoading || stateLoading) && !question && state === undefined;
+  const hasError = (questionError || stateError) && !questionLoading && !stateLoading;
+
   return {
-    question,
-    description,
+    question: question || (hasError ? 'Error loading market' : undefined),
+    description: description || '',
     category,
-    state,
+    state: state ?? 0, // Default to PROPOSED if undefined
     outcome,
     creator,
     endTime,
@@ -99,7 +103,8 @@ export function useMarketInfo(marketAddress: Address, watch = false) {
     totalNoShares,
     totalVolume,
     createdAt,
-    isLoading: !question, // Simple loading check
+    isLoading,
+    hasError,
   };
 }
 
