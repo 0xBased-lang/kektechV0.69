@@ -30,6 +30,7 @@ export {
   useResolveMarket,
   useDisputeMarket,
   useApproveMarket,
+  useAdminApproveMarket, // ✅ FIXED: Export new admin hook
   useActivateMarket,
 } from './useMarketActions';
 
