@@ -62,26 +62,72 @@ npx playwright test --headed
 
 ## Test Coverage
 
-### ✅ Implemented Tests
+### ✅ Completed Test Suites (52 tests total)
 
-1. **01-wallet-connection.spec.ts** - Wallet connection flow
-   - Connect wallet
-   - Disconnect wallet
-   - Network switching
-   - Address display
+1. **01-wallet-connection.spec.ts** - Wallet Connection Flow (5 tests)
+   - Display connect wallet button
+   - Open wallet modal on click
+   - Show wallet address after connection
+   - Disconnect wallet successfully
+   - Navigate with wallet connected
 
-2. **02-proposal-voting.spec.ts** - Proposal voting system
-   - Like/dislike votes
-   - Vote persistence
-   - Vote count updates
-   - Authentication flow
+2. **02-proposal-voting.spec.ts** - Proposal Voting (6 tests)
+   - Display proposal cards with vote buttons
+   - Show login prompt when voting without wallet
+   - Submit like vote successfully
+   - Change vote from like to dislike
+   - Persist vote after page refresh
+   - Display vote counts correctly
 
-### 🚧 TODO: Remaining Tests
+3. **03-admin-approval.spec.ts** - Admin Market Approval (8 tests)
+   - Display admin panel to admin users
+   - Filter markets by status (Proposed/Approved/Rejected)
+   - Display market details correctly
+   - Show approve button for PROPOSED markets
+   - Handle approve button click
+   - Display market statistics
+   - Allow searching markets
+   - Handle reject action for PROPOSED markets
 
-3. **03-admin-approval.spec.ts** - Admin market approval (to be implemented)
-4. **04-market-trading.spec.ts** - Market betting flow (to be implemented)
-5. **05-error-handling.spec.ts** - Edge cases and errors (to be implemented)
-6. **06-complete-journey.spec.ts** - Full user journey (to be implemented)
+4. **04-market-trading.spec.ts** - Market Trading (11 tests)
+   - Display active markets on homepage
+   - Navigate to market detail page
+   - Display market information correctly
+   - Show betting interface with amount input
+   - Validate bet amount input
+   - Require wallet connection for betting
+   - Handle place bet flow (requires wallet)
+   - Display user position after betting
+   - Show transaction history
+   - Calculate estimated returns correctly
+   - Handle market resolution state
+
+5. **05-error-handling.spec.ts** - Error Handling (18 tests)
+   - Network Errors (3 tests): Invalid addresses, malformed data, timeouts
+   - Authentication Errors (2 tests): Unauthenticated access, admin rights
+   - Validation Errors (2 tests): Bet amounts, comment length
+   - Transaction Errors (2 tests): Rejected transactions, insufficient balance
+   - Network State Errors (2 tests): Wrong network, connection loss
+   - UI Error States (3 tests): Error boundaries, empty states, loading states
+   - Recovery Mechanisms (2 tests): Retry flows, form state preservation
+
+6. **06-complete-journey.spec.ts** - End-to-End Journey (4 tests)
+   - Complete full user journey (10 phases):
+     1. Landing & Navigation
+     2. Browsing Proposals
+     3. Wallet Connection
+     4. Community Voting
+     5. View Market Details
+     6. Trading
+     7. Community Engagement
+     8. Admin Controls
+     9. Navigation Validation
+     10. Final Validation
+   - Complete trading cycle (manual wallet required)
+   - Validate platform performance
+   - Validate responsive design
+
+**🎉 Total: 52 comprehensive E2E tests covering all critical user flows!**
 
 ## Current Limitations
 
@@ -106,11 +152,16 @@ To test with real MetaMask transactions, you'll need:
 ```
 tests/e2e/
 ├── helpers/
-│   ├── wallet.ts      # Wallet interaction utilities
-│   └── api.ts         # API helper functions
-├── 01-wallet-connection.spec.ts
-├── 02-proposal-voting.spec.ts
-└── README.md          # This file
+│   ├── wallet.ts      # Wallet interaction utilities (WalletHelper class)
+│   └── api.ts         # API helper functions (APIHelper class)
+├── 01-wallet-connection.spec.ts    # ✅ Wallet connection flow (5 tests)
+├── 02-proposal-voting.spec.ts      # ✅ Proposal voting system (6 tests)
+├── 03-admin-approval.spec.ts       # ✅ Admin market approval (8 tests)
+├── 04-market-trading.spec.ts       # ✅ Market trading & betting (11 tests)
+├── 05-error-handling.spec.ts       # ✅ Error states & recovery (18 tests)
+├── 06-complete-journey.spec.ts     # ✅ End-to-end journey (4 tests)
+├── .env.test.example               # Test environment template
+└── README.md                       # This file
 ```
 
 ## Debugging Failed Tests
