@@ -91,7 +91,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.walletconnect.com https://*.walletconnect.org wss://*.walletconnect.com wss://*.walletconnect.org https://*.bridge.walletconnect.org https://rpc.basedai.com https://api.web3modal.org https://mainnet.basedaibridge.com https://explorer.bf1337.org https://kektech.xyz https://api.kektech.xyz wss://ws.kektech.xyz https://eth.merkle.io https://*.merkle.io https://*.ipfs.nftstorage.link https://*.ipfs.w3s.link https://ipfs.io https://cca-lite.coinbase.com https://*.supabase.co wss://*.supabase.co",
+              "connect-src 'self' https://*.walletconnect.com https://*.walletconnect.org wss://*.walletconnect.com wss://*.walletconnect.org https://*.bridge.walletconnect.org https://rpc.basedai.com https://api.web3modal.org https://mainnet.basedaibridge.com https://explorer.bf1337.org https://kektech.xyz https://api.kektech.xyz wss://ws.kektech.xyz wss://ws-temp-zmart.kektech.xyz https://eth.merkle.io https://*.merkle.io https://*.ipfs.nftstorage.link https://*.ipfs.w3s.link https://ipfs.io https://cca-lite.coinbase.com https://*.supabase.co wss://*.supabase.co",
               "frame-src 'self' https://verify.walletconnect.com https://verify.walletconnect.org",
               "object-src 'none'",
               "base-uri 'self'",
