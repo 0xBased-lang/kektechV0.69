@@ -6,10 +6,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!
-);
+// Helper function to create Supabase client (lazy initialization)
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+
+  return createClient(supabaseUrl, supabaseServiceKey);
+}
 
 // GET - Get vote counts for a market proposal
 export async function GET(
@@ -20,6 +27,9 @@ export async function GET(
     const { marketAddress } = await params;
     const { searchParams } = new URL(request.url);
     const userAddress = searchParams.get('userAddress');
+
+    // Initialize Supabase client (lazy initialization at runtime)
+    const supabase = getSupabaseClient();
 
     // Get all votes for this market from Supabase
     const { data: votes, error } = await supabase
