@@ -62,6 +62,7 @@ export async function POST(request: NextRequest) {
     const origin = request.headers.get('origin');
     const allowedOrigins = [
       process.env.NEXT_PUBLIC_APP_URL,
+      'https://kektech-frontend.vercel.app', // Vercel production deployment
       'https://kektech.xyz',
       'https://www.kektech.xyz',
       process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : null,
