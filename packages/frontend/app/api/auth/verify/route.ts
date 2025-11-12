@@ -20,31 +20,38 @@ import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
 import { z } from 'zod';
 
-// Create Supabase admin client (server-side only!)
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_KEY!, // Service role key with admin privileges
-  {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-    },
-  }
-);
-
-// Rate limiter (5 attempts per 15 minutes per wallet address)
-const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(5, '15 m'),
-  analytics: true,
-  prefix: 'auth',
-});
-
 // Input validation schema
 const authRequestSchema = z.object({
   message: z.string().min(1).max(10000),
   signature: z.string().regex(/^0x[a-fA-F0-9]{130}$/, 'Invalid signature format'),
 });
+
+// Helper function to create Supabase admin client (lazy initialization)
+function getSupabaseAdmin() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+
+  if (!supabaseUrl || !supabaseServiceKey) {
+    throw new Error('Missing Supabase environment variables');
+  }
+
+  return createClient(supabaseUrl, supabaseServiceKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+    },
+  });
+}
+
+// Helper function to create rate limiter (lazy initialization)
+function getRateLimiter() {
+  return new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(5, '15 m'),
+    analytics: true,
+    prefix: 'auth',
+  });
+}
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -101,6 +108,7 @@ export async function POST(request: NextRequest) {
     const walletAddress = verificationResult.data.address.toLowerCase();
 
     // 4. Rate limiting (per wallet address)
+    const ratelimit = getRateLimiter();
     const { success: rateLimitOk, remaining } = await ratelimit.limit(walletAddress);
 
     if (!rateLimitOk) {
@@ -154,6 +162,9 @@ export async function POST(request: NextRequest) {
 
     // Create email for Supabase auth (unique per wallet)
     const email = `${walletAddress}@kektech.xyz`;
+
+    // Initialize Supabase admin client (lazy initialization at runtime)
+    const supabaseAdmin = getSupabaseAdmin();
 
     // Check if auth user already exists
     const { data: existingUsers, error: listError } = await supabaseAdmin.auth.admin.listUsers();
