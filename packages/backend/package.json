@@ -12,7 +12,13 @@
     "start:ws": "node dist/services/websocket-server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["blockchain", "indexer", "websocket", "basedai", "kektech"],
+  "keywords": [
+    "blockchain",
+    "indexer",
+    "websocket",
+    "basedai",
+    "kektech"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -24,7 +30,10 @@
     "ws": "^8.14.2"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.20",
     "@types/node": "^20.10.0",
+    "@types/react-dom": "^19.2.3",
     "@types/ws": "^8.5.9",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"

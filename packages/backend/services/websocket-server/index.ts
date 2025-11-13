@@ -31,12 +31,17 @@ interface WSClient {
   isAlive: boolean;
 }
 
+interface ChannelSubscription {
+  clients: Set<string>;
+  matcher: RegExp;
+}
+
 class WebSocketServerManager {
   private server: WebSocketServer;
   private httpServer;
   private redisSubscriber;
   private clients: Map<string, WSClient> = new Map();
-  private channelClients: Map<string, Set<string>> = new Map();
+  private channelClients: Map<string, ChannelSubscription> = new Map();
   private heartbeatInterval?: NodeJS.Timeout;
 
   constructor() {
@@ -65,6 +70,14 @@ class WebSocketServerManager {
     });
 
     this.setupEventHandlers();
+  }
+
+  private createMatcher(pattern: string): RegExp {
+    const escaped = pattern
+      .replace(/[-/\\^$+?.()|[\]{}]/g, '\\$&')
+      .replace(/\*/g, '.*')
+      .replace(/\?/g, '.');
+    return new RegExp(`^${escaped}$`, 'i');
   }
 
   private setupEventHandlers() {
@@ -241,7 +254,10 @@ class WebSocketServerManager {
 
     // Add client to channel's client list
     if (!this.channelClients.has(channel)) {
-      this.channelClients.set(channel, new Set());
+      this.channelClients.set(channel, {
+        clients: new Set(),
+        matcher: this.createMatcher(channel),
+      });
 
       // Subscribe to Redis channel (pattern matching)
       await this.redisSubscriber.pSubscribe(channel, (message, messageChannel) => {
@@ -251,12 +267,12 @@ class WebSocketServerManager {
       logger.info('Subscribed to Redis channel', { channel });
     }
 
-    this.channelClients.get(channel)!.add(client.id);
+    this.channelClients.get(channel)!.clients.add(client.id);
 
     logger.info('Client subscribed to channel', {
       clientId: client.id,
       channel,
-      channelClients: this.channelClients.get(channel)!.size,
+      channelClients: this.channelClients.get(channel)!.clients.size,
     });
 
     // Confirm subscription
@@ -276,12 +292,12 @@ class WebSocketServerManager {
     client.subscriptions.delete(channel);
 
     // Remove client from channel's client list
-    const channelSet = this.channelClients.get(channel);
-    if (channelSet) {
-      channelSet.delete(client.id);
+    const channelSubscription = this.channelClients.get(channel);
+    if (channelSubscription) {
+      channelSubscription.clients.delete(client.id);
 
       // If no more clients on this channel, unsubscribe from Redis
-      if (channelSet.size === 0) {
+      if (channelSubscription.clients.size === 0) {
         this.channelClients.delete(channel);
         await this.redisSubscriber.pUnsubscribe(channel);
         logger.info('Unsubscribed from Redis channel', { channel });
@@ -304,11 +320,11 @@ class WebSocketServerManager {
   private handleDisconnection(client: WSClient) {
     // Remove from all channels
     client.subscriptions.forEach(async (channel) => {
-      const channelSet = this.channelClients.get(channel);
-      if (channelSet) {
-        channelSet.delete(client.id);
+      const channelSubscription = this.channelClients.get(channel);
+      if (channelSubscription) {
+        channelSubscription.clients.delete(client.id);
 
-        if (channelSet.size === 0) {
+        if (channelSubscription.clients.size === 0) {
           this.channelClients.delete(channel);
           await this.redisSubscriber.pUnsubscribe(channel);
         }
@@ -325,11 +341,6 @@ class WebSocketServerManager {
   }
 
   private broadcastToChannel(channel: string, message: string) {
-    const clientIds = this.channelClients.get(channel);
-    if (!clientIds || clientIds.size === 0) {
-      return;
-    }
-
     let parsed;
     try {
       parsed = JSON.parse(message);
@@ -344,13 +355,26 @@ class WebSocketServerManager {
       timestamp: new Date().toISOString(),
     };
 
+    const deliveredClients = new Set<string>();
     let sentCount = 0;
-    clientIds.forEach((clientId) => {
-      const client = this.clients.get(clientId);
-      if (client && client.ws.readyState === WebSocket.OPEN) {
-        this.send(client.ws, payload);
-        sentCount++;
+
+    this.channelClients.forEach((subscription, pattern) => {
+      if (!subscription.matcher.test(channel)) {
+        return;
       }
+
+      subscription.clients.forEach((clientId) => {
+        if (deliveredClients.has(clientId)) {
+          return;
+        }
+
+        const client = this.clients.get(clientId);
+        if (client && client.ws.readyState === WebSocket.OPEN) {
+          this.send(client.ws, payload);
+          deliveredClients.add(clientId);
+          sentCount++;
+        }
+      });
     });
 
     logger.debug('Broadcast to channel', {

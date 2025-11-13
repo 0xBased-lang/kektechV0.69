@@ -20,7 +20,6 @@ import {
 import {
   insertIndexedEvent,
   upsertMarketMetadata,
-  updateMarketState,
   getLastIndexedBlock,
 } from '../../shared/utils/supabase.js';
 import {
@@ -34,6 +33,30 @@ const POLL_INTERVAL = parseInt(process.env.POLL_INTERVAL || '10000'); // 10 seco
 const INDEXER_BATCH_SIZE = parseInt(process.env.INDEXER_BATCH_SIZE || '100');
 const MAX_RETRIES = parseInt(process.env.MAX_RETRIES || '3');
 const RETRY_DELAY = parseInt(process.env.RETRY_DELAY || '2000'); // 2 seconds
+
+function normalizeCategory(value: unknown): string {
+  if (!value) {
+    return '';
+  }
+
+  if (typeof value === 'string') {
+    if (value.startsWith('0x')) {
+      try {
+        return ethers.decodeBytes32String(value);
+      } catch {
+        return value.toLowerCase();
+      }
+    }
+    return value;
+  }
+
+  try {
+    const hexValue = ethers.hexlify(value as ethers.BytesLike);
+    return normalizeCategory(hexValue);
+  } catch {
+    return '';
+  }
+}
 
 class EventIndexer {
   private isRunning = false;
@@ -211,11 +234,25 @@ class EventIndexer {
   }
 
   private async handleMarketCreated(event: ethers.EventLog) {
-    const marketAddress = event.args![0] as string;
-    const creator = event.args![1] as string;
-    const question = event.args![2] as string;
-    const description = event.args![3] as string;
-    const expiryTime = event.args![4] as bigint;
+    const args = event.args as Record<string, any>;
+    const marketAddress = (args?.marketAddress ?? args?.[0]) as string;
+    const creator = (args?.creator ?? args?.[1]) as string;
+    const question = (args?.question ?? args?.[2]) as string;
+    const resolutionTimeRaw = (args?.resolutionTime ?? args?.[3]) as bigint;
+    const creatorBondRaw = (args?.creatorBond ?? args?.[4]) as bigint;
+    const categoryRaw = args?.category ?? args?.[5];
+    const emittedTimestampRaw = (args?.timestamp ?? args?.[6]) as bigint;
+
+    const resolutionTime = BigInt(resolutionTimeRaw ?? 0n);
+    const creatorBond = BigInt(creatorBondRaw ?? 0n);
+    const category = normalizeCategory(categoryRaw);
+    const emittedTimestamp = BigInt(emittedTimestampRaw ?? 0n);
+    const blockNumber = BigInt(event.blockNumber);
+
+    const emittedAtIso =
+      emittedTimestamp > 0n
+        ? new Date(Number(emittedTimestamp) * 1000).toISOString()
+        : new Date().toISOString();
 
     logger.info('MarketCreated event', {
       marketAddress,
@@ -225,51 +262,74 @@ class EventIndexer {
     });
 
     // Index event to database
+    const eventPayload = {
+      marketAddress,
+      creator,
+      question,
+      resolutionTime: resolutionTime.toString(),
+      creatorBond: creatorBond.toString(),
+      category,
+      blockNumber: event.blockNumber,
+      timestamp: emittedTimestamp.toString(),
+      emittedAt: emittedAtIso,
+    };
+
     await insertIndexedEvent({
       eventType: 'MarketCreated',
       marketAddress,
-      blockNumber: BigInt(event.blockNumber),
+      blockNumber,
       transactionHash: event.transactionHash,
       logIndex: event.index,
-      eventData: {
-        marketAddress,
-        creator,
-        question,
-        description,
-        expiryTime: expiryTime.toString(),
-      },
+      eventData: eventPayload,
+      timestamp: emittedAtIso,
     });
 
     // Fetch market state from contract
     const market = getPredictionMarketContract(marketAddress);
-    const state = await market.state();
+    let stateValue = 0;
+
+    try {
+      const stateResult = await market.getMarketState();
+
+      if (Array.isArray(stateResult)) {
+        stateValue = Number(stateResult[0] ?? 0);
+      } else if (typeof stateResult === 'object' && stateResult !== null && 'state' in stateResult) {
+        // Some contract bindings may return structs with a state property
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        stateValue = Number((stateResult as any).state ?? 0);
+      } else {
+        stateValue = Number(stateResult);
+      }
+    } catch (error: any) {
+      logger.warn('Failed to fetch market state via getMarketState()', {
+        error: error.message,
+        marketAddress,
+      });
+    }
 
     // Upsert market metadata
     await upsertMarketMetadata({
       id: marketAddress,
       question,
-      description,
       creator,
-      state: Number(state),
-      expiryTime,
+      state: stateValue,
+      expiryTime: resolutionTime,
+      description: '',
+      createdAt: emittedAtIso,
+      updatedAt: emittedAtIso,
     });
 
     // Publish to Redis for real-time WebSocket updates
     await publishMarketEvent('MarketCreated', marketAddress, {
-      marketAddress,
-      creator,
-      question,
-      description,
-      expiryTime: expiryTime.toString(),
-      state: Number(state),
-      blockNumber: event.blockNumber,
+      ...eventPayload,
+      state: stateValue,
       transactionHash: event.transactionHash,
     });
 
     logger.info('Market indexed successfully', {
       marketAddress,
       question,
-      state: Number(state),
+      state: stateValue,
     });
   }
 

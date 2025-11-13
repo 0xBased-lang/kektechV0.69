@@ -4,6 +4,7 @@
  */
 
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { randomUUID } from 'crypto';
 import { logger } from './logger.js';
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
@@ -38,19 +39,24 @@ export async function insertIndexedEvent(event: {
   transactionHash: string;
   logIndex: number;
   eventData: any;
+  timestamp?: string;
 }) {
   try {
+    const payload = {
+      id: randomUUID(),
+      eventType: event.eventType,
+      marketAddress: event.marketAddress,
+      blockNumber: event.blockNumber.toString(), // Convert BigInt to string
+      transactionHash: event.transactionHash,
+      logIndex: event.logIndex,
+      eventData: event.eventData,
+      processed: false,
+      timestamp: event.timestamp ?? new Date().toISOString(),
+    };
+
     const { data, error } = await supabase
       .from('IndexedEvent')
-      .insert({
-        eventType: event.eventType,
-        marketAddress: event.marketAddress,
-        blockNumber: event.blockNumber.toString(), // Convert BigInt to string
-        transactionHash: event.transactionHash,
-        logIndex: event.logIndex,
-        eventData: event.eventData,
-        processed: false,
-      })
+      .insert(payload)
       .select()
       .single();
 
@@ -91,19 +97,29 @@ export async function upsertMarketMetadata(metadata: {
   creator: string;
   state: number;
   expiryTime: bigint;
+  createdAt?: string;
+  updatedAt?: string;
 }) {
   try {
+    const nowIso = metadata.updatedAt ?? new Date().toISOString();
+    const payload: Record<string, any> = {
+      id: metadata.id,
+      question: metadata.question,
+      description: metadata.description || '',
+      creator: metadata.creator,
+      state: metadata.state,
+      expiryTime: metadata.expiryTime.toString(),
+      updatedAt: nowIso,
+    };
+
+    if (metadata.createdAt) {
+      payload.createdAt = metadata.createdAt;
+    }
+
     const { data, error } = await supabase
       .from('MarketMetadata')
       .upsert(
-        {
-          id: metadata.id,
-          question: metadata.question,
-          description: metadata.description || '',
-          creator: metadata.creator,
-          state: metadata.state,
-          expiryTime: metadata.expiryTime.toString(),
-        },
+        payload,
         {
           onConflict: 'id', // Update if market already exists
         }

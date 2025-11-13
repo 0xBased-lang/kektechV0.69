@@ -32,15 +32,9 @@ export const provider = new ethers.JsonRpcProvider(RPC_HTTP_URL, {
 });
 
 // Load contract ABIs
-// __dirname is shared/config/, so ../abis/ goes to shared/abis/
-const marketFactoryAbiPath = path.join(
-  __dirname,
-  '../abis/MarketFactory.json'
-);
-const predictionMarketAbiPath = path.join(
-  __dirname,
-  '../abis/PredictionMarket.json'
-);
+const abisDir = path.join(process.cwd(), 'shared/abis');
+const marketFactoryAbiPath = path.join(abisDir, 'MarketFactory.json');
+const predictionMarketAbiPath = path.join(abisDir, 'PredictionMarket.json');
 
 const marketFactoryAbi = JSON.parse(
   readFileSync(marketFactoryAbiPath, 'utf-8')

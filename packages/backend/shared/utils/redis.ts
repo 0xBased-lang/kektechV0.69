@@ -67,6 +67,10 @@ export async function disconnectRedis() {
   }
 }
 
+function toSnakeCase(value: string) {
+  return value.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
+}
+
 /**
  * Publish event to Redis channel
  * @param channel - Channel name (e.g., 'events:market_created', 'market:0x123')
@@ -99,6 +103,7 @@ export async function publishMarketEvent(
   marketAddress: string | null,
   eventData: any
 ) {
+  const eventTypeKey = toSnakeCase(eventType);
   const payload = {
     type: eventType,
     marketAddress,
@@ -107,7 +112,7 @@ export async function publishMarketEvent(
   };
 
   // Publish to global event channel
-  await publishEvent(`events:${eventType.toLowerCase()}`, payload);
+  await publishEvent(`events:${eventTypeKey}`, payload);
 
   // Publish to market-specific channel if applicable
   if (marketAddress) {
