@@ -83,7 +83,7 @@ export function FeaturedNFTs() {
     <section className="bg-gradient-to-b from-gray-900 to-gray-950 py-16 sm:py-24 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-[#3fb8bd] sm:text-4xl mb-4 font-fredoka">
+          <h2 className="text-3xl font-bold text-kek-green sm:text-4xl mb-4 font-fredoka">
             Featured NFTs
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto font-fredoka">
@@ -115,7 +115,7 @@ export function FeaturedNFTs() {
                       href={`/gallery`}
                       className="group block flex-shrink-0 w-48 sm:w-56"
                     >
-                      <div className="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 transition-all duration-300 hover:border-[#3fb8bd] hover:shadow-lg hover:shadow-[#3fb8bd]/20 hover:scale-105">
+                      <div className="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 transition-all duration-300 hover:border-kek-green hover:shadow-lg hover:shadow-kek-green/20 hover:scale-105">
                         {/* NFT Image */}
                         <div className="aspect-square relative overflow-hidden">
                           <Image
@@ -131,7 +131,7 @@ export function FeaturedNFTs() {
 
                         {/* NFT Info */}
                         <div className="p-3">
-                          <h3 className="font-semibold text-[#3fb8bd] text-sm truncate font-fredoka">
+                          <h3 className="font-semibold text-kek-green text-sm truncate font-fredoka">
                             {nft.name}
                           </h3>
                         </div>

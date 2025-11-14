@@ -56,7 +56,7 @@ export function NFTDashboard({ address }: NFTDashboardProps) {
   if (loading || metadataLoading) {
     return (
       <div className="text-center py-12">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#3fb8bd]"></div>
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-kek-green"></div>
         <p className="mt-4 text-gray-400">Loading your NFTs...</p>
       </div>
     )
@@ -93,7 +93,7 @@ export function NFTDashboard({ address }: NFTDashboardProps) {
         </p>
         <Link
           href="/marketplace"
-          className="inline-block px-8 py-3 rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-bold hover:scale-105 transition font-fredoka"
+          className="inline-block px-8 py-3 rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] text-black font-bold hover:scale-105 transition font-fredoka"
         >
           Mint 𝕂Ǝ𝕂TECH NFTs
         </Link>
@@ -113,7 +113,7 @@ export function NFTDashboard({ address }: NFTDashboardProps) {
 
         <div className="bg-gray-900/60 rounded-xl border border-gray-800 p-6 text-center">
           <div className="text-4xl mb-3">🐸</div>
-          <div className="text-3xl font-bold text-[#3fb8bd] mb-2">{kektechNFTs.length}</div>
+          <div className="text-3xl font-bold text-kek-green mb-2">{kektechNFTs.length}</div>
           <div className="text-sm text-gray-400">𝕂Ǝ𝕂TECH NFTs</div>
         </div>
 
@@ -134,7 +134,7 @@ export function NFTDashboard({ address }: NFTDashboardProps) {
             {kektechNFTs.map((nft) => (
               <div
                 key={nft.id}
-                className="bg-gray-900/60 rounded-xl border border-gray-800 hover:border-[#3fb8bd] transition overflow-hidden group"
+                className="bg-gray-900/60 rounded-xl border border-gray-800 hover:border-kek-green transition overflow-hidden group"
               >
                 <div className="aspect-square relative bg-gray-800">
                   {nft.image_url || nft.metadata?.image_url ? (

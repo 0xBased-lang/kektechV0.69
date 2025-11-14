@@ -51,12 +51,12 @@ export function TierWidget({ showTitle = true, compact = false }: TierWidgetProp
   }
 
   return (
-    <div className={`bg-gradient-to-br from-gray-900/50 to-transparent rounded-2xl border border-[#3fb8bd]/20 ${compact ? 'p-4' : 'p-6'}`}>
+    <div className={`bg-gradient-to-br from-gray-900/50 to-transparent rounded-2xl border border-kek-green/20 ${compact ? 'p-4' : 'p-6'}`}>
       {showTitle && (
         <div className="mb-6">
           <h3 className="text-2xl font-bold text-white mb-2 font-fredoka">Tier Distribution</h3>
           <p className="text-gray-400 text-sm">
-            Total Minted: <span className="text-[#3fb8bd] font-bold">{totalMinted}</span> / <span className="text-gray-300">4,200</span>
+            Total Minted: <span className="text-kek-green font-bold">{totalMinted}</span> / <span className="text-gray-300">4,200</span>
           </p>
         </div>
       )}
@@ -83,7 +83,7 @@ export function TierWidget({ showTitle = true, compact = false }: TierWidgetProp
                   <span className="text-gray-400">
                     {tier.minted} / {tier.total}
                   </span>
-                  <span className="text-[#3fb8bd] font-bold min-w-[60px] text-right">
+                  <span className="text-kek-green font-bold min-w-[60px] text-right">
                     {remaining} left
                   </span>
                 </div>
@@ -117,7 +117,7 @@ export function TierWidget({ showTitle = true, compact = false }: TierWidgetProp
         <div className="mt-6 pt-6 border-t border-gray-800">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <div className="text-2xl font-bold text-[#3fb8bd]">{totalMinted}</div>
+              <div className="text-2xl font-bold text-kek-green">{totalMinted}</div>
               <div className="text-xs text-gray-400">Minted</div>
             </div>
             <div>

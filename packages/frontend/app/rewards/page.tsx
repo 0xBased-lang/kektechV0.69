@@ -25,12 +25,12 @@ export default function RewardsPage() {
           />
 
           {/* Coming Soon Notice */}
-          <div className="relative mb-16 bg-gradient-to-br from-[#3fb8bd]/10 via-[#4ecca7]/5 to-transparent rounded-2xl border-2 border-[#3fb8bd]/30 p-12 text-center overflow-hidden">
+          <div className="relative mb-16 bg-gradient-to-br from-kek-green/10 via-[#4ecca7]/5 to-transparent rounded-2xl border-2 border-kek-green/30 p-12 text-center overflow-hidden">
             {/* Checkered Background Pattern */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
             <div className="relative">
             <div className="text-6xl mb-6">🎁</div>
-            <h2 className="font-fredoka mb-4 text-3xl font-bold text-[#3fb8bd]">$TECH Token Airdrops Sent!</h2>
+            <h2 className="font-fredoka mb-4 text-3xl font-bold text-kek-green">$TECH Token Airdrops Sent!</h2>
             <p className="text-xl text-gray-300 mb-6 max-w-2xl mx-auto">
               We&apos;ve successfully distributed $TECH token airdrops to all eligible 𝕂Ǝ𝕂TECH NFT holders! 🎉
             </p>
@@ -45,16 +45,16 @@ export default function RewardsPage() {
 
           {/* How Rewards Work */}
           <div className="mb-16">
-            <h2 className="font-fredoka mb-8 text-3xl font-bold text-[#3fb8bd] text-center">How Rewards Work</h2>
+            <h2 className="font-fredoka mb-8 text-3xl font-bold text-kek-green text-center">How Rewards Work</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Daily Rewards */}
-              <div className="relative bg-gradient-to-br from-[#3fb8bd]/10 to-transparent rounded-2xl border border-[#3fb8bd]/20 p-8 overflow-hidden">
+              <div className="relative bg-gradient-to-br from-kek-green/10 to-transparent rounded-2xl border border-kek-green/20 p-8 overflow-hidden">
                 {/* Checkered Background Pattern */}
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
                 <div className="relative">
                 <div className="text-4xl mb-4">💰</div>
-                <h3 className="font-fredoka text-xl font-bold text-[#3fb8bd] mb-3">Daily Token Rewards</h3>
+                <h3 className="font-fredoka text-xl font-bold text-kek-green mb-3">Daily Token Rewards</h3>
                 <p className="text-gray-300">
                   All 𝕂Ǝ𝕂TECH NFT holders receive daily token emissions automatically. The base rate applies to all holders, making passive income accessible to everyone.
                 </p>
@@ -91,7 +91,7 @@ export default function RewardsPage() {
 
           {/* Token Economy */}
           <div className="mb-16">
-            <h2 className="font-fredoka mb-8 text-3xl font-bold text-[#3fb8bd] text-center">Token Economy</h2>
+            <h2 className="font-fredoka mb-8 text-3xl font-bold text-kek-green text-center">Token Economy</h2>
 
             <div className="max-w-4xl mx-auto">
               <div className="relative bg-gradient-to-br from-gray-900 to-transparent rounded-2xl border border-gray-800 p-8 space-y-6 overflow-hidden">
@@ -99,7 +99,7 @@ export default function RewardsPage() {
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
                 <div className="relative">
                 <div>
-                  <h3 className="font-fredoka text-xl font-bold text-[#3fb8bd] mb-3">What Are TECH Tokens?</h3>
+                  <h3 className="font-fredoka text-xl font-bold text-kek-green mb-3">What Are TECH Tokens?</h3>
                   <p className="text-gray-300">
                     TECH tokens power the ecosystem and enable future upgrades. Tokens will be used for NFT customization, trait upgrades, and participation in special events.
                   </p>
@@ -125,7 +125,7 @@ export default function RewardsPage() {
 
           {/* Call to Action */}
           <div className="text-center">
-            <h2 className="font-fredoka mb-6 text-3xl font-bold text-[#3fb8bd]">Start Earning Today</h2>
+            <h2 className="font-fredoka mb-6 text-3xl font-bold text-kek-green">Start Earning Today</h2>
             <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
               The more 𝕂Ǝ𝕂TECH NFTs you hold, and the rarer they are, the more rewards you&apos;ll earn every day. Join our community and start building your token portfolio!
             </p>

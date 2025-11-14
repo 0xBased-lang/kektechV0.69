@@ -74,7 +74,7 @@ export default function MarketPage({ params }: MarketPageProps) {
           <p className="text-gray-400 mb-6">This market doesn&apos;t exist or failed to load</p>
           <Link
             href="/markets"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#3fb8bd] hover:bg-[#3fb8bd]/90 text-white font-semibold rounded-xl transition"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-kek-green hover:bg-kek-green/90 text-white font-semibold rounded-xl transition"
           >
             <ArrowLeft className="w-5 h-5" />
             Back to Markets
@@ -100,7 +100,7 @@ export default function MarketPage({ params }: MarketPageProps) {
     const colors = {
       [MarketState.PROPOSED]: 'text-yellow-500 bg-yellow-500/10',
       [MarketState.APPROVED]: 'text-green-500 bg-green-500/10',
-      [MarketState.ACTIVE]: 'text-[#3fb8bd] bg-[#3fb8bd]/10',
+      [MarketState.ACTIVE]: 'text-kek-green bg-kek-green/10',
       [MarketState.RESOLVING]: 'text-orange-500 bg-orange-500/10',
       [MarketState.DISPUTED]: 'text-red-500 bg-red-500/10',
       [MarketState.FINALIZED]: 'text-emerald-500 bg-emerald-500/10',

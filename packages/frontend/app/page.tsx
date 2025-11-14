@@ -13,7 +13,7 @@ const FeaturedNFTs = dynamic(
       <section className="bg-gradient-to-b from-gray-900 to-gray-950 py-16 sm:py-24 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#3fb8bd] sm:text-4xl mb-4 font-fredoka">
+            <h2 className="text-3xl font-bold text-kek-green sm:text-4xl mb-4 font-fredoka">
               Featured NFTs
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto font-fredoka">
@@ -68,41 +68,41 @@ export default function Homepage() {
 
             {/* Hero Text */}
             <p className="font-fredoka text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed">
-              <span className="font-bold text-[#3fb8bd]">4200 𝕂Ǝ𝕂丅ᵉ匚🅷 Artifacts</span>
+              <span className="font-bold text-kek-green">4200 𝕂Ǝ𝕂丅ᵉ匚🅷 Artifacts</span>
               : digital masterpieces blending tech and meme fun, hand-drawn by{' '}
               <span className="font-bold text-[#4ecca7]">𝔹enzo𝔹ert & Princess 𝔹u𝔹𝔹legum</span>
               . An homage to{' '}
-              <span className="font-bold text-[#3fb8bd]">OG Pepecoin 🐸👑</span>
+              <span className="font-bold text-kek-green">OG Pepecoin 🐸👑</span>
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/marketplace"
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] p-[2px] shadow-lg shadow-[#3fb8bd]/50 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-[#3fb8bd]/70"
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] p-[2px] shadow-lg shadow-kek-green/50 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-kek-green/70"
               >
                 <div className="relative rounded-[10px] bg-gray-900 px-8 py-4 transition-all group-hover:bg-transparent">
-                  <span className="text-lg font-bold text-[#3fb8bd] group-hover:text-black font-fredoka">
+                  <span className="text-lg font-bold text-kek-green group-hover:text-black font-fredoka">
                     Start Minting
                   </span>
                 </div>
               </Link>
               <Link
                 href="/gallery"
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] p-[2px] shadow-lg shadow-[#3fb8bd]/50 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-[#3fb8bd]/70"
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] p-[2px] shadow-lg shadow-kek-green/50 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-kek-green/70"
               >
                 <div className="relative rounded-[10px] bg-gray-900 px-8 py-4 transition-all group-hover:bg-transparent">
-                  <span className="text-lg font-bold text-[#3fb8bd] group-hover:text-black font-fredoka">
+                  <span className="text-lg font-bold text-kek-green group-hover:text-black font-fredoka">
                     Explore Gallery
                   </span>
                 </div>
               </Link>
               <Link
                 href="/feels-good-markets/kek-futures"
-                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] p-[2px] shadow-lg shadow-[#3fb8bd]/50 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-[#3fb8bd]/70"
+                className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] p-[2px] shadow-lg shadow-kek-green/50 transition-all hover:scale-105 hover:shadow-2xl hover:shadow-kek-green/70"
               >
                 <div className="relative rounded-[10px] bg-gray-900 px-8 py-4 transition-all group-hover:bg-transparent">
-                  <span className="text-lg font-bold text-[#3fb8bd] group-hover:text-black font-fredoka">
+                  <span className="text-lg font-bold text-kek-green group-hover:text-black font-fredoka">
                     🎲 Explore Markets
                   </span>
                 </div>
@@ -118,13 +118,13 @@ export default function Homepage() {
       {/* Roadmap Section */}
       <section id="roadmap" className="bg-gradient-to-b from-gray-900 to-gray-950 py-20 border-t border-gray-800">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-[#3fb8bd] text-center mb-12 font-fredoka">
+          <h2 className="text-4xl font-bold text-kek-green text-center mb-12 font-fredoka">
             ROADMAP
           </h2>
 
           {/* Visual Roadmap Image - Below fold: lazy loading (Context7 optimized) */}
           <div className="max-w-5xl mx-auto mb-12">
-            <div className="rounded-2xl overflow-hidden border border-[#3fb8bd]/30 shadow-lg shadow-[#3fb8bd]/10">
+            <div className="rounded-2xl overflow-hidden border border-kek-green/30 shadow-lg shadow-kek-green/10">
               <Image
                 src="/images/kekorama.jpg"
                 alt="KEKTECH Roadmap Visual"
@@ -139,11 +139,11 @@ export default function Homepage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-16">
             {/* Phase 1 */}
-            <div className="relative bg-gradient-to-br from-[#3fb8bd]/10 to-transparent rounded-2xl border border-[#3fb8bd]/20 p-8 overflow-hidden">
+            <div className="relative bg-gradient-to-br from-kek-green/10 to-transparent rounded-2xl border border-kek-green/20 p-8 overflow-hidden">
               {/* Checkered Background Pattern */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
               <div className="relative">
-              <h3 className="text-2xl font-bold text-[#3fb8bd] mb-4 font-fredoka">Phase 1: Collection Launch</h3>
+              <h3 className="text-2xl font-bold text-kek-green mb-4 font-fredoka">Phase 1: Collection Launch</h3>
               <ul className="space-y-3 text-gray-300">
                 <li>→ Release of our founding collection: 4,200 uniquely crafted Pepe NFTs</li>
                 <li>→ Pricing set at 18.369 $BASED per NFT</li>
@@ -169,11 +169,11 @@ export default function Homepage() {
             </div>
 
             {/* Phase 3 */}
-            <div className="relative bg-gradient-to-br from-[#3fb8bd]/10 to-transparent rounded-2xl border border-[#3fb8bd]/20 p-8 overflow-hidden">
+            <div className="relative bg-gradient-to-br from-kek-green/10 to-transparent rounded-2xl border border-kek-green/20 p-8 overflow-hidden">
               {/* Checkered Background Pattern */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
               <div className="relative">
-              <h3 className="text-2xl font-bold text-[#3fb8bd] mb-4 font-fredoka">Phase 3: Limited Edition Mint</h3>
+              <h3 className="text-2xl font-bold text-kek-green mb-4 font-fredoka">Phase 3: Limited Edition Mint</h3>
               <ul className="space-y-3 text-gray-300">
                 <li>→ Limited edition free mint of 420 handpicked NFTs</li>
                 <li>→ Main collection NFT holders with Easter Egg traits qualify for the 420 limited edition free mint</li>
@@ -202,7 +202,7 @@ export default function Homepage() {
       {/* About Us Section */}
       <section id="about" className="py-20 border-t border-gray-800">
         <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold text-[#3fb8bd] text-center mb-16 font-fredoka">About Us</h2>
+          <h2 className="text-4xl font-bold text-kek-green text-center mb-16 font-fredoka">About Us</h2>
 
           {/* First Row: Text Left, Image Right */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
@@ -218,7 +218,7 @@ export default function Homepage() {
               </p>
             </div>
 
-            <div className="relative aspect-square rounded-2xl overflow-hidden border-2 border-[#3fb8bd]/30">
+            <div className="relative aspect-square rounded-2xl overflow-hidden border-2 border-kek-green/30">
               <Image
                 src="/images/1.png"
                 alt="KEKTECH NFT Artwork"
@@ -233,7 +233,7 @@ export default function Homepage() {
 
           {/* Second Row: Image Left, Text Right */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-            <div className="relative aspect-square rounded-2xl overflow-hidden border-2 border-[#3fb8bd]/30 lg:order-1">
+            <div className="relative aspect-square rounded-2xl overflow-hidden border-2 border-kek-green/30 lg:order-1">
               <Image
                 src="/images/2.png"
                 alt="KEKTECH NFT Collection"
@@ -246,7 +246,7 @@ export default function Homepage() {
             </div>
 
             <div className="space-y-6 lg:order-2">
-              <h3 className="text-2xl font-bold text-[#3fb8bd] font-fredoka">Our Vision</h3>
+              <h3 className="text-2xl font-bold text-kek-green font-fredoka">Our Vision</h3>
               <p className="text-gray-300 leading-relaxed">
                 At 𝕂Ǝ𝕂TECH, we aim to create more than just another NFT collection. We envision a dynamic ecosystem where art, community, and technology converge to create lasting value. At our core, spreading fresh, dank Pepe art throughout the crypto space drives everything we do. We&apos;re building a platform where holders can customize their digital identities, earn rewards, and participate in the evolution of the collection itself.
               </p>
@@ -263,7 +263,7 @@ export default function Homepage() {
       <section className="bg-gradient-to-b from-gray-900 to-gray-950 py-20 border-t border-gray-800">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-3xl font-bold text-[#3fb8bd] mb-6 font-fredoka">
+            <h3 className="text-3xl font-bold text-kek-green mb-6 font-fredoka">
               Community Journey
             </h3>
             <p className="text-gray-300 leading-relaxed mb-8">
@@ -271,7 +271,7 @@ export default function Homepage() {
             </p>
 
             {/* Making Of GIF - Below fold: lazy loading (Context7 optimized) */}
-            <div className="rounded-2xl overflow-hidden border border-[#3fb8bd]/20 mt-8">
+            <div className="rounded-2xl overflow-hidden border border-kek-green/20 mt-8">
               <Image
                 src="/images/makingof.gif"
                 alt="KEKTECH Creative Process - Behind the Scenes"

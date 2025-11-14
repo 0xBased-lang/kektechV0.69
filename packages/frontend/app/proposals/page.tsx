@@ -75,7 +75,7 @@ export default function ProposalsPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
-            <Sparkles className="w-8 h-8 text-[#3fb8bd]" />
+            <Sparkles className="w-8 h-8 text-kek-green" />
             <h1 className="text-4xl font-bold text-white">Market Proposals</h1>
           </div>
           {/* Debug Toggle */}
@@ -133,7 +133,7 @@ export default function ProposalsPage() {
         <div className="grid md:grid-cols-3 gap-6">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 rounded-full bg-[#3fb8bd]/20 flex items-center justify-center text-[#3fb8bd] font-bold">
+              <div className="w-8 h-8 rounded-full bg-kek-green/20 flex items-center justify-center text-kek-green font-bold">
                 1
               </div>
               <h3 className="font-semibold text-white">Propose</h3>

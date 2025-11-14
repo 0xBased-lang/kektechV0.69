@@ -65,7 +65,7 @@ export function KektechNFTsOnly({ address }: KektechNFTsOnlyProps) {
   if (loading || metadataLoading) {
     return (
       <div className="text-center py-12">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#3fb8bd]"></div>
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-kek-green"></div>
         <p className="mt-4 text-gray-400">Loading your 𝕂Ǝ𝕂TECH NFTs...</p>
       </div>
     )
@@ -102,7 +102,7 @@ export function KektechNFTsOnly({ address }: KektechNFTsOnlyProps) {
         </p>
         <Link
           href="/marketplace"
-          className="inline-block px-8 py-3 rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-bold hover:scale-105 transition font-fredoka"
+          className="inline-block px-8 py-3 rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] text-black font-bold hover:scale-105 transition font-fredoka"
         >
           Mint 𝕂Ǝ𝕂TECH NFTs
         </Link>
@@ -119,7 +119,7 @@ export function KektechNFTsOnly({ address }: KektechNFTsOnlyProps) {
             <Link
               key={nft.id}
               href={`/nft?id=${nft.id}`}
-              className="bg-gray-900/60 rounded-xl border border-gray-800 hover:border-[#3fb8bd] transition overflow-hidden group cursor-pointer"
+              className="bg-gray-900/60 rounded-xl border border-gray-800 hover:border-kek-green transition overflow-hidden group cursor-pointer"
             >
               <div className="aspect-square relative bg-gray-800">
                 {nft.image_url || nft.metadata?.image_url ? (
@@ -142,7 +142,7 @@ export function KektechNFTsOnly({ address }: KektechNFTsOnlyProps) {
                 </div>
               </div>
               <div className="p-3">
-                <h3 className="font-bold text-[#3fb8bd] text-sm truncate">
+                <h3 className="font-bold text-kek-green text-sm truncate">
                   {nft.metadata?.name || `#${nft.id}`}
                 </h3>
               </div>

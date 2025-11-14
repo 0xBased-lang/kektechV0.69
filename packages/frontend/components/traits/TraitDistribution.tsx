@@ -210,8 +210,8 @@ export function TraitDistribution() {
             onClick={() => setActiveCategory(key)}
             className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
               activeCategory === key
-                ? 'bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black shadow-md shadow-[#3fb8bd]/30'
-                : 'border border-[#3fb8bd]/20 bg-gray-900 text-gray-400 hover:border-[#3fb8bd]/50 hover:text-white'
+                ? 'bg-gradient-to-r from-kek-green to-[#4ecca7] text-black shadow-md shadow-kek-green/30'
+                : 'border border-kek-green/20 bg-gray-900 text-gray-400 hover:border-kek-green/50 hover:text-white'
             }`}
           >
             {label}
@@ -220,23 +220,23 @@ export function TraitDistribution() {
       </div>
 
       {/* Traits Table */}
-      <div className="relative overflow-hidden rounded-lg border border-[#3fb8bd]/20 bg-gray-900">
+      <div className="relative overflow-hidden rounded-lg border border-kek-green/20 bg-gray-900">
         {/* Checkered Background Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
         <div className="relative overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-800">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-[#3fb8bd]">
+                <th className="px-6 py-3 text-left text-sm font-semibold uppercase tracking-wider text-kek-green">
                   Trait
                 </th>
-                <th className="px-6 py-3 text-center text-sm font-semibold uppercase tracking-wider text-[#3fb8bd]">
+                <th className="px-6 py-3 text-center text-sm font-semibold uppercase tracking-wider text-kek-green">
                   Count
                 </th>
-                <th className="px-6 py-3 text-center text-sm font-semibold uppercase tracking-wider text-[#3fb8bd]">
+                <th className="px-6 py-3 text-center text-sm font-semibold uppercase tracking-wider text-kek-green">
                   %
                 </th>
-                <th className="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wider text-[#3fb8bd]">
+                <th className="px-6 py-3 text-right text-sm font-semibold uppercase tracking-wider text-kek-green">
                   Rarity
                 </th>
               </tr>
@@ -247,7 +247,7 @@ export function TraitDistribution() {
                 return (
                   <tr
                     key={name}
-                    className="transition-colors hover:bg-[#3fb8bd]/5"
+                    className="transition-colors hover:bg-kek-green/5"
                   >
                     <td className="px-6 py-4 text-sm font-medium text-white">
                       {formatTraitName(name)}
@@ -255,7 +255,7 @@ export function TraitDistribution() {
                     <td className="px-6 py-4 text-center text-sm text-gray-300">
                       {data.count}
                     </td>
-                    <td className="px-6 py-4 text-center text-sm font-semibold text-[#3fb8bd]">
+                    <td className="px-6 py-4 text-center text-sm font-semibold text-kek-green">
                       {data.percentage}
                     </td>
                     <td className="px-6 py-4 text-right">

@@ -28,7 +28,7 @@ export function ComprehensiveDashboard({ address }: ComprehensiveDashboardProps)
   if (portfolio.isLoading) {
     return (
       <div className="text-center py-12">
-        <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-[#3fb8bd] mb-4"></div>
+        <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-kek-green mb-4"></div>
         <p className="text-xl text-gray-400 font-fredoka">Loading your portfolio...</p>
         <p className="text-sm text-gray-500 mt-2">Fetching data from blockchain</p>
       </div>

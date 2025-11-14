@@ -34,8 +34,8 @@ export function CommonSection({ maxComments = 10, className = '' }: CommonSectio
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-[#3fb8bd]/10 rounded-lg">
-            <MessageSquare className="w-6 h-6 text-[#3fb8bd]" />
+          <div className="p-2 bg-kek-green/10 rounded-lg">
+            <MessageSquare className="w-6 h-6 text-kek-green" />
           </div>
           <div>
             <h2 className="text-2xl font-bold text-white">💬 Most Liked Comments</h2>
@@ -53,7 +53,7 @@ export function CommonSection({ maxComments = 10, className = '' }: CommonSectio
               onClick={() => setTimeframe(tf)}
               className={`px-4 py-2 rounded-lg text-sm font-semibold transition ${
                 timeframe === tf
-                  ? 'bg-[#3fb8bd] text-white'
+                  ? 'bg-kek-green text-white'
                   : 'bg-gray-800 text-gray-400 hover:text-gray-300 hover:bg-gray-700'
               }`}
             >
@@ -107,7 +107,7 @@ export function CommonSection({ maxComments = 10, className = '' }: CommonSectio
           </p>
           <Link
             href="/markets"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#3fb8bd] hover:bg-[#3fb8bd]/90 text-white font-semibold rounded-xl transition"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-kek-green hover:bg-kek-green/90 text-white font-semibold rounded-xl transition"
           >
             <MessageSquare className="w-5 h-5" />
             Start Commenting
@@ -133,7 +133,7 @@ function TopCommentCard({
       href={`/market/${comment.marketAddress}#comment-${comment.id}`}
       className="block group"
     >
-      <div className="p-4 bg-gray-800/30 hover:bg-gray-800/50 rounded-lg border border-gray-800 hover:border-[#3fb8bd]/30 transition">
+      <div className="p-4 bg-gray-800/30 hover:bg-gray-800/50 rounded-lg border border-gray-800 hover:border-kek-green/30 transition">
         {/* Rank Badge */}
         <div className="flex items-start gap-4">
           <div

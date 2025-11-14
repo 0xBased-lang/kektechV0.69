@@ -102,7 +102,7 @@ function NFTDetailPageContent() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center text-gray-300">
               <p>No NFT ID provided</p>
-              <Link href="/gallery" className="mt-4 inline-block text-[#3fb8bd] hover:underline">
+              <Link href="/gallery" className="mt-4 inline-block text-kek-green hover:underline">
                 ← Back to Gallery
               </Link>
             </div>
@@ -122,7 +122,7 @@ function NFTDetailPageContent() {
           {/* Back Button */}
           <Link
             href="/gallery"
-            className="font-fredoka mb-8 inline-flex items-center text-lg text-[#3fb8bd] transition-colors hover:text-[#4ecca7]"
+            className="font-fredoka mb-8 inline-flex items-center text-lg text-kek-green transition-colors hover:text-[#4ecca7]"
           >
             ← Back to Collection
           </Link>
@@ -131,7 +131,7 @@ function NFTDetailPageContent() {
           {loading && (
             <div className="flex min-h-[400px] items-center justify-center">
               <div className="text-center">
-                <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-[#3fb8bd] border-t-transparent" />
+                <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-kek-green border-t-transparent" />
                 <p className="font-fredoka text-lg text-gray-300">Loading NFT details...</p>
               </div>
             </div>
@@ -148,7 +148,7 @@ function NFTDetailPageContent() {
           {nft && !loading && !error && (
             <div className="grid gap-8 lg:grid-cols-2">
               {/* Left Column - Image */}
-              <div className="group relative aspect-square overflow-hidden rounded-xl border-2 border-[#3fb8bd]/30 bg-gradient-to-br from-gray-900 to-gray-950 shadow-2xl transition-all hover:border-[#3fb8bd] hover:shadow-[#3fb8bd]/20">
+              <div className="group relative aspect-square overflow-hidden rounded-xl border-2 border-kek-green/30 bg-gradient-to-br from-gray-900 to-gray-950 shadow-2xl transition-all hover:border-kek-green hover:shadow-kek-green/20">
                 <Image
                   src={nft.imageUrl}
                   alt={nft.name}
@@ -163,7 +163,7 @@ function NFTDetailPageContent() {
               <div className="space-y-6">
                 {/* Title and External Links */}
                 <div>
-                  <h1 className="font-fredoka mb-2 text-4xl font-bold text-[#3fb8bd]">
+                  <h1 className="font-fredoka mb-2 text-4xl font-bold text-kek-green">
                     {nft.name}
                   </h1>
                   <p className="font-fredoka mb-4 text-xl text-white">
@@ -175,7 +175,7 @@ function NFTDetailPageContent() {
                       href={`https://aftermint.trade/nft/0x40b6184b901334c0a88f528c1a0a1de7a77490f1/${nft.tokenId}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg border border-[#3fb8bd]/30 bg-[#3fb8bd]/10 px-4 py-2 font-fredoka text-sm text-[#3fb8bd] transition-all hover:border-[#3fb8bd] hover:bg-[#3fb8bd]/20"
+                      className="inline-flex items-center gap-2 rounded-lg border border-kek-green/30 bg-kek-green/10 px-4 py-2 font-fredoka text-sm text-kek-green transition-all hover:border-kek-green hover:bg-kek-green/20"
                     >
                       <Image
                         src="/aftermint-logo.avif"
@@ -205,8 +205,8 @@ function NFTDetailPageContent() {
                 </div>
 
                 {/* About Section */}
-                <div className="rounded-xl border border-[#3fb8bd]/20 bg-gray-900/50 p-6">
-                  <h2 className="font-fredoka mb-3 text-2xl font-bold text-[#3fb8bd]">
+                <div className="rounded-xl border border-kek-green/20 bg-gray-900/50 p-6">
+                  <h2 className="font-fredoka mb-3 text-2xl font-bold text-kek-green">
                     ABOUT
                   </h2>
                   <p className="font-fredoka leading-relaxed text-gray-300">
@@ -216,9 +216,9 @@ function NFTDetailPageContent() {
 
                 {/* Stats */}
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-xl border border-[#3fb8bd]/20 bg-gray-900/50 p-6">
+                  <div className="rounded-xl border border-kek-green/20 bg-gray-900/50 p-6">
                     <div className="text-sm text-gray-400">Global Rank</div>
-                    <div className="font-fredoka text-3xl font-bold text-[#3fb8bd]">
+                    <div className="font-fredoka text-3xl font-bold text-kek-green">
                       #{nft.rank}
                     </div>
                   </div>
@@ -232,8 +232,8 @@ function NFTDetailPageContent() {
 
                 {/* Attributes/Traits */}
                 {nft.attributes && nft.attributes.length > 0 && (
-                  <div className="rounded-xl border border-[#3fb8bd]/20 bg-gray-900/50 p-6">
-                    <h2 className="font-fredoka mb-4 text-2xl font-bold text-[#3fb8bd]">
+                  <div className="rounded-xl border border-kek-green/20 bg-gray-900/50 p-6">
+                    <h2 className="font-fredoka mb-4 text-2xl font-bold text-kek-green">
                       TRAITS
                     </h2>
                     <div className="grid gap-4 sm:grid-cols-2">
@@ -242,9 +242,9 @@ function NFTDetailPageContent() {
                         return (
                           <div
                             key={index}
-                            className="rounded-lg border border-[#3fb8bd]/30 bg-black/60 p-4 transition-all hover:border-[#3fb8bd] hover:bg-black/80"
+                            className="rounded-lg border border-kek-green/30 bg-black/60 p-4 transition-all hover:border-kek-green hover:bg-black/80"
                           >
-                            <div className="mb-2 text-xs font-bold uppercase tracking-wider text-[#3fb8bd]">
+                            <div className="mb-2 text-xs font-bold uppercase tracking-wider text-kek-green">
                               {attr.trait_type}
                             </div>
                             <div className="font-fredoka mb-1 text-lg font-normal capitalize text-gray-300">
@@ -287,7 +287,7 @@ export default function NFTDetailPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex min-h-[400px] items-center justify-center">
               <div className="text-center">
-                <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-[#3fb8bd] border-t-transparent" />
+                <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-kek-green border-t-transparent" />
                 <p className="font-fredoka text-lg text-gray-300">Loading...</p>
               </div>
             </div>

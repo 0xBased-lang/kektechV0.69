@@ -47,7 +47,7 @@ export function FeelsGoodTab({ address }: FeelsGoodTabProps) {
         </p>
         <div className="flex justify-center gap-4 text-sm text-gray-500">
           <span className="flex items-center gap-2">
-            <span className="text-[#3fb8bd]">■</span>
+            <span className="text-kek-green">■</span>
             KEK Futures
           </span>
           <span className="flex items-center gap-2">

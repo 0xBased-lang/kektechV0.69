@@ -67,7 +67,7 @@ export default function FrogFuturesPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
                   href="/feels-good-markets"
-                  className="px-8 py-3 bg-[#4ecca7] text-black rounded-lg font-fredoka font-bold hover:bg-[#3fb8bd] transition-all hover:scale-105 shadow-lg shadow-[#4ecca7]/30"
+                  className="px-8 py-3 bg-[#4ecca7] text-black rounded-lg font-fredoka font-bold hover:bg-kek-green transition-all hover:scale-105 shadow-lg shadow-[#4ecca7]/30"
                 >
                   Back to Markets
                 </Link>

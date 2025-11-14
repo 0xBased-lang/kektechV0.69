@@ -29,7 +29,7 @@ export function TrendingTopics() {
   return (
     <div className="terminal-card p-4">
       <div className="flex items-center gap-2 mb-4">
-        <TrendingUp className="w-5 h-5 text-[#3fb8bd]" />
+        <TrendingUp className="w-5 h-5 text-kek-green" />
         <h3 className="text-base font-bold text-terminal-primary">Trending Topics</h3>
       </div>
 
@@ -45,8 +45,8 @@ export function TrendingTopics() {
                 <span className="text-xs text-terminal-tertiary mono-numbers">
                   #{index + 1}
                 </span>
-                <Hash className="w-3 h-3 text-[#3fb8bd] flex-shrink-0" />
-                <span className="text-sm font-semibold text-terminal-primary group-hover:text-[#3fb8bd] transition truncate">
+                <Hash className="w-3 h-3 text-kek-green flex-shrink-0" />
+                <span className="text-sm font-semibold text-terminal-primary group-hover:text-kek-green transition truncate">
                   {topic.tag}
                 </span>
               </div>
@@ -72,7 +72,7 @@ export function TrendingTopics() {
       {/* View All Link */}
       <Link
         href="/feed?view=trending"
-        className="block mt-4 pt-3 border-t border-terminal text-center text-sm text-[#3fb8bd] hover:text-[#3fb8bd]/80 transition"
+        className="block mt-4 pt-3 border-t border-terminal text-center text-sm text-kek-green hover:text-kek-green/80 transition"
       >
         View all trending topics
       </Link>

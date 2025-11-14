@@ -64,14 +64,14 @@ export function TopTraders() {
               </div>
 
               {/* Avatar */}
-              <div className="w-8 h-8 rounded-lg bg-[#3fb8bd]/10 border border-[#3fb8bd]/20 flex items-center justify-center flex-shrink-0">
-                <User className="w-4 h-4 text-[#3fb8bd]" />
+              <div className="w-8 h-8 rounded-lg bg-kek-green/10 border border-kek-green/20 flex items-center justify-center flex-shrink-0">
+                <User className="w-4 h-4 text-kek-green" />
               </div>
 
               {/* Trader Info */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-terminal-primary group-hover:text-[#3fb8bd] transition mono-numbers truncate">
+                  <span className="text-sm font-semibold text-terminal-primary group-hover:text-kek-green transition mono-numbers truncate">
                     {truncate(trader.address, 12)}
                   </span>
                 </div>
@@ -100,7 +100,7 @@ export function TopTraders() {
       {/* View Full Leaderboard Link */}
       <Link
         href="/leaderboard"
-        className="block mt-4 pt-3 border-t border-terminal text-center text-sm text-[#3fb8bd] hover:text-[#3fb8bd]/80 transition"
+        className="block mt-4 pt-3 border-t border-terminal text-center text-sm text-kek-green hover:text-kek-green/80 transition"
       >
         View full leaderboard
       </Link>

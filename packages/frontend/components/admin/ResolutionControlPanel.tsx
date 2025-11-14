@@ -1,7 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 "use client";
 
 import { useState } from "react";
@@ -21,6 +17,7 @@ import {
   Shield
 } from "lucide-react";
 import { useMarketList, useMarketInfo, useAdminResolveMarket } from "@/lib/hooks/kektech";
+import { useMarketInfoList } from "@/lib/hooks/kektech/useMarketInfoList";
 import { useResolutionVotes } from "@/lib/api/engagement";
 import { formatDistanceToNow } from "date-fns";
 import type { Address } from "viem";
@@ -29,8 +26,8 @@ export function ResolutionControlPanel() {
   const { markets, isLoading } = useMarketList(true);
   const [selectedMarket, setSelectedMarket] = useState<Address | null>(null);
 
-  // Call hooks for ALL markets at top level (required by React rules)
-  const marketInfos = markets.map((address) => useMarketInfo(address, true));
+  // ✅ FIXED: Use dedicated hook for fetching multiple markets (no hooks-in-loop violation)
+  const { marketInfos } = useMarketInfoList(markets, true);
 
   // Filter for RESOLVING markets (state = 4 or 5 in old system, or RESOLVING/DISPUTED states)
   const resolvingMarkets = markets.filter((_, index) => {

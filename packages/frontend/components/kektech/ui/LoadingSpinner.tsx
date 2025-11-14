@@ -31,7 +31,7 @@ export function LoadingSpinner({
     <div className={cn('flex flex-col items-center justify-center gap-2', className)}>
       <div
         className={cn(
-          'animate-spin rounded-full border-t-transparent border-[#3fb8bd]',
+          'animate-spin rounded-full border-t-transparent border-kek-green',
           sizeMap[size]
         )}
         role="status"

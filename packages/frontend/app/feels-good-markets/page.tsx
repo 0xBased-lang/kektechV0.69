@@ -35,8 +35,8 @@ export default function FeelsGoodMarketsPage() {
 
             {/* Feature Badges */}
             <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <div className="px-6 py-3 bg-gray-900/60 backdrop-blur-sm rounded-lg border border-[#3fb8bd]/30">
-                <span className="text-[#3fb8bd] font-semibold">⚡ Ultra-Low Fees</span>
+              <div className="px-6 py-3 bg-gray-900/60 backdrop-blur-sm rounded-lg border border-kek-green/30">
+                <span className="text-kek-green font-semibold">⚡ Ultra-Low Fees</span>
               </div>
               <div className="px-6 py-3 bg-gray-900/60 backdrop-blur-sm rounded-lg border border-[#4ecca7]/30">
                 <span className="text-[#4ecca7] font-semibold">🚀 Instant Settlement</span>
@@ -62,7 +62,7 @@ export default function FeelsGoodMarketsPage() {
               "100% uptime"
             ]}
             icon="📈"
-            gradient="from-[#3fb8bd] to-[#2a8388]"
+            gradient="from-kek-green to-[#2a8388]"
             badge="Live Now"
             badgeVariant="success"
             ctaText="Enter Markets"
@@ -117,7 +117,7 @@ export default function FeelsGoodMarketsPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="text-4xl font-fredoka font-bold text-[#3fb8bd] mb-2">
+              <div className="text-4xl font-fredoka font-bold text-kek-green mb-2">
                 1000x
               </div>
               <p className="text-sm text-gray-400">Cheaper than competitors</p>
@@ -144,7 +144,7 @@ export default function FeelsGoodMarketsPage() {
           </p>
           <a
             href="/feels-good-markets/kek-futures"
-            className="inline-block px-10 py-4 bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-fredoka font-bold rounded-lg shadow-lg hover:shadow-xl hover:shadow-[#3fb8bd]/30 transition-all hover:scale-105 active:scale-95"
+            className="inline-block px-10 py-4 bg-gradient-to-r from-kek-green to-[#4ecca7] text-black font-fredoka font-bold rounded-lg shadow-lg hover:shadow-xl hover:shadow-kek-green/30 transition-all hover:scale-105 active:scale-95"
           >
             Explore KEK Futures →
           </a>

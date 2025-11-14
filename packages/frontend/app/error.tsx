@@ -56,7 +56,7 @@ export default function Error({
         <div className="flex gap-3 justify-center">
           <Button
             onClick={reset}
-            className="bg-[#3fb8bd] hover:bg-[#2fa8ad] text-white"
+            className="bg-kek-green hover:bg-[#2fa8ad] text-white"
           >
             Try again
           </Button>

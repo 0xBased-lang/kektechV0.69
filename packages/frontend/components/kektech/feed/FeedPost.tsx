@@ -16,8 +16,8 @@ interface FeedPostProps {
 const ACTIVITY_CONFIG = {
   market_created: {
     icon: TrendingUp,
-    color: 'text-[#3fb8bd]',
-    bgColor: 'bg-[#3fb8bd]/10',
+    color: 'text-kek-green',
+    bgColor: 'bg-kek-green/10',
     label: 'created a market',
   },
   bet_placed: {
@@ -91,10 +91,10 @@ export function FeedPost({ activity }: FeedPostProps) {
         <div className="ml-11">
           <Link
             href={`/feels-good-markets/kek-futures/market/${activity.marketAddress}`}
-            className="block p-3 bg-terminal-elevated hover:bg-terminal-bg-hover rounded-lg border border-terminal hover:border-[#3fb8bd]/50 transition"
+            className="block p-3 bg-terminal-elevated hover:bg-terminal-bg-hover rounded-lg border border-terminal hover:border-kek-green/50 transition"
           >
             <div className="flex items-start gap-2">
-              <TrendingUp className="w-4 h-4 text-[#3fb8bd] mt-0.5 flex-shrink-0" />
+              <TrendingUp className="w-4 h-4 text-kek-green mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-terminal-primary">
                   {activity.metadata?.marketQuestion}
@@ -128,7 +128,7 @@ export function FeedPost({ activity }: FeedPostProps) {
                 href={`/feels-good-markets/kek-futures/market/${activity.marketAddress}`}
                 className="block mt-2 pt-2 border-t border-terminal"
               >
-                <p className="text-xs text-terminal-tertiary hover:text-[#3fb8bd] transition">
+                <p className="text-xs text-terminal-tertiary hover:text-kek-green transition">
                   {truncate(activity.metadata.marketQuestion, 60)}
                 </p>
               </Link>
@@ -149,8 +149,8 @@ export function FeedPost({ activity }: FeedPostProps) {
                 className="block pt-2 border-t border-terminal"
               >
                 <div className="flex items-center gap-2">
-                  <MessageSquare className="w-3 h-3 text-[#3fb8bd]" />
-                  <p className="text-xs text-terminal-tertiary hover:text-[#3fb8bd] transition">
+                  <MessageSquare className="w-3 h-3 text-kek-green" />
+                  <p className="text-xs text-terminal-tertiary hover:text-kek-green transition">
                     on: {truncate(activity.metadata.marketQuestion, 50)}
                   </p>
                 </div>
@@ -174,7 +174,7 @@ export function FeedPost({ activity }: FeedPostProps) {
                 href={`/feels-good-markets/kek-futures/market/${activity.marketAddress}`}
                 className="block mt-2 pt-2 border-t border-terminal"
               >
-                <p className="text-xs text-terminal-tertiary hover:text-[#3fb8bd] transition">
+                <p className="text-xs text-terminal-tertiary hover:text-kek-green transition">
                   {truncate(activity.metadata.marketQuestion, 60)}
                 </p>
               </Link>
@@ -197,7 +197,7 @@ export function FeedPost({ activity }: FeedPostProps) {
                 href={`/feels-good-markets/kek-futures/market/${activity.marketAddress}`}
                 className="block"
               >
-                <p className="text-xs text-terminal-tertiary hover:text-[#3fb8bd] transition">
+                <p className="text-xs text-terminal-tertiary hover:text-kek-green transition">
                   {truncate(activity.metadata.marketQuestion, 60)}
                 </p>
               </Link>

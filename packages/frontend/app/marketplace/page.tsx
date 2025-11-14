@@ -19,7 +19,7 @@ export default function MarketplacePage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-black">
       <div className="text-center">
-        <div className="text-[#3fb8bd] text-6xl mb-4">⏳</div>
+        <div className="text-kek-green text-6xl mb-4">⏳</div>
         <p className="text-gray-400">Redirecting to NFT Marketplace...</p>
       </div>
     </div>

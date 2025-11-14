@@ -91,7 +91,7 @@ export function MarketFilters({
             placeholder="Search markets..."
             value={filters.search}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="w-full pl-10 pr-10 py-2.5 bg-terminal-card border border-terminal rounded-lg text-terminal-primary placeholder:text-terminal-tertiary focus:border-[#3fb8bd] focus:outline-none transition text-sm"
+            className="w-full pl-10 pr-10 py-2.5 bg-terminal-card border border-terminal rounded-lg text-terminal-primary placeholder:text-terminal-tertiary focus:border-kek-green focus:outline-none transition text-sm"
           />
           {filters.search && (
             <button
@@ -108,14 +108,14 @@ export function MarketFilters({
           onClick={() => setShowAdvanced(!showAdvanced)}
           className={`px-4 py-2.5 rounded-lg border transition flex items-center gap-2 text-sm font-medium ${
             showAdvanced || hasActiveFilters
-              ? 'bg-[#3fb8bd]/10 border-[#3fb8bd] text-[#3fb8bd]'
-              : 'bg-terminal-card border-terminal text-terminal-secondary hover:border-[#3fb8bd]/50'
+              ? 'bg-kek-green/10 border-kek-green text-kek-green'
+              : 'bg-terminal-card border-terminal text-terminal-secondary hover:border-kek-green/50'
           }`}
         >
           <SlidersHorizontal className="w-4 h-4" />
           <span className="hidden sm:inline">Filters</span>
           {hasActiveFilters && (
-            <span className="w-2 h-2 bg-[#3fb8bd] rounded-full" />
+            <span className="w-2 h-2 bg-kek-green rounded-full" />
           )}
         </button>
       </div>
@@ -138,8 +138,8 @@ export function MarketFilters({
                     onClick={() => handleSortChange(option.value)}
                     className={`px-3 py-2 rounded-lg border transition flex items-center gap-2 text-sm font-medium ${
                       isActive
-                        ? 'bg-[#3fb8bd]/10 border-[#3fb8bd] text-[#3fb8bd]'
-                        : 'bg-terminal-elevated border-terminal text-terminal-secondary hover:border-[#3fb8bd]/50'
+                        ? 'bg-kek-green/10 border-kek-green text-kek-green'
+                        : 'bg-terminal-elevated border-terminal text-terminal-secondary hover:border-kek-green/50'
                     }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -157,7 +157,7 @@ export function MarketFilters({
               {filters.states.length > 0 && (
                 <button
                   onClick={() => onFiltersChange({ ...filters, states: [] })}
-                  className="text-xs text-[#3fb8bd] hover:text-[#3fb8bd]/80 transition"
+                  className="text-xs text-kek-green hover:text-kek-green/80 transition"
                 >
                   Clear
                 </button>
@@ -172,8 +172,8 @@ export function MarketFilters({
                     onClick={() => toggleState(option.value)}
                     className={`px-3 py-2 rounded-lg border transition text-sm font-medium ${
                       isActive
-                        ? 'bg-terminal-elevated border-[#3fb8bd] text-[#3fb8bd]'
-                        : `bg-terminal-elevated border-terminal ${option.color} hover:border-[#3fb8bd]/50`
+                        ? 'bg-terminal-elevated border-kek-green text-kek-green'
+                        : `bg-terminal-elevated border-terminal ${option.color} hover:border-kek-green/50`
                     }`}
                   >
                     {option.label}
@@ -188,7 +188,7 @@ export function MarketFilters({
             <div className="pt-3 border-t border-terminal">
               <button
                 onClick={clearFilters}
-                className="w-full px-4 py-2 bg-terminal-elevated hover:bg-terminal-bg-hover border border-terminal rounded-lg text-terminal-secondary hover:text-[#3fb8bd] transition text-sm font-medium flex items-center justify-center gap-2"
+                className="w-full px-4 py-2 bg-terminal-elevated hover:bg-terminal-bg-hover border border-terminal rounded-lg text-terminal-secondary hover:text-kek-green transition text-sm font-medium flex items-center justify-center gap-2"
               >
                 <X className="w-4 h-4" />
                 Clear All Filters
@@ -207,7 +207,7 @@ export function MarketFilters({
         {hasActiveFilters && (
           <button
             onClick={clearFilters}
-            className="text-xs text-[#3fb8bd] hover:text-[#3fb8bd]/80 transition"
+            className="text-xs text-kek-green hover:text-kek-green/80 transition"
           >
             Reset filters
           </button>

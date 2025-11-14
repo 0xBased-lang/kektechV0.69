@@ -51,12 +51,12 @@ export function MarketCard({
           bg-gray-900/60 border-2 rounded-xl p-8
           transition-all duration-300
           ${isPrimary
-            ? 'border-[#3fb8bd] shadow-lg shadow-[#3fb8bd]/30 md:row-span-2'
+            ? 'border-kek-green shadow-lg shadow-kek-green/30 md:row-span-2'
             : 'border-gray-800'
           }
           ${isDisabled
             ? 'opacity-50 cursor-not-allowed'
-            : 'hover:shadow-2xl hover:shadow-[#3fb8bd]/20 cursor-pointer hover:border-[#3fb8bd]'
+            : 'hover:shadow-2xl hover:shadow-kek-green/20 cursor-pointer hover:border-kek-green'
           }
           ${size === 'large' ? 'md:col-span-2 lg:col-span-1' : ''}
         `}
@@ -101,7 +101,7 @@ export function MarketCard({
         <ul className="space-y-2 mb-6">
           {features.map((feature, index) => (
             <li key={index} className="flex items-center gap-2 text-sm text-gray-300">
-              <span className="text-[#3fb8bd] flex-shrink-0">✓</span>
+              <span className="text-kek-green flex-shrink-0">✓</span>
               <span>{feature}</span>
             </li>
           ))}
@@ -113,8 +113,8 @@ export function MarketCard({
           className={`
             w-full py-3 rounded-lg font-fredoka font-bold transition-all
             ${isPrimary
-              ? 'bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black shadow-lg hover:shadow-xl hover:shadow-[#4ecca7]/30 hover:scale-105 active:scale-95'
-              : 'border-2 border-[#3fb8bd]/60 text-[#3fb8bd] hover:bg-[#3fb8bd]/10 hover:border-[#3fb8bd]'
+              ? 'bg-gradient-to-r from-kek-green to-[#4ecca7] text-black shadow-lg hover:shadow-xl hover:shadow-[#4ecca7]/30 hover:scale-105 active:scale-95'
+              : 'border-2 border-kek-green/60 text-kek-green hover:bg-kek-green/10 hover:border-kek-green'
             }
             ${isDisabled && 'opacity-50 cursor-not-allowed hover:scale-100'}
             disabled:cursor-not-allowed
@@ -125,7 +125,7 @@ export function MarketCard({
 
         {/* Hover Glow Effect */}
         {!isDisabled && (
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[#3fb8bd]/0 to-[#4ecca7]/0 group-hover:from-[#3fb8bd]/5 group-hover:to-[#4ecca7]/5 transition-all duration-300 pointer-events-none" />
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-kek-green/0 to-[#4ecca7]/0 group-hover:from-kek-green/5 group-hover:to-[#4ecca7]/5 transition-all duration-300 pointer-events-none" />
         )}
       </div>
     </CardWrapper>

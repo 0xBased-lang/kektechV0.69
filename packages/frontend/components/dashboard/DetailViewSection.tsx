@@ -150,7 +150,7 @@ export function DetailViewSection({
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
         <div className="relative">
         <div className="mb-8">
-          <h2 className="text-3xl font-bold text-[#3fb8bd] mb-2 font-fredoka">
+          <h2 className="text-3xl font-bold text-kek-green mb-2 font-fredoka">
             📊 Complete Portfolio Overview
           </h2>
           <p className="text-white text-lg">
@@ -217,7 +217,7 @@ export function DetailViewSection({
 
         {/* Asset Breakdown */}
         <div className="bg-gray-900/60 rounded-xl border border-gray-800 p-6">
-          <h3 className="text-xl font-bold text-[#3fb8bd] mb-4 font-fredoka">
+          <h3 className="text-xl font-bold text-kek-green mb-4 font-fredoka">
             Asset Breakdown
           </h3>
           <div className="space-y-4">
@@ -301,7 +301,7 @@ export function DetailViewSection({
         {/* Based NFTs Visual Gallery */}
         {otherNFTs.length > 0 && (
           <div className="mt-8 bg-gray-900/60 rounded-xl border border-gray-800 p-6">
-            <h3 className="text-xl font-bold text-[#3fb8bd] mb-4 font-fredoka">
+            <h3 className="text-xl font-bold text-kek-green mb-4 font-fredoka">
               🎨 Based NFTs
             </h3>
             <p className="text-sm text-gray-400 mb-4">

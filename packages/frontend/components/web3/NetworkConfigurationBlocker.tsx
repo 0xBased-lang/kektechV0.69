@@ -132,12 +132,12 @@ export function NetworkConfigurationBlocker({ onVerified }: NetworkConfiguration
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
-      <div className="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900 to-black border-2 border-[#3fb8bd] rounded-2xl shadow-2xl shadow-[#3fb8bd]/20">
+      <div className="relative max-w-2xl w-full max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900 to-black border-2 border-kek-green rounded-2xl shadow-2xl shadow-kek-green/20">
         <div className="p-6 sm:p-8">
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#3fb8bd]/10 border-2 border-[#3fb8bd] mb-4">
-              <AlertTriangle className="w-8 h-8 text-[#3fb8bd] animate-pulse" />
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-kek-green/10 border-2 border-kek-green mb-4">
+              <AlertTriangle className="w-8 h-8 text-kek-green animate-pulse" />
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Network Configuration Required
@@ -161,9 +161,9 @@ export function NetworkConfigurationBlocker({ onVerified }: NetworkConfiguration
           {/* Step-by-Step Instructions */}
           <div className="space-y-6">
             {/* Step 1: Copy Settings */}
-            <div className="border-2 border-[#3fb8bd] bg-[#3fb8bd]/5 rounded-lg p-4 transition-all">
+            <div className="border-2 border-kek-green bg-kek-green/5 rounded-lg p-4 transition-all">
               <div className="flex items-start gap-3 mb-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#3fb8bd] text-black font-bold flex items-center justify-center">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-kek-green text-black font-bold flex items-center justify-center">
                   1
                 </div>
                 <div className="flex-1">
@@ -185,7 +185,7 @@ export function NetworkConfigurationBlocker({ onVerified }: NetworkConfiguration
                         </div>
                         <button
                           onClick={() => copyToClipboard(setting.copyLabel, index)}
-                          className="ml-2 flex items-center gap-1 px-3 py-1.5 bg-[#3fb8bd]/20 hover:bg-[#3fb8bd]/30 border border-[#3fb8bd]/50 rounded text-[#3fb8bd] text-xs transition-all"
+                          className="ml-2 flex items-center gap-1 px-3 py-1.5 bg-kek-green/20 hover:bg-kek-green/30 border border-kek-green/50 rounded text-kek-green text-xs transition-all"
                         >
                           {copiedIndex === index ? (
                             <>
@@ -205,7 +205,7 @@ export function NetworkConfigurationBlocker({ onVerified }: NetworkConfiguration
 
                   <button
                     onClick={copyAllSettings}
-                    className="mt-3 w-full flex items-center justify-center gap-2 px-4 py-2 bg-[#3fb8bd] hover:bg-[#3fb8bd]/80 text-black font-semibold rounded-lg transition-all"
+                    className="mt-3 w-full flex items-center justify-center gap-2 px-4 py-2 bg-kek-green hover:bg-kek-green/80 text-black font-semibold rounded-lg transition-all"
                   >
                     {copiedIndex === -1 ? (
                       <>
@@ -224,9 +224,9 @@ export function NetworkConfigurationBlocker({ onVerified }: NetworkConfiguration
             </div>
 
             {/* Step 2: Delete Old Network */}
-            <div className="border-2 border-[#3fb8bd] bg-[#3fb8bd]/5 rounded-lg p-4 transition-all">
+            <div className="border-2 border-kek-green bg-kek-green/5 rounded-lg p-4 transition-all">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#3fb8bd] text-black font-bold flex items-center justify-center">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-kek-green text-black font-bold flex items-center justify-center">
                   2
                 </div>
                 <div className="flex-1">
@@ -245,9 +245,9 @@ export function NetworkConfigurationBlocker({ onVerified }: NetworkConfiguration
             </div>
 
             {/* Step 3: Add Fresh Network */}
-            <div className="border-2 border-[#3fb8bd] bg-[#3fb8bd]/5 rounded-lg p-4 transition-all">
+            <div className="border-2 border-kek-green bg-kek-green/5 rounded-lg p-4 transition-all">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#3fb8bd] text-black font-bold flex items-center justify-center">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-kek-green text-black font-bold flex items-center justify-center">
                   3
                 </div>
                 <div className="flex-1">
@@ -257,7 +257,7 @@ export function NetworkConfigurationBlocker({ onVerified }: NetworkConfiguration
                   <ul className="text-sm text-gray-300 space-y-1 list-disc list-inside mb-3">
                     <li>Click &quot;Add Network&quot; → &quot;Add network manually&quot;</li>
                     <li>Paste the settings from Step 1</li>
-                    <li><strong className="text-[#3fb8bd]">Currency Symbol MUST be &quot;BASED&quot;</strong></li>
+                    <li><strong className="text-kek-green">Currency Symbol MUST be &quot;BASED&quot;</strong></li>
                     <li>Click &quot;Save&quot;</li>
                   </ul>
 
@@ -275,9 +275,9 @@ export function NetworkConfigurationBlocker({ onVerified }: NetworkConfiguration
             </div>
 
             {/* Step 4: Verify */}
-            <div className="border-2 border-[#3fb8bd] bg-[#3fb8bd]/5 rounded-lg p-4 transition-all">
+            <div className="border-2 border-kek-green bg-kek-green/5 rounded-lg p-4 transition-all">
               <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#3fb8bd] text-black font-bold flex items-center justify-center">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-kek-green text-black font-bold flex items-center justify-center">
                   4
                 </div>
                 <div className="flex-1">

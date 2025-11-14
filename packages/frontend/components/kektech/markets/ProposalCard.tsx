@@ -155,12 +155,12 @@ export function ProposalCard({ marketAddress, compact = false }: ProposalCardPro
   const isReadyToActivate = voteData.netVotes >= activationThreshold;
 
   return (
-    <div className="group p-6 bg-gray-900 rounded-xl border border-gray-800 hover:border-[#3fb8bd] transition">
+    <div className="group p-6 bg-gray-900 rounded-xl border border-gray-800 hover:border-kek-green transition">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1 min-w-0">
           <Link href={`/feels-good-markets/kek-futures/market/${marketAddress}`}>
-            <h3 className="text-lg font-bold text-white mb-1 group-hover:text-[#3fb8bd] transition line-clamp-2 cursor-pointer">
+            <h3 className="text-lg font-bold text-white mb-1 group-hover:text-kek-green transition line-clamp-2 cursor-pointer">
               {market.question}
             </h3>
           </Link>
@@ -208,7 +208,7 @@ export function ProposalCard({ marketAddress, compact = false }: ProposalCardPro
         </div>
 
         <div className="flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 text-[#3fb8bd]" />
+          <TrendingUp className="w-4 h-4 text-kek-green" />
           <div>
             <p className="text-xs text-gray-400">Net Votes</p>
             <p className={`text-sm font-semibold ${voteData.netVotes >= 0 ? 'text-green-400' : 'text-red-400'}`}>
@@ -235,7 +235,7 @@ export function ProposalCard({ marketAddress, compact = false }: ProposalCardPro
         </div>
         <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
           <div
-            className={`h-full transition-all ${isReadyToActivate ? 'bg-green-500' : 'bg-[#3fb8bd]'}`}
+            className={`h-full transition-all ${isReadyToActivate ? 'bg-green-500' : 'bg-kek-green'}`}
             style={{ width: `${progress}%` }}
           />
         </div>

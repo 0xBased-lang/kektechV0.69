@@ -21,7 +21,7 @@ export function EnhancedNFTCard({ nft, showRank = true }: EnhancedNFTCardProps) 
   return (
     <Link
       href={`/nft?id=${nft.tokenId}`}
-      className="group block overflow-hidden rounded-xl border-2 border-[#3fb8bd]/30 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 shadow-lg transition-all duration-300 hover:border-[#3fb8bd] hover:shadow-2xl hover:shadow-[#3fb8bd]/30"
+      className="group block overflow-hidden rounded-xl border-2 border-kek-green/30 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 shadow-lg transition-all duration-300 hover:border-kek-green hover:shadow-2xl hover:shadow-kek-green/30"
     >
       {/* NFT Image */}
       <div className="relative aspect-square overflow-hidden">
@@ -40,7 +40,7 @@ export function EnhancedNFTCard({ nft, showRank = true }: EnhancedNFTCardProps) 
         {/* Rank Badge - Only show if showRank is true */}
         {showRank && (
           <div className="absolute right-3 top-3">
-            <div className="rounded-full bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] px-4 py-1.5 text-sm font-bold text-black shadow-lg">
+            <div className="rounded-full bg-gradient-to-r from-kek-green to-[#4ecca7] px-4 py-1.5 text-sm font-bold text-black shadow-lg">
               #{nft.rank}
             </div>
           </div>
@@ -49,7 +49,7 @@ export function EnhancedNFTCard({ nft, showRank = true }: EnhancedNFTCardProps) 
 
       {/* Card Info */}
       <div className="space-y-2 p-4">
-        <h3 className="font-fredoka truncate text-lg font-bold text-[#3fb8bd]">
+        <h3 className="font-fredoka truncate text-lg font-bold text-kek-green">
           {nft.name}
         </h3>
 

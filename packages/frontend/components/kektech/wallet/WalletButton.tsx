@@ -63,7 +63,7 @@ export function WalletButton({
         </div>
         <button
           onClick={switchToBasedAI}
-          className="px-4 py-2 rounded-lg bg-[#3fb8bd] text-black font-semibold hover:bg-[#3fb8bd]/90 transition"
+          className="px-4 py-2 rounded-lg bg-kek-green text-black font-semibold hover:bg-kek-green/90 transition"
         >
           Switch to BasedAI
         </button>
@@ -80,7 +80,7 @@ export function WalletButton({
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="text-xs text-gray-400">Connected</span>
-              <span className="text-sm text-[#3fb8bd] font-mono">
+              <span className="text-sm text-kek-green font-mono">
                 {address.slice(0, 6)}...{address.slice(-4)}
               </span>
             </div>
@@ -135,7 +135,7 @@ export function WalletButton({
     <button
       onClick={() => connect()}
       className={cn(
-        'px-6 py-3 rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-bold',
+        'px-6 py-3 rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] text-black font-bold',
         'hover:scale-105 transition flex items-center gap-2',
         className
       )}
@@ -166,7 +166,7 @@ export function CompactWalletButton() {
   return (
     <button
       onClick={() => connect()}
-      className="px-4 py-2 rounded-lg bg-[#3fb8bd] text-black font-semibold hover:bg-[#3fb8bd]/90 transition text-sm"
+      className="px-4 py-2 rounded-lg bg-kek-green text-black font-semibold hover:bg-kek-green/90 transition text-sm"
     >
       Connect
     </button>

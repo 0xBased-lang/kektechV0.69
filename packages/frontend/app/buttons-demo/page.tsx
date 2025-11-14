@@ -19,7 +19,7 @@ export default function ButtonsDemoPage() {
         <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
           {/* Page Header */}
           <div className="mb-16 text-center">
-            <h1 className="font-fredoka text-4xl font-bold text-[#3fb8bd] sm:text-5xl mb-4">
+            <h1 className="font-fredoka text-4xl font-bold text-kek-green sm:text-5xl mb-4">
               Button Design System
             </h1>
             <p className="text-lg text-gray-300 max-w-3xl mx-auto">
@@ -35,7 +35,7 @@ export default function ButtonsDemoPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Primary */}
               <div className="bg-gray-900/60 rounded-xl border border-gray-800 p-6">
-                <h3 className="font-fredoka text-xl font-bold text-[#3fb8bd] mb-4">Primary</h3>
+                <h3 className="font-fredoka text-xl font-bold text-kek-green mb-4">Primary</h3>
                 <p className="text-gray-400 text-sm mb-4">Main CTAs - gradient fill with subtle shadow</p>
                 <div className="space-y-4">
                   <Button variant="primary">Primary Action</Button>
@@ -45,7 +45,7 @@ export default function ButtonsDemoPage() {
 
               {/* Secondary */}
               <div className="bg-gray-900/60 rounded-xl border border-gray-800 p-6">
-                <h3 className="font-fredoka text-xl font-bold text-[#3fb8bd] mb-4">Secondary</h3>
+                <h3 className="font-fredoka text-xl font-bold text-kek-green mb-4">Secondary</h3>
                 <p className="text-gray-400 text-sm mb-4">Alternative actions - outlined with hover effect</p>
                 <div className="space-y-4">
                   <Button variant="secondary">Secondary Action</Button>
@@ -55,7 +55,7 @@ export default function ButtonsDemoPage() {
 
               {/* Ghost */}
               <div className="bg-gray-900/60 rounded-xl border border-gray-800 p-6">
-                <h3 className="font-fredoka text-xl font-bold text-[#3fb8bd] mb-4">Ghost</h3>
+                <h3 className="font-fredoka text-xl font-bold text-kek-green mb-4">Ghost</h3>
                 <p className="text-gray-400 text-sm mb-4">Minimal style - subtle interactions</p>
                 <div className="space-y-4">
                   <Button variant="ghost">Ghost Action</Button>
@@ -132,7 +132,7 @@ export default function ButtonsDemoPage() {
 
             {/* Hero CTA Example */}
             <div className="bg-gray-900/60 rounded-xl border border-gray-800 p-8 mb-8">
-              <h3 className="font-fredoka text-xl font-bold text-[#3fb8bd] mb-4">Hero Section CTAs</h3>
+              <h3 className="font-fredoka text-xl font-bold text-kek-green mb-4">Hero Section CTAs</h3>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <LinkButton href="/mint" variant="primary" size="lg">
                   Start Minting
@@ -145,7 +145,7 @@ export default function ButtonsDemoPage() {
 
             {/* Page CTAs Example */}
             <div className="bg-gray-900/60 rounded-xl border border-gray-800 p-8">
-              <h3 className="font-fredoka text-xl font-bold text-[#3fb8bd] mb-4">Rewards Page CTAs</h3>
+              <h3 className="font-fredoka text-xl font-bold text-kek-green mb-4">Rewards Page CTAs</h3>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <LinkButton href="/mint" variant="primary" size="lg">
                   Mint 𝕂Ǝ𝕂TECH NFTs
@@ -164,28 +164,28 @@ export default function ButtonsDemoPage() {
             <div className="bg-gray-900/60 rounded-xl border border-gray-800 p-8">
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-fredoka text-lg font-bold text-[#3fb8bd] mb-2">Import</h4>
+                  <h4 className="font-fredoka text-lg font-bold text-kek-green mb-2">Import</h4>
                   <code className="block bg-black/50 p-4 rounded text-[#4ecca7] text-sm">
                     {`import { Button, LinkButton } from '@/components/ui/button'`}
                   </code>
                 </div>
 
                 <div>
-                  <h4 className="font-fredoka text-lg font-bold text-[#3fb8bd] mb-2">Basic Button</h4>
+                  <h4 className="font-fredoka text-lg font-bold text-kek-green mb-2">Basic Button</h4>
                   <code className="block bg-black/50 p-4 rounded text-[#4ecca7] text-sm">
                     {`<Button variant="primary" size="lg">\n  Click Me\n</Button>`}
                   </code>
                 </div>
 
                 <div>
-                  <h4 className="font-fredoka text-lg font-bold text-[#3fb8bd] mb-2">Link Button</h4>
+                  <h4 className="font-fredoka text-lg font-bold text-kek-green mb-2">Link Button</h4>
                   <code className="block bg-black/50 p-4 rounded text-[#4ecca7] text-sm">
                     {`<LinkButton href="/mint" variant="primary" leftIcon="🚀">\n  Start Minting\n</LinkButton>`}
                   </code>
                 </div>
 
                 <div>
-                  <h4 className="font-fredoka text-lg font-bold text-[#3fb8bd] mb-2">With Loading State</h4>
+                  <h4 className="font-fredoka text-lg font-bold text-kek-green mb-2">With Loading State</h4>
                   <code className="block bg-black/50 p-4 rounded text-[#4ecca7] text-sm">
                     {`<Button variant="primary" isLoading={loading}>\n  Submit\n</Button>`}
                   </code>

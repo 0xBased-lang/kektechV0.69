@@ -31,7 +31,7 @@ export function PositionList({ filter = 'all' }: PositionListProps) {
         <p className="text-gray-400 mb-6">Connect your wallet to see your positions</p>
         <button
           onClick={() => connect()}
-          className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-bold hover:scale-105 transition"
+          className="px-8 py-4 rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] text-black font-bold hover:scale-105 transition"
         >
           Connect Wallet
         </button>
@@ -73,7 +73,7 @@ export function PositionList({ filter = 'all' }: PositionListProps) {
             key={value}
             className={`px-4 py-2 rounded-lg font-medium transition ${
               filter === value
-                ? 'bg-[#3fb8bd] text-black'
+                ? 'bg-kek-green text-black'
                 : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
             }`}
           >

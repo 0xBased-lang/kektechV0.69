@@ -67,7 +67,7 @@ export default function PositionsPage() {
                 onClick={() => setFilter(value)}
                 className={`px-6 py-3 rounded-lg font-semibold transition ${
                   filter === value
-                    ? 'bg-[#3fb8bd] text-white'
+                    ? 'bg-kek-green text-white'
                     : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                 }`}
                 data-testid={`filter-${value}`}
@@ -103,7 +103,7 @@ function StatCard({
   return (
     <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
       <div className="flex items-center gap-3 mb-4">
-        <div className="p-2 bg-gray-800 rounded-lg text-[#3fb8bd]">{icon}</div>
+        <div className="p-2 bg-gray-800 rounded-lg text-kek-green">{icon}</div>
         <h3 className="text-sm font-medium text-gray-400">{title}</h3>
       </div>
       <div className="mb-1">

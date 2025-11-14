@@ -18,8 +18,8 @@ export default function MarketsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-[#3fb8bd]/10 rounded-xl">
-                <TrendingUp className="w-8 h-8 text-[#3fb8bd]" />
+              <div className="p-3 bg-kek-green/10 rounded-xl">
+                <TrendingUp className="w-8 h-8 text-kek-green" />
               </div>
               <div>
                 <h1 className="text-3xl font-bold text-white">
@@ -34,7 +34,7 @@ export default function MarketsPage() {
             {/* Create Market Button */}
             <Link
               href="/feels-good-markets/kek-futures/create"
-              className="flex items-center gap-2 px-6 py-3 bg-[#3fb8bd] hover:bg-[#3fb8bd]/90 text-white font-semibold rounded-xl transition"
+              className="flex items-center gap-2 px-6 py-3 bg-kek-green hover:bg-kek-green/90 text-white font-semibold rounded-xl transition"
             >
               <Plus className="w-5 h-5" />
               Create Market
@@ -57,21 +57,21 @@ export default function MarketsPage() {
               </h3>
               <div className="grid md:grid-cols-3 gap-6 text-sm text-gray-300">
                 <div>
-                  <h4 className="font-semibold text-[#3fb8bd] mb-2">1. Browse & Bet</h4>
+                  <h4 className="font-semibold text-kek-green mb-2">1. Browse & Bet</h4>
                   <p>
                     Find markets about future events and place bets with BASED tokens.
                     Your odds are determined by the LMSR bonding curve.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-[#3fb8bd] mb-2">2. Wait for Resolution</h4>
+                  <h4 className="font-semibold text-kek-green mb-2">2. Wait for Resolution</h4>
                   <p>
                     After the event occurs, the market enters a 48-hour dispute window
                     before being finalized.
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-[#3fb8bd] mb-2">3. Claim Winnings</h4>
+                  <h4 className="font-semibold text-kek-green mb-2">3. Claim Winnings</h4>
                   <p>
                     If your prediction was correct, claim your winnings plus a share
                     of the losing pool!

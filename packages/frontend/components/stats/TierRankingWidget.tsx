@@ -114,7 +114,7 @@ export function TierRankingWidget() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-8">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#3fb8bd] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-kek-green border-t-transparent" />
       </div>
     )
   }
@@ -127,15 +127,15 @@ export function TierRankingWidget() {
   return (
     <div className="flex flex-col gap-4 sm:flex-row">
       {/* Total NFTs Card */}
-      <div className="flex-1 rounded-xl border border-[#3fb8bd]/30 bg-gradient-to-br from-gray-900 to-gray-950 p-6 text-center">
+      <div className="flex-1 rounded-xl border border-kek-green/30 bg-gradient-to-br from-gray-900 to-gray-950 p-6 text-center">
         <h3 className="font-fredoka mb-3 text-sm font-bold uppercase tracking-wide text-gray-400">
           TOTAL NFTS
         </h3>
-        <div className="font-fredoka text-5xl font-bold text-[#3fb8bd]">{stats.totalNFTs}</div>
+        <div className="font-fredoka text-5xl font-bold text-kek-green">{stats.totalNFTs}</div>
       </div>
 
       {/* Rarity Tiers Card */}
-      <div className="flex-1 rounded-xl border border-[#3fb8bd]/30 bg-gradient-to-br from-gray-900 to-gray-950 p-6">
+      <div className="flex-1 rounded-xl border border-kek-green/30 bg-gradient-to-br from-gray-900 to-gray-950 p-6">
         <h3 className="font-fredoka mb-4 text-sm font-bold uppercase tracking-wide text-gray-400">
           RARITY TIERS
         </h3>

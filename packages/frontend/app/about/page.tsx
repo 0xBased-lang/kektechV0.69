@@ -39,7 +39,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-8">
                 <div className="text-4xl mb-4">📈</div>
-                <h3 className="text-2xl font-fredoka font-bold text-[#3fb8bd] mb-4">
+                <h3 className="text-2xl font-fredoka font-bold text-kek-green mb-4">
                   KEK Futures
                 </h3>
                 <p className="text-gray-300 mb-4">
@@ -48,7 +48,7 @@ export default function AboutPage() {
                 </p>
                 <Link
                   href="/feels-good-markets/kek-futures"
-                  className="text-[#3fb8bd] hover:text-[#4ecca7] font-semibold"
+                  className="text-kek-green hover:text-[#4ecca7] font-semibold"
                 >
                   Explore Markets →
                 </Link>
@@ -87,7 +87,7 @@ export default function AboutPage() {
 
               <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-8">
                 <div className="text-4xl mb-4">💎</div>
-                <h3 className="text-2xl font-fredoka font-bold text-[#3fb8bd] mb-4">
+                <h3 className="text-2xl font-fredoka font-bold text-kek-green mb-4">
                   Staking
                 </h3>
                 <p className="text-gray-300 mb-4">
@@ -101,14 +101,14 @@ export default function AboutPage() {
             </div>
 
             {/* Why BasedAI Section */}
-            <div className="bg-gradient-to-br from-[#3fb8bd]/10 to-[#4ecca7]/10 border border-[#3fb8bd]/30 rounded-xl p-8">
+            <div className="bg-gradient-to-br from-kek-green/10 to-[#4ecca7]/10 border border-kek-green/30 rounded-xl p-8">
               <div className="flex items-center gap-4 mb-6">
                 <div className="text-5xl">⚡</div>
                 <h2 className="text-3xl font-fredoka font-bold text-white">Why BasedAI?</h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
                 <div>
-                  <div className="text-4xl font-bold text-[#3fb8bd] mb-2">$0.0001</div>
+                  <div className="text-4xl font-bold text-kek-green mb-2">$0.0001</div>
                   <p className="text-gray-300">Per transaction</p>
                 </div>
                 <div>
@@ -130,7 +130,7 @@ export default function AboutPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
                   href="/feels-good-markets"
-                  className="px-10 py-4 bg-[#3fb8bd] text-black rounded-lg text-lg font-fredoka font-bold hover:bg-[#4ecca7] transition-all hover:scale-105 shadow-lg shadow-[#3fb8bd]/30"
+                  className="px-10 py-4 bg-kek-green text-black rounded-lg text-lg font-fredoka font-bold hover:bg-[#4ecca7] transition-all hover:scale-105 shadow-lg shadow-kek-green/30"
                 >
                   Explore Markets
                 </Link>

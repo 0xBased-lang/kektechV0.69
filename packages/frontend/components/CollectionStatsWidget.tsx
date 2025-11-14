@@ -43,7 +43,7 @@ export function CollectionStatsWidget() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#3fb8bd] border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-kek-green border-t-transparent" />
       </div>
     )
   }
@@ -53,13 +53,13 @@ export function CollectionStatsWidget() {
   const progress = getPercentage(totalMinted, totalSupply)
 
   return (
-    <div className="bg-gradient-to-br from-gray-900/80 to-gray-950/80 rounded-2xl border border-[#3fb8bd]/30 p-8 backdrop-blur-sm">
+    <div className="bg-gradient-to-br from-gray-900/80 to-gray-950/80 rounded-2xl border border-kek-green/30 p-8 backdrop-blur-sm">
       {/* Header Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {/* Total Minted */}
-        <div className="text-center p-6 rounded-xl bg-gradient-to-br from-[#3fb8bd]/10 to-transparent border border-[#3fb8bd]/20">
+        <div className="text-center p-6 rounded-xl bg-gradient-to-br from-kek-green/10 to-transparent border border-kek-green/20">
           <div className="text-sm font-medium text-gray-400 mb-2">Total Minted</div>
-          <div className="text-4xl font-bold text-[#3fb8bd] font-fredoka">{totalMinted}</div>
+          <div className="text-4xl font-bold text-kek-green font-fredoka">{totalMinted}</div>
           <div className="text-xs text-gray-500 mt-1">of {totalSupply}</div>
         </div>
 
@@ -107,7 +107,7 @@ export function CollectionStatsWidget() {
                   <span className="text-gray-400">
                     <span className="text-white font-medium">{tier.minted}</span> / {tier.total}
                   </span>
-                  <span className="text-[#3fb8bd] font-bold min-w-[80px] text-right">
+                  <span className="text-kek-green font-bold min-w-[80px] text-right">
                     {remaining} left
                   </span>
                 </div>

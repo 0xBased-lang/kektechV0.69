@@ -80,64 +80,64 @@ export function Header() {
         <nav className="hidden items-center space-x-4 md:flex lg:space-x-6">
           <Link
             href="/feels-good-markets"
-            className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
-              pathname?.startsWith('/feels-good-markets') ? 'text-[#3fb8bd] font-bold' : 'text-terminal-secondary'
+            className={`font-fredoka text-sm font-medium transition-colors hover:text-kek-green ${
+              pathname?.startsWith('/feels-good-markets') ? 'text-kek-green font-bold' : 'text-terminal-secondary'
             }`}
           >
             Feels Good Markets
           </Link>
           <Link
             href="/proposals"
-            className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
-              pathname === '/proposals' ? 'text-[#3fb8bd] font-bold' : 'text-terminal-secondary'
+            className={`font-fredoka text-sm font-medium transition-colors hover:text-kek-green ${
+              pathname === '/proposals' ? 'text-kek-green font-bold' : 'text-terminal-secondary'
             }`}
           >
             💡 Proposals
           </Link>
           <Link
             href="/markets"
-            className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
-              pathname?.startsWith('/market') ? 'text-[#3fb8bd] font-bold' : 'text-terminal-secondary'
+            className={`font-fredoka text-sm font-medium transition-colors hover:text-kek-green ${
+              pathname?.startsWith('/market') ? 'text-kek-green font-bold' : 'text-terminal-secondary'
             }`}
           >
             Markets
           </Link>
           <Link
             href="/feed"
-            className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
-              pathname === '/feed' ? 'text-[#3fb8bd] font-bold' : 'text-terminal-secondary'
+            className={`font-fredoka text-sm font-medium transition-colors hover:text-kek-green ${
+              pathname === '/feed' ? 'text-kek-green font-bold' : 'text-terminal-secondary'
             }`}
           >
             Feed
           </Link>
           <Link
             href="/dashboard"
-            className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
-              pathname === '/dashboard' ? 'text-[#3fb8bd] font-bold' : 'text-terminal-secondary'
+            className={`font-fredoka text-sm font-medium transition-colors hover:text-kek-green ${
+              pathname === '/dashboard' ? 'text-kek-green font-bold' : 'text-terminal-secondary'
             }`}
           >
             Dashboard
           </Link>
           <Link
             href="/gallery"
-            className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
-              pathname === '/gallery' ? 'text-[#3fb8bd] font-bold' : 'text-terminal-secondary'
+            className={`font-fredoka text-sm font-medium transition-colors hover:text-kek-green ${
+              pathname === '/gallery' ? 'text-kek-green font-bold' : 'text-terminal-secondary'
             }`}
           >
             Gallery
           </Link>
           <Link
             href="/staking"
-            className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
-              pathname === '/staking' ? 'text-[#3fb8bd] font-bold' : 'text-terminal-secondary'
+            className={`font-fredoka text-sm font-medium transition-colors hover:text-kek-green ${
+              pathname === '/staking' ? 'text-kek-green font-bold' : 'text-terminal-secondary'
             }`}
           >
             Staking
           </Link>
           <Link
             href="/about"
-            className={`font-fredoka text-sm font-medium transition-colors hover:text-[#3fb8bd] ${
-              pathname === '/about' ? 'text-[#3fb8bd] font-bold' : 'text-terminal-secondary'
+            className={`font-fredoka text-sm font-medium transition-colors hover:text-kek-green ${
+              pathname === '/about' ? 'text-kek-green font-bold' : 'text-terminal-secondary'
             }`}
           >
             About Us
@@ -195,22 +195,22 @@ export function Header() {
           {/* Mobile: Hamburger Menu Button */}
           <button
             onClick={toggleMobileMenu}
-            className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg bg-gray-900/60 border border-gray-800 hover:border-[#3fb8bd] transition-colors"
+            className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg bg-gray-900/60 border border-gray-800 hover:border-kek-green transition-colors"
             aria-label="Toggle mobile menu"
             aria-expanded={mobileMenuOpen}
           >
             <span
-              className={`block w-6 h-0.5 bg-[#3fb8bd] transition-all duration-300 ${
+              className={`block w-6 h-0.5 bg-kek-green transition-all duration-300 ${
                 mobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''
               }`}
             />
             <span
-              className={`block w-6 h-0.5 bg-[#3fb8bd] my-1 transition-all duration-300 ${
+              className={`block w-6 h-0.5 bg-kek-green my-1 transition-all duration-300 ${
                 mobileMenuOpen ? 'opacity-0' : ''
               }`}
             />
             <span
-              className={`block w-6 h-0.5 bg-[#3fb8bd] transition-all duration-300 ${
+              className={`block w-6 h-0.5 bg-kek-green transition-all duration-300 ${
                 mobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''
               }`}
             />
@@ -229,7 +229,7 @@ export function Header() {
 
       {/* Mobile Slide-Out Menu - Highest z-index to appear above everything */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] border-l border-[#3fb8bd]/20 z-[110] transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
+        className={`fixed top-0 right-0 h-full w-80 max-w-[85vw] border-l border-kek-green/20 z-[110] transform transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{
@@ -247,11 +247,11 @@ export function Header() {
             <button
               onClick={closeMobileMenu}
               type="button"
-              className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-900 border-2 border-gray-800 hover:border-[#3fb8bd] hover:bg-gray-800 active:scale-95 transition-all relative z-[120] touch-manipulation flex-shrink-0"
+              className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-900 border-2 border-gray-800 hover:border-kek-green hover:bg-gray-800 active:scale-95 transition-all relative z-[120] touch-manipulation flex-shrink-0"
               aria-label="Close menu"
               style={{ pointerEvents: 'auto' }}
             >
-              <span className="text-[#3fb8bd] text-3xl font-bold leading-none select-none">×</span>
+              <span className="text-kek-green text-3xl font-bold leading-none select-none">×</span>
             </button>
           </div>
 
@@ -300,8 +300,8 @@ export function Header() {
             onClick={closeMobileMenu}
             className={`font-fredoka text-lg font-medium py-4 px-5 rounded-lg transition-colors touch-manipulation ${
               pathname?.startsWith('/feels-good-markets')
-                ? 'bg-[#3fb8bd]/20 text-[#3fb8bd] font-bold'
-                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-[#3fb8bd]'
+                ? 'bg-kek-green/20 text-kek-green font-bold'
+                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-kek-green'
             }`}
           >
             Feels Good Markets
@@ -311,8 +311,8 @@ export function Header() {
             onClick={closeMobileMenu}
             className={`font-fredoka text-lg font-medium py-4 px-5 rounded-lg transition-colors touch-manipulation ${
               pathname === '/proposals'
-                ? 'bg-[#3fb8bd]/20 text-[#3fb8bd] font-bold'
-                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-[#3fb8bd]'
+                ? 'bg-kek-green/20 text-kek-green font-bold'
+                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-kek-green'
             }`}
           >
             💡 Proposals
@@ -322,8 +322,8 @@ export function Header() {
             onClick={closeMobileMenu}
             className={`font-fredoka text-lg font-medium py-4 px-5 rounded-lg transition-colors touch-manipulation ${
               pathname?.startsWith('/market')
-                ? 'bg-[#3fb8bd]/20 text-[#3fb8bd] font-bold'
-                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-[#3fb8bd]'
+                ? 'bg-kek-green/20 text-kek-green font-bold'
+                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-kek-green'
             }`}
           >
             Markets
@@ -333,8 +333,8 @@ export function Header() {
             onClick={closeMobileMenu}
             className={`font-fredoka text-lg font-medium py-4 px-5 rounded-lg transition-colors touch-manipulation ${
               pathname === '/feed'
-                ? 'bg-[#3fb8bd]/20 text-[#3fb8bd] font-bold'
-                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-[#3fb8bd]'
+                ? 'bg-kek-green/20 text-kek-green font-bold'
+                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-kek-green'
             }`}
           >
             Feed
@@ -344,8 +344,8 @@ export function Header() {
             onClick={closeMobileMenu}
             className={`font-fredoka text-lg font-medium py-4 px-5 rounded-lg transition-colors touch-manipulation ${
               pathname === '/dashboard'
-                ? 'bg-[#3fb8bd]/20 text-[#3fb8bd] font-bold'
-                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-[#3fb8bd]'
+                ? 'bg-kek-green/20 text-kek-green font-bold'
+                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-kek-green'
             }`}
           >
             Dashboard
@@ -355,8 +355,8 @@ export function Header() {
             onClick={closeMobileMenu}
             className={`font-fredoka text-lg font-medium py-4 px-5 rounded-lg transition-colors touch-manipulation ${
               pathname === '/gallery'
-                ? 'bg-[#3fb8bd]/20 text-[#3fb8bd] font-bold'
-                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-[#3fb8bd]'
+                ? 'bg-kek-green/20 text-kek-green font-bold'
+                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-kek-green'
             }`}
           >
             Gallery
@@ -366,8 +366,8 @@ export function Header() {
             onClick={closeMobileMenu}
             className={`font-fredoka text-lg font-medium py-4 px-5 rounded-lg transition-colors touch-manipulation ${
               pathname === '/staking'
-                ? 'bg-[#3fb8bd]/20 text-[#3fb8bd] font-bold'
-                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-[#3fb8bd]'
+                ? 'bg-kek-green/20 text-kek-green font-bold'
+                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-kek-green'
             }`}
           >
             Staking
@@ -377,8 +377,8 @@ export function Header() {
             onClick={closeMobileMenu}
             className={`font-fredoka text-lg font-medium py-4 px-5 rounded-lg transition-colors touch-manipulation ${
               pathname === '/about'
-                ? 'bg-[#3fb8bd]/20 text-[#3fb8bd] font-bold'
-                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-[#3fb8bd]'
+                ? 'bg-kek-green/20 text-kek-green font-bold'
+                : 'text-terminal-secondary hover:bg-terminal-elevated hover:text-kek-green'
             }`}
           >
             About Us

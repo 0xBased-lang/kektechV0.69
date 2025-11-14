@@ -32,7 +32,7 @@ export function FeedModeToggle({ mode, onModeChange, className = '' }: FeedModeT
         onClick={() => onModeChange('all')}
         className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all ${
           mode === 'all'
-            ? 'bg-[#3fb8bd] text-white shadow-lg shadow-[#3fb8bd]/20'
+            ? 'bg-kek-green text-white shadow-lg shadow-kek-green/20'
             : 'text-gray-400 hover:text-gray-300 hover:bg-gray-800/50'
         }`}
       >
@@ -46,7 +46,7 @@ export function FeedModeToggle({ mode, onModeChange, className = '' }: FeedModeT
         onClick={() => onModeChange('comments')}
         className={`flex-1 flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all ${
           mode === 'comments'
-            ? 'bg-[#3fb8bd] text-white shadow-lg shadow-[#3fb8bd]/20'
+            ? 'bg-kek-green text-white shadow-lg shadow-kek-green/20'
             : 'text-gray-400 hover:text-gray-300 hover:bg-gray-800/50'
         }`}
       >

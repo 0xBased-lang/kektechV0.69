@@ -22,7 +22,7 @@ export function NFTCard({ nft }: NFTCardProps) {
   return (
     <Link
       href={`/nft?id=${nft.tokenId}`}
-      className="group block overflow-hidden rounded-lg border border-[#3fb8bd]/20 bg-gray-900 transition-all hover:border-[#3fb8bd]/50 hover:shadow-lg hover:shadow-[#3fb8bd]/20 dark:border-[#3fb8bd]/20 dark:bg-gray-900"
+      className="group block overflow-hidden rounded-lg border border-kek-green/20 bg-gray-900 transition-all hover:border-kek-green/50 hover:shadow-lg hover:shadow-kek-green/20 dark:border-kek-green/20 dark:bg-gray-900"
     >
       {/* Image */}
       <div className="relative aspect-square overflow-hidden bg-gray-800 dark:bg-gray-800">
@@ -36,7 +36,7 @@ export function NFTCard({ nft }: NFTCardProps) {
         />
 
         {/* Ranking Badge */}
-        <div className="absolute right-2 top-2 rounded-full bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] px-3 py-1 text-xs font-semibold text-black shadow-lg">
+        <div className="absolute right-2 top-2 rounded-full bg-gradient-to-r from-kek-green to-[#4ecca7] px-3 py-1 text-xs font-semibold text-black shadow-lg">
           Rank #{nft.rank}
         </div>
       </div>

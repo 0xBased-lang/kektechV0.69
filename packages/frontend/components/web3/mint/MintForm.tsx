@@ -162,7 +162,7 @@ export function MintForm() {
         {/* NFT Images or Loading State */}
         {nftsLoading ? (
           <div className="mb-4">
-            <div className="w-full max-w-xs mx-auto aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg border-2 border-[#3fb8bd] flex items-center justify-center animate-pulse">
+            <div className="w-full max-w-xs mx-auto aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg border-2 border-kek-green flex items-center justify-center animate-pulse">
               <span className="text-gray-400 dark:text-gray-500 text-sm">Loading your NFT{mintAmount > 1 ? 's' : ''}...</span>
             </div>
           </div>
@@ -180,10 +180,10 @@ export function MintForm() {
                     <img
                       src={nft.imageUrl}
                       alt={nft.name}
-                      className="w-full aspect-square object-cover rounded-lg border-2 border-[#3fb8bd] shadow-lg transition-transform group-hover:scale-105"
+                      className="w-full aspect-square object-cover rounded-lg border-2 border-kek-green shadow-lg transition-transform group-hover:scale-105"
                     />
                   ) : (
-                    <div className="w-full aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg border-2 border-[#3fb8bd] flex items-center justify-center">
+                    <div className="w-full aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg border-2 border-kek-green flex items-center justify-center">
                       <span className="text-gray-400 dark:text-gray-500">Loading...</span>
                     </div>
                   )}
@@ -213,14 +213,14 @@ export function MintForm() {
             href={`${EXPLORER_URL}/tx/${hash}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block rounded-lg bg-[#3fb8bd] px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-[#3fb8bd]/80"
+            className="inline-block rounded-lg bg-kek-green px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-kek-green/80"
           >
             View Transaction ↗
           </a>
           {mintedNFTs.length > 0 && (
             <a
               href={`/nft?tokenId=${mintedNFTs[0].tokenId}`}
-              className="ml-2 inline-block rounded-lg bg-[#3fb8bd]/20 border-2 border-[#3fb8bd] px-4 py-2 text-sm font-medium text-[#3fb8bd] transition-colors hover:bg-[#3fb8bd]/30"
+              className="ml-2 inline-block rounded-lg bg-kek-green/20 border-2 border-kek-green px-4 py-2 text-sm font-medium text-kek-green transition-colors hover:bg-kek-green/30"
             >
               View NFT
             </a>

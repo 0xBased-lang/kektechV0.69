@@ -56,11 +56,11 @@ export function PositionCard({
 
   return (
     <Link href={`/markets/${marketAddress}`}>
-      <div className="group p-6 bg-gray-900 rounded-xl border border-gray-800 hover:border-[#3fb8bd] transition cursor-pointer">
+      <div className="group p-6 bg-gray-900 rounded-xl border border-gray-800 hover:border-kek-green transition cursor-pointer">
         {/* Market info (if enabled) */}
         {showMarketInfo && market.question && (
           <div className="mb-4 pb-4 border-b border-gray-800">
-            <h3 className="font-semibold text-white group-hover:text-[#3fb8bd] transition line-clamp-2">
+            <h3 className="font-semibold text-white group-hover:text-kek-green transition line-clamp-2">
               {market.question}
             </h3>
           </div>

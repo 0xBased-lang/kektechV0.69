@@ -88,14 +88,14 @@ export function TraitFilterSidebar({ nfts, onFilterChange }: TraitFilterSidebarP
   const activeFilterCount = Object.values(filters).reduce((sum, values) => sum + values.length, 0)
 
   return (
-    <div className="w-80 bg-gray-900/80 border border-[#3fb8bd]/30 rounded-xl p-6 space-y-6 shadow-lg shadow-[#3fb8bd]/10">
+    <div className="w-80 bg-gray-900/80 border border-kek-green/30 rounded-xl p-6 space-y-6 shadow-lg shadow-kek-green/10">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-bold text-[#3fb8bd] font-fredoka">Filter by Traits</h3>
+        <h3 className="text-lg font-bold text-kek-green font-fredoka">Filter by Traits</h3>
         {activeFilterCount > 0 && (
           <button
             onClick={clearAll}
-            className="text-sm text-[#4ecca7] hover:text-[#3fb8bd] transition font-fredoka"
+            className="text-sm text-[#4ecca7] hover:text-kek-green transition font-fredoka"
           >
             Clear All ({activeFilterCount})
           </button>
@@ -112,22 +112,22 @@ export function TraitFilterSidebar({ nfts, onFilterChange }: TraitFilterSidebarP
           if (options.length === 0) return null
 
           return (
-            <div key={key} className="border border-[#3fb8bd]/20 rounded-lg overflow-hidden bg-black/30">
+            <div key={key} className="border border-kek-green/20 rounded-lg overflow-hidden bg-black/30">
               {/* Category Header */}
               <button
                 onClick={() => toggleCategory(key)}
-                className="w-full px-4 py-3 bg-[#3fb8bd]/10 hover:bg-[#3fb8bd]/20 transition flex items-center justify-between"
+                className="w-full px-4 py-3 bg-kek-green/10 hover:bg-kek-green/20 transition flex items-center justify-between"
               >
                 <span className="font-medium text-[#4ecca7] font-fredoka flex items-center gap-2">
                   {label}
                   {categoryFilters.length > 0 && (
-                    <span className="px-2 py-0.5 bg-[#3fb8bd] text-black text-xs rounded-full font-bold">
+                    <span className="px-2 py-0.5 bg-kek-green text-black text-xs rounded-full font-bold">
                       {categoryFilters.length}
                     </span>
                   )}
                 </span>
                 <svg
-                  className={`w-4 h-4 text-[#3fb8bd] transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                  className={`w-4 h-4 text-kek-green transition-transform ${isExpanded ? 'rotate-180' : ''}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -142,7 +142,7 @@ export function TraitFilterSidebar({ nfts, onFilterChange }: TraitFilterSidebarP
                   {categoryFilters.length > 0 && (
                     <button
                       onClick={() => clearCategory(key)}
-                      className="text-xs text-[#3fb8bd] hover:text-[#4ecca7] mb-2 font-fredoka transition"
+                      className="text-xs text-kek-green hover:text-[#4ecca7] mb-2 font-fredoka transition"
                     >
                       Clear {label}
                     </button>
@@ -155,14 +155,14 @@ export function TraitFilterSidebar({ nfts, onFilterChange }: TraitFilterSidebarP
                     return (
                       <label
                         key={value}
-                        className="flex items-center justify-between cursor-pointer hover:bg-[#3fb8bd]/10 p-2 rounded transition group"
+                        className="flex items-center justify-between cursor-pointer hover:bg-kek-green/10 p-2 rounded transition group"
                       >
                         <div className="flex items-center gap-2">
                           <input
                             type="checkbox"
                             checked={isChecked}
                             onChange={() => toggleFilter(key, value)}
-                            className="w-4 h-4 rounded border-2 border-[#3fb8bd]/50 bg-gray-900 checked:bg-[#3fb8bd] checked:border-[#3fb8bd] focus:ring-2 focus:ring-[#3fb8bd] focus:ring-offset-0 cursor-pointer transition-all"
+                            className="w-4 h-4 rounded border-2 border-kek-green/50 bg-gray-900 checked:bg-kek-green checked:border-kek-green focus:ring-2 focus:ring-kek-green focus:ring-offset-0 cursor-pointer transition-all"
                             style={{
                               colorScheme: 'dark'
                             }}
@@ -187,7 +187,7 @@ export function TraitFilterSidebar({ nfts, onFilterChange }: TraitFilterSidebarP
 
       {/* Active Filters Summary */}
       {activeFilterCount > 0 && (
-        <div className="pt-4 border-t border-[#3fb8bd]/30">
+        <div className="pt-4 border-t border-kek-green/30">
           <p className="text-sm text-[#4ecca7] font-fredoka font-bold">
             {activeFilterCount} filter{activeFilterCount !== 1 ? 's' : ''} active
           </p>
@@ -244,7 +244,7 @@ function formatTraitName(name: string): string {
 function getRarityColor(percentage: number): string {
   if (percentage < 1) return 'text-[#ff00ff]'      // Magenta for ultra rare (<1%)
   if (percentage < 5) return 'text-[#4ecca7]'      // Mint green for very rare (<5%)
-  if (percentage < 15) return 'text-[#3fb8bd]'     // Cyan for rare (<15%)
-  if (percentage < 30) return 'text-[#3fb8bd]/70'  // Muted cyan for uncommon (<30%)
+  if (percentage < 15) return 'text-kek-green'     // Cyan for rare (<15%)
+  if (percentage < 30) return 'text-kek-green/70'  // Muted cyan for uncommon (<30%)
   return 'text-gray-400'                            // Gray for common (>30%)
 }

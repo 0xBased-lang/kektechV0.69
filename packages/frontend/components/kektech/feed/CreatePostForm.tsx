@@ -53,8 +53,8 @@ export function CreatePostForm() {
       <form onSubmit={handleSubmit}>
         {/* User Info */}
         <div className="flex items-start gap-3 mb-3">
-          <div className="w-10 h-10 rounded-lg bg-[#3fb8bd]/10 border border-[#3fb8bd]/20 flex items-center justify-center flex-shrink-0">
-            <span className="text-[#3fb8bd] font-bold text-sm">
+          <div className="w-10 h-10 rounded-lg bg-kek-green/10 border border-kek-green/20 flex items-center justify-center flex-shrink-0">
+            <span className="text-kek-green font-bold text-sm">
               {address ? address.slice(2, 4).toUpperCase() : '??'}
             </span>
           </div>
@@ -79,14 +79,14 @@ export function CreatePostForm() {
                   className="p-2 hover:bg-terminal-elevated rounded transition"
                   title="Advanced options"
                 >
-                  <Image className="w-4 h-4 text-terminal-tertiary hover:text-[#3fb8bd] transition" />
+                  <Image className="w-4 h-4 text-terminal-tertiary hover:text-kek-green transition" />
                 </button>
                 <button
                   type="button"
                   className="p-2 hover:bg-terminal-elevated rounded transition"
                   title="Add link"
                 >
-                  <LinkIcon className="w-4 h-4 text-terminal-tertiary hover:text-[#3fb8bd] transition" />
+                  <LinkIcon className="w-4 h-4 text-terminal-tertiary hover:text-kek-green transition" />
                 </button>
               </div>
 
@@ -145,7 +145,7 @@ export function CreatePostForm() {
               px-6 py-2 rounded-lg font-semibold text-sm transition flex items-center gap-2
               ${isEmpty || isOverLimit || isPosting
                 ? 'bg-terminal-elevated text-terminal-tertiary cursor-not-allowed'
-                : 'bg-[#3fb8bd] hover:bg-[#3fb8bd]/90 text-terminal-black shadow-lg shadow-[#3fb8bd]/10'
+                : 'bg-kek-green hover:bg-kek-green/90 text-terminal-black shadow-lg shadow-kek-green/10'
               }
             `}
           >

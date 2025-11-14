@@ -34,7 +34,7 @@ export function SummaryCard({
         transition-all duration-300
         ${disabled || isLoading
           ? 'opacity-50 cursor-not-allowed'
-          : 'hover:border-[#3fb8bd] hover:shadow-lg hover:shadow-[#3fb8bd]/20 cursor-pointer'
+          : 'hover:border-kek-green hover:shadow-lg hover:shadow-kek-green/20 cursor-pointer'
         }
       `}
     >
@@ -65,7 +65,7 @@ export function SummaryCard({
 
         {/* Arrow hint */}
         {!disabled && !isLoading && (
-          <div className="absolute top-6 right-6 text-gray-600 group-hover:text-[#3fb8bd] transition">
+          <div className="absolute top-6 right-6 text-gray-600 group-hover:text-kek-green transition">
             →
           </div>
         )}

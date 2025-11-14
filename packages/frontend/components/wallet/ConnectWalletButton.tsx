@@ -53,7 +53,7 @@ export function ConnectWalletButton() {
                   <Button
                     onClick={openConnectModal}
                     type="button"
-                    className="bg-[#3fb8bd] hover:bg-[#2fa8ad] text-white font-medium"
+                    className="bg-kek-green hover:bg-[#2fa8ad] text-white font-medium"
                   >
                     Connect Wallet
                   </Button>
@@ -80,7 +80,7 @@ export function ConnectWalletButton() {
                     onClick={authenticate}
                     disabled={isAuthenticating}
                     type="button"
-                    className="bg-[#3fb8bd] hover:bg-[#2fa8ad] text-white font-medium"
+                    className="bg-kek-green hover:bg-[#2fa8ad] text-white font-medium"
                   >
                     {isAuthenticating ? (
                       <>
@@ -132,7 +132,7 @@ export function ConnectWalletButton() {
                   <Button
                     onClick={openAccountModal}
                     type="button"
-                    className="bg-[#3fb8bd] hover:bg-[#2fa8ad] text-white font-medium"
+                    className="bg-kek-green hover:bg-[#2fa8ad] text-white font-medium"
                   >
                     {account.displayName}
                     {account.displayBalance && (

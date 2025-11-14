@@ -51,7 +51,7 @@ export function MarketStats({ marketAddress }: MarketStatsProps) {
       {/* Price Chart */}
       <div className="p-6 bg-gray-900 rounded-xl border border-gray-800">
         <div className="flex items-center gap-2 mb-4">
-          <BarChart3 className="w-5 h-5 text-[#3fb8bd]" />
+          <BarChart3 className="w-5 h-5 text-kek-green" />
           <h3 className="text-lg font-bold text-white">Current Odds</h3>
         </div>
 
@@ -111,7 +111,7 @@ export function MarketStats({ marketAddress }: MarketStatsProps) {
         {/* Total Volume */}
         <div className="p-6 bg-gray-900 rounded-xl border border-gray-800">
           <div className="flex items-center gap-2 mb-3">
-            <DollarSign className="w-5 h-5 text-[#3fb8bd]" />
+            <DollarSign className="w-5 h-5 text-kek-green" />
             <h3 className="text-sm font-medium text-gray-400">Total Volume</h3>
           </div>
           <p className="text-3xl font-bold text-white mb-1">
@@ -123,7 +123,7 @@ export function MarketStats({ marketAddress }: MarketStatsProps) {
         {/* Liquidity */}
         <div className="p-6 bg-gray-900 rounded-xl border border-gray-800">
           <div className="flex items-center gap-2 mb-3">
-            <PieChart className="w-5 h-5 text-[#3fb8bd]" />
+            <PieChart className="w-5 h-5 text-kek-green" />
             <h3 className="text-sm font-medium text-gray-400">Liquidity</h3>
           </div>
           <p className="text-3xl font-bold text-white mb-1">

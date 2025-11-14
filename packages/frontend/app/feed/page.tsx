@@ -31,8 +31,8 @@ export default function GlobalFeedPage() {
       <div className="border-b border-terminal bg-terminal-card/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-[#3fb8bd]/10 rounded-lg border border-[#3fb8bd]/20">
-              <MessageSquare className="w-6 h-6 text-[#3fb8bd]" />
+            <div className="p-2 bg-kek-green/10 rounded-lg border border-kek-green/20">
+              <MessageSquare className="w-6 h-6 text-kek-green" />
             </div>
             <div>
               <h1 className="text-2xl font-bold text-terminal-primary mono-numbers">
@@ -58,7 +58,7 @@ export default function GlobalFeedPage() {
                   className={`
                     flex items-center gap-2 px-4 py-3 font-semibold text-sm whitespace-nowrap transition-all relative
                     ${isActive
-                      ? 'text-[#3fb8bd] bg-terminal-elevated'
+                      ? 'text-kek-green bg-terminal-elevated'
                       : 'text-terminal-tertiary hover:text-terminal-secondary hover:bg-terminal-elevated/50'
                     }
                   `}
@@ -66,7 +66,7 @@ export default function GlobalFeedPage() {
                   <Icon className="w-4 h-4" />
                   <span className="hidden sm:inline">{tab.label}</span>
                   {isActive && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#3fb8bd]" />
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-kek-green" />
                   )}
                 </button>
               );
@@ -102,7 +102,7 @@ export default function GlobalFeedPage() {
             {/* Platform Stats */}
             <div className="p-4 bg-terminal-card rounded-lg border border-terminal">
               <h4 className="font-semibold text-terminal-primary mb-3 flex items-center gap-2">
-                <span className="text-[#3fb8bd]">◆</span>
+                <span className="text-kek-green">◆</span>
                 Platform Stats
               </h4>
               <div className="space-y-2.5 text-sm">
@@ -130,7 +130,7 @@ export default function GlobalFeedPage() {
             {/* Feed Info */}
             <div className="p-4 bg-terminal-card rounded-lg border border-terminal">
               <h4 className="font-semibold text-terminal-primary mb-2 flex items-center gap-2">
-                <span className="text-[#3fb8bd]">→</span>
+                <span className="text-kek-green">→</span>
                 About Feed
               </h4>
               <p className="text-sm text-terminal-tertiary">

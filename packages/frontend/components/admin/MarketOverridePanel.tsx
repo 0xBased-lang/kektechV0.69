@@ -1,7 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 "use client";
 
 import { useState } from "react";
@@ -22,6 +18,7 @@ import {
   Search
 } from "lucide-react";
 import { useMarketList, useMarketInfo } from "@/lib/hooks/kektech/useMarketData";
+import { useMarketInfoList } from "@/lib/hooks/kektech/useMarketInfoList";
 import {
   useApproveMarket,
   useActivateMarket,
@@ -37,8 +34,8 @@ export function MarketOverridePanel() {
   const [filterState, setFilterState] = useState<number | null>(null);
   const [selectedMarket, setSelectedMarket] = useState<Address | null>(null);
 
-  // Call hooks for ALL markets at top level (required by React rules)
-  const marketInfos = markets.map((address) => useMarketInfo(address, true));
+  // ✅ FIXED: Use dedicated hook for fetching multiple markets (no hooks-in-loop violation)
+  const { marketInfos } = useMarketInfoList(markets, true);
 
   // Filter markets based on search and state filter
   const filteredMarkets = markets.filter((address, index) => {

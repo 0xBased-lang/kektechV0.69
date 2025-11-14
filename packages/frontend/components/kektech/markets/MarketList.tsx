@@ -66,7 +66,7 @@ export function MarketList({ filterState, limit }: MarketListProps) {
             onClick={() => setFilter(state)}
             className={`px-4 py-2 rounded-lg font-medium transition ${
               filter === state
-                ? 'bg-[#3fb8bd] text-black'
+                ? 'bg-kek-green text-black'
                 : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
             }`}
           >

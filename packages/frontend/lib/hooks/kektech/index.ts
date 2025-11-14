@@ -21,6 +21,12 @@ export {
   useMarketOdds,
 } from './useMarketData';
 
+// Market info list hook (for admin panels handling multiple markets)
+export {
+  useMarketInfoList,
+  useMarketInfoListOptimized,
+} from './useMarketInfoList';
+
 // Market action hooks
 export {
   useCreateMarket,

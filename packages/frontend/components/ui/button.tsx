@@ -5,27 +5,27 @@ import { cva, type VariantProps } from 'class-variance-authority'
 // Refined button system - exclusive, clean, professional
 const buttonVariants = cva(
   // Base styles - minimal and elegant
-  'inline-flex items-center justify-center gap-2 font-fredoka font-semibold transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-[#3fb8bd]/30 focus:ring-offset-2 focus:ring-offset-gray-950',
+  'inline-flex items-center justify-center gap-2 font-fredoka font-semibold transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-kek-green/30 focus:ring-offset-2 focus:ring-offset-gray-950',
   {
     variants: {
       variant: {
         // Primary: Clean gradient fill - professional and exclusive
         primary:
-          'bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black shadow-md hover:shadow-lg hover:shadow-[#3fb8bd]/20 hover:opacity-90',
+          'bg-gradient-to-r from-kek-green to-[#4ecca7] text-black shadow-md hover:shadow-lg hover:shadow-kek-green/20 hover:opacity-90',
 
         // Secondary: Elegant outline - refined alternative
         secondary:
-          'border-2 border-[#3fb8bd]/60 bg-transparent text-[#3fb8bd] hover:border-[#3fb8bd] hover:bg-[#3fb8bd]/5 hover:shadow-md hover:shadow-[#3fb8bd]/10',
+          'border-2 border-kek-green/60 bg-transparent text-kek-green hover:border-kek-green hover:bg-kek-green/5 hover:shadow-md hover:shadow-kek-green/10',
 
         // Ghost: Minimal and subtle
         ghost:
-          'bg-transparent text-gray-300 hover:bg-gray-800/30 hover:text-[#3fb8bd]',
+          'bg-transparent text-gray-300 hover:bg-gray-800/30 hover:text-kek-green',
 
         // Shadcn-style variants for admin dashboard compatibility
-        default: 'bg-[#3fb8bd] text-white hover:bg-[#2fa8ad]',
+        default: 'bg-kek-green text-white hover:bg-[#2fa8ad]',
         destructive: 'bg-red-600 text-white hover:bg-red-700',
         outline: 'border-2 border-gray-700 bg-transparent text-gray-300 hover:bg-gray-800 hover:text-white',
-        link: 'text-[#3fb8bd] underline-offset-4 hover:underline bg-transparent',
+        link: 'text-kek-green underline-offset-4 hover:underline bg-transparent',
       },
       size: {
         sm: 'px-5 py-2.5 text-sm rounded-lg',

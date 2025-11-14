@@ -40,8 +40,8 @@ export default function MarketplacePage() {
                   className={`
                     px-8 py-3 rounded-lg font-fredoka font-bold transition-all duration-200
                     ${activeTab === 'mint'
-                      ? 'bg-[#3fb8bd] text-black shadow-lg shadow-[#3fb8bd]/20'
-                      : 'text-[#3fb8bd] hover:text-white hover:bg-gray-800/50'
+                      ? 'bg-kek-green text-black shadow-lg shadow-kek-green/20'
+                      : 'text-kek-green hover:text-white hover:bg-gray-800/50'
                     }
                   `}
                 >

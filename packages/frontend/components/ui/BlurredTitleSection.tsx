@@ -46,17 +46,16 @@ export function BlurredTitleSection({
       {/* Content Layer - Title and Subtitle */}
       <div className="relative z-10 px-8 py-16 text-center">
         {/* Animated glow effect behind title */}
-        <div className="absolute left-1/2 top-1/2 h-32 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#3fb8bd]/20 blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 h-32 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-kek-green/20 blur-3xl" />
 
         {/* Title */}
-        <h1 className="font-fredoka relative mb-4 text-3xl font-bold text-[#3fb8bd] sm:text-4xl lg:text-5xl drop-shadow-2xl">
+        <h1 className="font-fredoka relative mb-4 text-3xl font-bold text-kek-green sm:text-4xl lg:text-5xl drop-shadow-2xl">
           <span className="relative inline-block">
             {title}
             {/* Text glow effect */}
             <span
-              className="absolute inset-0 blur-md opacity-50"
+              className="absolute inset-0 blur-md opacity-50 text-kek-green"
               style={{
-                color: '#3fb8bd',
                 zIndex: -1
               }}
             >
@@ -73,7 +72,7 @@ export function BlurredTitleSection({
         )}
 
         {/* Decorative line */}
-        <div className="mx-auto mt-6 h-1 w-24 rounded-full bg-gradient-to-r from-transparent via-[#3fb8bd] to-transparent opacity-50" />
+        <div className="mx-auto mt-6 h-1 w-24 rounded-full bg-gradient-to-r from-transparent via-kek-green to-transparent opacity-50" />
       </div>
 
       {/* Shimmer effect overlay */}

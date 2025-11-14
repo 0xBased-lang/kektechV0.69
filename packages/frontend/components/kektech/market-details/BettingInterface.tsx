@@ -92,7 +92,7 @@ export function BettingInterface({ marketAddress, onSuccess }: BettingInterfaceP
         <p className="text-gray-400 mb-4">Connect your wallet to place bets</p>
         <button
           onClick={() => connect()}
-          className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-bold hover:scale-105 transition"
+          className="px-6 py-3 rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] text-black font-bold hover:scale-105 transition"
         >
           Connect Wallet
         </button>
@@ -172,7 +172,7 @@ export function BettingInterface({ marketAddress, onSuccess }: BettingInterfaceP
           placeholder="1.0"
           step="0.1"
           min="0"
-          className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd]"
+          className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-kek-green"
         />
         {balance && (
           <p className="text-xs text-gray-400 mt-1">

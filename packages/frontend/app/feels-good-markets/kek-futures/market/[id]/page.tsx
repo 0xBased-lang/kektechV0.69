@@ -57,7 +57,7 @@ export default function MarketDetailPage() {
             <div className="mt-8">
               {/* Section Header */}
               <div className="mb-6">
-                <h3 className="text-2xl font-bold text-[#3fb8bd] font-fredoka mb-2">
+                <h3 className="text-2xl font-bold text-kek-green font-fredoka mb-2">
                   Community Engagement
                 </h3>
                 <p className="text-gray-400 text-sm font-fredoka">
@@ -76,19 +76,19 @@ export default function MarketDetailPage() {
                 <TabsList className="bg-gray-900 border border-gray-800 rounded-xl p-1 mb-6 w-full sm:w-auto">
                   <TabsTrigger
                     value="discussion"
-                    className="font-fredoka font-medium text-sm data-[state=active]:bg-gray-950 data-[state=active]:text-[#3fb8bd] data-[state=active]:shadow-sm data-[state=active]:border-[#3fb8bd]/30 text-gray-400 hover:text-gray-300 transition-all rounded-lg"
+                    className="font-fredoka font-medium text-sm data-[state=active]:bg-gray-950 data-[state=active]:text-kek-green data-[state=active]:shadow-sm data-[state=active]:border-kek-green/30 text-gray-400 hover:text-gray-300 transition-all rounded-lg"
                   >
                     💬 Discussion
                   </TabsTrigger>
                   <TabsTrigger
                     value="sentiment"
-                    className="font-fredoka font-medium text-sm data-[state=active]:bg-gray-950 data-[state=active]:text-[#3fb8bd] data-[state=active]:shadow-sm data-[state=active]:border-[#3fb8bd]/30 text-gray-400 hover:text-gray-300 transition-all rounded-lg"
+                    className="font-fredoka font-medium text-sm data-[state=active]:bg-gray-950 data-[state=active]:text-kek-green data-[state=active]:shadow-sm data-[state=active]:border-kek-green/30 text-gray-400 hover:text-gray-300 transition-all rounded-lg"
                   >
                     📊 Sentiment Voting
                   </TabsTrigger>
                   <TabsTrigger
                     value="resolution"
-                    className="font-fredoka font-medium text-sm data-[state=active]:bg-gray-950 data-[state=active]:text-[#3fb8bd] data-[state=active]:shadow-sm data-[state=active]:border-[#3fb8bd]/30 text-gray-400 hover:text-gray-300 transition-all rounded-lg"
+                    className="font-fredoka font-medium text-sm data-[state=active]:bg-gray-950 data-[state=active]:text-kek-green data-[state=active]:shadow-sm data-[state=active]:border-kek-green/30 text-gray-400 hover:text-gray-300 transition-all rounded-lg"
                   >
                     ⚖️ Resolution
                   </TabsTrigger>

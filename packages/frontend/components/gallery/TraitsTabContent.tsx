@@ -54,7 +54,7 @@ export function TraitsTabContent() {
     return (
       <div className="flex items-center justify-center min-h-[600px]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-[#3fb8bd] mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-kek-green mx-auto mb-4"></div>
           <p className="text-gray-400">Loading NFT trait data...</p>
           <p className="text-sm text-gray-500 mt-2">This may take up to 30 seconds on first load</p>
         </div>
@@ -72,7 +72,7 @@ export function TraitsTabContent() {
           <p className="text-gray-400 mb-4">{error.message}</p>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-2 bg-[#3fb8bd] text-black font-bold rounded-lg hover:bg-[#3fb8bd]/90 transition"
+            className="px-6 py-2 bg-kek-green text-black font-bold rounded-lg hover:bg-kek-green/90 transition"
           >
             Try Again
           </button>
@@ -84,14 +84,14 @@ export function TraitsTabContent() {
   return (
     <div className="space-y-6">
       {/* Subtle Mode Toggle */}
-      <div className="flex justify-center border-b border-[#3fb8bd]/30 pb-4">
-        <div className="flex items-center gap-2 bg-gray-900/60 rounded-lg p-1 border border-[#3fb8bd]/20">
+      <div className="flex justify-center border-b border-kek-green/30 pb-4">
+        <div className="flex items-center gap-2 bg-gray-900/60 rounded-lg p-1 border border-kek-green/20">
           <button
             onClick={() => setViewMode('filter')}
             className={`px-4 py-1.5 rounded-md font-fredoka text-sm font-medium transition-all duration-200 ${
               viewMode === 'filter'
-                ? 'bg-[#3fb8bd] text-black'
-                : 'text-[#3fb8bd] hover:bg-[#3fb8bd]/10'
+                ? 'bg-kek-green text-black'
+                : 'text-kek-green hover:bg-kek-green/10'
             }`}
           >
             🔍 Filter
@@ -113,7 +113,7 @@ export function TraitsTabContent() {
       {stats && viewMode === 'filter' && (
         <div className="flex justify-center gap-8 text-sm text-gray-400 font-fredoka">
           <span>
-            Total Minted: <span className="text-[#3fb8bd] font-bold">{stats.total}</span>
+            Total Minted: <span className="text-kek-green font-bold">{stats.total}</span>
           </span>
           <span>•</span>
           <span>

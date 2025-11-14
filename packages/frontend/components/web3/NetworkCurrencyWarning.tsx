@@ -63,13 +63,13 @@ export function NetworkCurrencyWarning() {
   }
 
   return (
-    <div className="w-full bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-2 border-[#3fb8bd]/50 rounded-xl p-4 mb-6 backdrop-blur-sm">
+    <div className="w-full bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border-2 border-kek-green/50 rounded-xl p-4 mb-6 backdrop-blur-sm">
       <div className="flex items-start gap-3">
-        <AlertTriangle className="w-6 h-6 text-[#3fb8bd] flex-shrink-0 mt-0.5" />
+        <AlertTriangle className="w-6 h-6 text-kek-green flex-shrink-0 mt-0.5" />
 
         <div className="flex-1 space-y-2">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold text-[#3fb8bd]">
+            <h3 className="text-lg font-bold text-kek-green">
               ⚠️ Network Configuration Check
             </h3>
             <button
@@ -90,7 +90,7 @@ export function NetworkCurrencyWarning() {
               <div className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
                 <span>
-                  Open <strong className="text-[#3fb8bd]">MetaMask</strong>
+                  Open <strong className="text-kek-green">MetaMask</strong>
                 </span>
               </div>
 
@@ -122,7 +122,7 @@ export function NetworkCurrencyWarning() {
           <div className="flex flex-col sm:flex-row gap-2 mt-3">
             <button
               onClick={handleFixNetwork}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-[#3fb8bd] hover:bg-[#3fb8bd]/80 text-white font-semibold rounded-lg transition-all text-sm"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-kek-green hover:bg-kek-green/80 text-white font-semibold rounded-lg transition-all text-sm"
             >
               📋 Show Fix Instructions
             </button>

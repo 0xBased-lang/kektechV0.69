@@ -27,7 +27,7 @@ export default function StakingPage() {
               <div className="text-9xl mb-8">💎</div>
 
               {/* Title */}
-              <h2 className="text-4xl font-fredoka font-bold text-[#3fb8bd] mb-6">
+              <h2 className="text-4xl font-fredoka font-bold text-kek-green mb-6">
                 Coming Soon
               </h2>
 
@@ -39,21 +39,21 @@ export default function StakingPage() {
 
               {/* Features List */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div className="bg-black/40 rounded-lg p-6 border border-[#3fb8bd]/20">
+                <div className="bg-black/40 rounded-lg p-6 border border-kek-green/20">
                   <div className="text-3xl mb-3">💰</div>
                   <h3 className="font-fredoka font-bold text-white mb-2">Passive Rewards</h3>
                   <p className="text-sm text-gray-400">
                     Earn rewards while you stake
                   </p>
                 </div>
-                <div className="bg-black/40 rounded-lg p-6 border border-[#3fb8bd]/20">
+                <div className="bg-black/40 rounded-lg p-6 border border-kek-green/20">
                   <div className="text-3xl mb-3">🗳️</div>
                   <h3 className="font-fredoka font-bold text-white mb-2">Governance</h3>
                   <p className="text-sm text-gray-400">
                     Vote on platform decisions
                   </p>
                 </div>
-                <div className="bg-black/40 rounded-lg p-6 border border-[#3fb8bd]/20">
+                <div className="bg-black/40 rounded-lg p-6 border border-kek-green/20">
                   <div className="text-3xl mb-3">🔒</div>
                   <h3 className="font-fredoka font-bold text-white mb-2">Secure</h3>
                   <p className="text-sm text-gray-400">
@@ -66,7 +66,7 @@ export default function StakingPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
                   href="/feels-good-markets"
-                  className="px-8 py-3 bg-[#3fb8bd] text-black rounded-lg font-fredoka font-bold hover:bg-[#4ecca7] transition-all hover:scale-105 shadow-lg shadow-[#3fb8bd]/30"
+                  className="px-8 py-3 bg-kek-green text-black rounded-lg font-fredoka font-bold hover:bg-[#4ecca7] transition-all hover:scale-105 shadow-lg shadow-kek-green/30"
                 >
                   Explore Markets
                 </Link>

@@ -47,7 +47,7 @@ export function Footer() {
               className="group"
               aria-label="BF Explorer"
             >
-              <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-900 border border-gray-800 group-hover:border-[#3fb8bd] transition-all duration-300 group-hover:scale-110">
+              <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-900 border border-gray-800 group-hover:border-kek-green transition-all duration-300 group-hover:scale-110">
                 <Image
                   src="/images/bf.png"
                   alt="Explorer"
@@ -97,7 +97,7 @@ export function Footer() {
               href="https://x.com/KektechNFT"
               target="_blank"
               rel="noopener noreferrer"
-              className="group w-10 h-10 flex items-center justify-center rounded-full bg-gray-900 border-2 border-gray-800 hover:border-[#3fb8bd] transition-all duration-300 hover:scale-110"
+              className="group w-10 h-10 flex items-center justify-center rounded-full bg-gray-900 border-2 border-gray-800 hover:border-kek-green transition-all duration-300 hover:scale-110"
               aria-label="X (Twitter)"
             >
               <Image

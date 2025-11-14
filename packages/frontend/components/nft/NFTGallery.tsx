@@ -121,7 +121,7 @@ export function NFTGallery() {
             value={searchId}
             onChange={(e) => setSearchId(e.target.value)}
             placeholder="Search by NFT ID (e.g., 1, 42, 1337)..."
-            className="w-full pl-11 pr-4 py-3 bg-gray-900/60 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#3fb8bd] focus:border-transparent transition font-fredoka"
+            className="w-full pl-11 pr-4 py-3 bg-gray-900/60 border border-gray-800 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-kek-green focus:border-transparent transition font-fredoka"
           />
           {searchId && (
             <button
@@ -151,7 +151,7 @@ export function NFTGallery() {
           </p>
           <button
             onClick={() => setSearchId('')}
-            className="px-6 py-2 bg-[#3fb8bd] text-black font-bold rounded-lg hover:bg-[#3fb8bd]/90 transition font-fredoka"
+            className="px-6 py-2 bg-kek-green text-black font-bold rounded-lg hover:bg-kek-green/90 transition font-fredoka"
           >
             Clear Search
           </button>

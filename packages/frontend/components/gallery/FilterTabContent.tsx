@@ -83,7 +83,7 @@ export function FilterTabContent() {
       {stats && (
         <div className="flex justify-center gap-8 text-sm text-gray-400 font-fredoka">
           <span>
-            Total Minted: <span className="text-[#3fb8bd] font-bold">{stats.total}</span>
+            Total Minted: <span className="text-kek-green font-bold">{stats.total}</span>
           </span>
           <span>•</span>
           <span>

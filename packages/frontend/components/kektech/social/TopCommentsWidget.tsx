@@ -92,7 +92,7 @@ export function TopCommentsWidget({ className = '' }: TopCommentsWidgetProps) {
 
         {/* Hover Indicator */}
         <div className="mt-3 text-center">
-          <span className="text-xs text-[#3fb8bd] font-medium group-hover:underline">
+          <span className="text-xs text-kek-green font-medium group-hover:underline">
             View Full Context →
           </span>
         </div>

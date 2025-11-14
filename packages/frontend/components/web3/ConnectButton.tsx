@@ -102,7 +102,7 @@ export function ConnectButton() {
       <div className="relative">
         <button
           onClick={() => setShowDropdown(!showDropdown)}
-          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#3fb8bd] to-[#2a8185] px-4 py-2 text-white hover:from-[#359ea2] hover:to-[#226669] transition-all"
+          className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-kek-green to-[#2a8185] px-4 py-2 text-white hover:from-[#359ea2] hover:to-[#226669] transition-all"
         >
           <span className="font-fredoka font-medium">
             ✓ {address.slice(0, 6)}...{address.slice(-4)}
@@ -144,7 +144,7 @@ export function ConnectButton() {
     <div className="relative">
       <button
         onClick={() => setShowDropdown(!showDropdown)}
-        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-[#3fb8bd] to-[#2a8185] px-4 py-2 text-white hover:from-[#359ea2] hover:to-[#226669] transition-all"
+        className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-kek-green to-[#2a8185] px-4 py-2 text-white hover:from-[#359ea2] hover:to-[#226669] transition-all"
       >
         <span>🔗</span>
         <span className="font-fredoka font-medium">Connect Wallet</span>

@@ -47,7 +47,7 @@ export function EmptyState({
       {action && (
         <Button
           onClick={action.onClick}
-          className="bg-[#3fb8bd] hover:bg-[#2fa8ad] text-white"
+          className="bg-kek-green hover:bg-[#2fa8ad] text-white"
         >
           {action.label}
         </Button>

@@ -143,8 +143,8 @@ export function ActivityFeed({ activeTab }: ActivityFeedProps) {
           onClick={() => setFilter('all')}
           className={`px-3 py-1.5 rounded-lg border text-xs font-medium whitespace-nowrap transition ${
             filter === 'all'
-              ? 'bg-[#3fb8bd]/10 border-[#3fb8bd] text-[#3fb8bd]'
-              : 'bg-terminal-elevated border-terminal text-terminal-tertiary hover:border-[#3fb8bd]/50'
+              ? 'bg-kek-green/10 border-kek-green text-kek-green'
+              : 'bg-terminal-elevated border-terminal text-terminal-tertiary hover:border-kek-green/50'
           }`}
         >
           All Types
@@ -153,8 +153,8 @@ export function ActivityFeed({ activeTab }: ActivityFeedProps) {
           onClick={() => setFilter('market_created')}
           className={`px-3 py-1.5 rounded-lg border text-xs font-medium whitespace-nowrap transition flex items-center gap-1.5 ${
             filter === 'market_created'
-              ? 'bg-[#3fb8bd]/10 border-[#3fb8bd] text-[#3fb8bd]'
-              : 'bg-terminal-elevated border-terminal text-terminal-tertiary hover:border-[#3fb8bd]/50'
+              ? 'bg-kek-green/10 border-kek-green text-kek-green'
+              : 'bg-terminal-elevated border-terminal text-terminal-tertiary hover:border-kek-green/50'
           }`}
         >
           <TrendingUp className="w-3 h-3" />
@@ -164,8 +164,8 @@ export function ActivityFeed({ activeTab }: ActivityFeedProps) {
           onClick={() => setFilter('comment')}
           className={`px-3 py-1.5 rounded-lg border text-xs font-medium whitespace-nowrap transition flex items-center gap-1.5 ${
             filter === 'comment'
-              ? 'bg-[#3fb8bd]/10 border-[#3fb8bd] text-[#3fb8bd]'
-              : 'bg-terminal-elevated border-terminal text-terminal-tertiary hover:border-[#3fb8bd]/50'
+              ? 'bg-kek-green/10 border-kek-green text-kek-green'
+              : 'bg-terminal-elevated border-terminal text-terminal-tertiary hover:border-kek-green/50'
           }`}
         >
           <MessageSquare className="w-3 h-3" />
@@ -175,8 +175,8 @@ export function ActivityFeed({ activeTab }: ActivityFeedProps) {
           onClick={() => setFilter('bet_placed')}
           className={`px-3 py-1.5 rounded-lg border text-xs font-medium whitespace-nowrap transition flex items-center gap-1.5 ${
             filter === 'bet_placed'
-              ? 'bg-[#3fb8bd]/10 border-[#3fb8bd] text-[#3fb8bd]'
-              : 'bg-terminal-elevated border-terminal text-terminal-tertiary hover:border-[#3fb8bd]/50'
+              ? 'bg-kek-green/10 border-kek-green text-kek-green'
+              : 'bg-terminal-elevated border-terminal text-terminal-tertiary hover:border-kek-green/50'
           }`}
         >
           <Clock className="w-3 h-3" />
@@ -193,7 +193,7 @@ export function ActivityFeed({ activeTab }: ActivityFeedProps) {
 
       {/* Load More Button */}
       <div className="flex justify-center pt-4">
-        <button className="px-6 py-2.5 bg-terminal-card hover:bg-terminal-elevated border border-terminal hover:border-[#3fb8bd]/50 rounded-lg text-terminal-secondary hover:text-[#3fb8bd] transition text-sm font-medium">
+        <button className="px-6 py-2.5 bg-terminal-card hover:bg-terminal-elevated border border-terminal hover:border-kek-green/50 rounded-lg text-terminal-secondary hover:text-kek-green transition text-sm font-medium">
           Load More Activity
         </button>
       </div>

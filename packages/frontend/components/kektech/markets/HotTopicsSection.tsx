@@ -83,7 +83,7 @@ export function HotTopicsSection({ markets, maxTrending = 3 }: HotTopicsSectionP
               {/* Pinned/Trending Badges */}
               <div className="absolute top-4 right-4 z-10 flex gap-2">
                 {isPinned && (
-                  <div className="flex items-center gap-1 px-3 py-1 bg-[#3fb8bd]/20 border border-[#3fb8bd]/30 rounded-full text-[#3fb8bd] text-xs font-semibold backdrop-blur-sm">
+                  <div className="flex items-center gap-1 px-3 py-1 bg-kek-green/20 border border-kek-green/30 rounded-full text-kek-green text-xs font-semibold backdrop-blur-sm">
                     <Pin className="w-3 h-3 fill-current" />
                     Pinned
                   </div>

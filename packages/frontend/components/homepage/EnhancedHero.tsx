@@ -35,11 +35,11 @@ export function EnhancedHero() {
 
           {/* Subtitle */}
           <p className="mx-auto mb-8 max-w-3xl font-fredoka text-lg text-gray-300 sm:text-xl md:text-2xl">
-            <span className="font-bold text-[#3fb8bd]">4200 𝕂Ǝ𝕂丅ᵉ匚🅷 Artifacts</span>
+            <span className="font-bold text-kek-green">4200 𝕂Ǝ𝕂丅ᵉ匚🅷 Artifacts</span>
             : digital masterpieces blending tech and meme fun, hand-drawn by{' '}
             <span className="font-bold text-[#4ecca7]">𝔹enzo𝔹ert & Princess 𝔹u𝔹𝔹legum</span>
             . An homage to{' '}
-            <span className="font-bold text-[#3fb8bd]">
+            <span className="font-bold text-kek-green">
               OG Pepecoin <span className="whitespace-nowrap">🐸👑</span>
             </span>
           </p>
@@ -59,8 +59,8 @@ export function EnhancedHero() {
 
           {/* Single Stat - Total Supply Only */}
           <div className="flex justify-center">
-            <div className="rounded-xl border-2 border-[#3fb8bd]/30 bg-black/60 px-8 py-6 backdrop-blur-sm">
-              <div className="font-fredoka text-5xl font-bold text-[#3fb8bd]">4,200</div>
+            <div className="rounded-xl border-2 border-kek-green/30 bg-black/60 px-8 py-6 backdrop-blur-sm">
+              <div className="font-fredoka text-5xl font-bold text-kek-green">4,200</div>
               <div className="font-fredoka text-lg text-gray-400">Total Supply</div>
             </div>
           </div>

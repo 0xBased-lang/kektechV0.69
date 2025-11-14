@@ -244,7 +244,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
         <p className="text-gray-400 mb-6">You need to connect your wallet to create a market</p>
         <button
           onClick={() => connect()}
-          className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-bold hover:scale-105 transition"
+          className="px-8 py-4 rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] text-black font-bold hover:scale-105 transition"
         >
           Connect Wallet
         </button>
@@ -267,7 +267,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
                 <div
                   className={cn(
                     'w-10 h-10 rounded-full flex items-center justify-center transition',
-                    isActive && 'bg-[#3fb8bd] text-black',
+                    isActive && 'bg-kek-green text-black',
                     isCompleted && 'bg-green-500 text-white',
                     !isActive && !isCompleted && 'bg-gray-800 text-gray-400'
                   )}
@@ -306,7 +306,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
               value={formData.question}
               onChange={(e) => setFormData(prev => ({ ...prev, question: e.target.value }))}
               placeholder="Will Bitcoin reach $100,000 by end of 2025?"
-              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd]"
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-kek-green"
               maxLength={200}
             />
             <div className="flex justify-between items-center mt-2">
@@ -330,7 +330,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               placeholder="Describe the market, resolution criteria, and any relevant context..."
               rows={6}
-              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd] resize-none"
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-kek-green resize-none"
               maxLength={1000}
             />
             <div className="flex justify-between items-center mt-2">
@@ -357,7 +357,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
                   className={cn(
                     'px-4 py-3 rounded-lg font-medium transition',
                     formData.category === cat
-                      ? 'bg-[#3fb8bd] text-black'
+                      ? 'bg-kek-green text-black'
                       : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                   )}
                 >
@@ -392,7 +392,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
                   value={formData.outcome1}
                   onChange={(e) => setFormData(prev => ({ ...prev, outcome1: e.target.value }))}
                   placeholder="Yes"
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd]"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-kek-green"
                   maxLength={50}
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -410,7 +410,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
                   value={formData.outcome2}
                   onChange={(e) => setFormData(prev => ({ ...prev, outcome2: e.target.value }))}
                   placeholder="No"
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd]"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-kek-green"
                   maxLength={50}
                 />
                 <p className="text-xs text-gray-500 mt-1">
@@ -476,7 +476,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
                     }
                   }}
                   min={new Date(Date.now() + 3600000).toISOString().split('T')[0]}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd]"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-kek-green"
                 />
               </div>
 
@@ -504,7 +504,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
                       endTimeSetRef.current = true; // Mark as user-set
                     }
                   }}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd]"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-kek-green"
                 />
               </div>
 
@@ -512,7 +512,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
               {formData.endTime > 0 && (
                 <div className="p-3 bg-gray-800/50 rounded-lg border border-gray-700/50">
                   <p className="text-sm text-gray-400">
-                    Selected: <span className="text-[#3fb8bd] font-medium">
+                    Selected: <span className="text-kek-green font-medium">
                       {new Date(formData.endTime * 1000).toLocaleString('en-US', {
                         dateStyle: 'medium',
                         timeStyle: 'short'
@@ -538,7 +538,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
                 onChange={(e) => setFormData(prev => ({ ...prev, creatorBond: e.target.value }))}
                 step="0.1"
                 min="0.1"
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-[#3fb8bd]"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-kek-green"
               />
               <p className="text-xs text-gray-400 mt-1">
                 Minimum bond required to create a market. You&apos;ll get this back when the market resolves.
@@ -611,7 +611,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
             <button
               onClick={handleSubmit}
               disabled={isLoading || isSuccess}
-              className="px-8 py-3 rounded-lg bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-bold hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-8 py-3 rounded-lg bg-gradient-to-r from-kek-green to-[#4ecca7] text-black font-bold hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <ButtonLoading text="Creating Market..." />
@@ -624,7 +624,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
           ) : (
             <button
               onClick={handleNext}
-              className="px-6 py-3 rounded-lg bg-[#3fb8bd] text-black font-semibold hover:bg-[#3fb8bd]/90 transition flex items-center gap-2"
+              className="px-6 py-3 rounded-lg bg-kek-green text-black font-semibold hover:bg-kek-green/90 transition flex items-center gap-2"
             >
               Next
               <ArrowRight className="w-4 h-4" />

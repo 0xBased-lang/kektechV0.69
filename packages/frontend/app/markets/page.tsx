@@ -86,8 +86,8 @@ export default function MarketsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-[#3fb8bd]/10 rounded-lg border border-[#3fb8bd]/20">
-                <TrendingUp className="w-6 h-6 text-[#3fb8bd]" />
+              <div className="p-2 bg-kek-green/10 rounded-lg border border-kek-green/20">
+                <TrendingUp className="w-6 h-6 text-kek-green" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-terminal-primary mono-numbers">
@@ -102,7 +102,7 @@ export default function MarketsPage() {
             {/* Create Market Button - Terminal Style */}
             <Link
               href="/markets/create"
-              className="flex items-center gap-2 px-4 py-2 bg-[#3fb8bd] hover:bg-[#3fb8bd]/90 text-terminal-black font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-[#3fb8bd]/20"
+              className="flex items-center gap-2 px-4 py-2 bg-kek-green hover:bg-kek-green/90 text-terminal-black font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-kek-green/20"
             >
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">Create Market</span>
@@ -126,7 +126,7 @@ export default function MarketsPage() {
                   className={`
                     flex items-center gap-2 px-4 py-3 font-semibold text-sm whitespace-nowrap transition-all relative
                     ${isActive
-                      ? 'text-[#3fb8bd] bg-terminal-elevated'
+                      ? 'text-kek-green bg-terminal-elevated'
                       : 'text-terminal-tertiary hover:text-terminal-secondary hover:bg-terminal-elevated/50'
                     }
                   `}
@@ -134,7 +134,7 @@ export default function MarketsPage() {
                   <Icon className="w-4 h-4" />
                   <span className="hidden sm:inline">{tab.label}</span>
                   {isActive && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#3fb8bd]" />
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-kek-green" />
                   )}
                 </button>
               );
@@ -172,7 +172,7 @@ export default function MarketsPage() {
                 {activeTab === 'hot' && (
                   <Link
                     href="/markets/create"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#3fb8bd] hover:bg-[#3fb8bd]/90 text-terminal-black font-semibold rounded-lg transition shadow-lg shadow-[#3fb8bd]/10"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-kek-green hover:bg-kek-green/90 text-terminal-black font-semibold rounded-lg transition shadow-lg shadow-kek-green/10"
                   >
                     <Plus className="w-5 h-5" />
                     Create Market
@@ -199,26 +199,26 @@ export default function MarketsPage() {
             {!isLoading && displayMarkets.length > 0 && (
               <div className="mt-12 p-6 bg-terminal-card rounded-lg border border-terminal">
                 <h3 className="text-lg font-bold text-terminal-primary mb-4 flex items-center gap-2">
-                  <span className="text-[#3fb8bd]">→</span>
+                  <span className="text-kek-green">→</span>
                   How It Works
                 </h3>
                 <div className="grid md:grid-cols-3 gap-6 text-sm text-terminal-secondary">
                   <div>
-                    <h4 className="font-semibold text-[#3fb8bd] mb-2 mono-numbers">01. Propose</h4>
+                    <h4 className="font-semibold text-kek-green mb-2 mono-numbers">01. Propose</h4>
                     <p>
                       Create proposals and get 10+ community votes.
                       Auto-activates when threshold met.
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[#3fb8bd] mb-2 mono-numbers">02. Trade</h4>
+                    <h4 className="font-semibold text-kek-green mb-2 mono-numbers">02. Trade</h4>
                     <p>
                       Place bets, discuss with evidence,
                       and engage with the community.
                     </p>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-[#3fb8bd] mb-2 mono-numbers">03. Resolve</h4>
+                    <h4 className="font-semibold text-kek-green mb-2 mono-numbers">03. Resolve</h4>
                     <p>
                       Community consensus determines outcomes.
                       Winners claim rewards.
@@ -262,7 +262,7 @@ export default function MarketsPage() {
               {/* Platform Stats - Terminal Style */}
               <div className="p-4 bg-terminal-card rounded-lg border border-terminal">
                 <h4 className="font-semibold text-terminal-primary mb-3 flex items-center gap-2">
-                  <span className="text-[#3fb8bd]">◆</span>
+                  <span className="text-kek-green">◆</span>
                   Platform Stats
                 </h4>
                 <div className="space-y-2.5 text-sm">
@@ -274,13 +274,13 @@ export default function MarketsPage() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-terminal-tertiary">View</span>
-                    <span className="text-[#3fb8bd] font-semibold text-xs">
+                    <span className="text-kek-green font-semibold text-xs">
                       {TABS.find(t => t.key === activeTab)?.label}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-terminal-tertiary">Feed</span>
-                    <span className="text-[#3fb8bd] font-semibold text-xs capitalize">
+                    <span className="text-kek-green font-semibold text-xs capitalize">
                       {feedMode === 'all' ? 'All Activity' : 'Comments'}
                     </span>
                   </div>

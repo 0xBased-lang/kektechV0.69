@@ -57,7 +57,7 @@ export function CommentOnlyFeed({
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <MessageSquare className="w-5 h-5 text-[#3fb8bd]" />
+          <MessageSquare className="w-5 h-5 text-kek-green" />
           <h3 className="text-lg font-bold text-white">Comments Feed</h3>
         </div>
         <div className={`text-xs font-medium ${connected ? 'text-green-400' : 'text-red-400'}`}>
@@ -112,7 +112,7 @@ function CommentEventCard({ event }: { event: MarketEvent }) {
     if (type.includes('downvote') || type.includes('dislike')) {
       return <ThumbsDown className="w-4 h-4 text-red-500" />;
     }
-    return <MessageSquare className="w-4 h-4 text-[#3fb8bd]" />;
+    return <MessageSquare className="w-4 h-4 text-kek-green" />;
   };
 
   const getEventAction = () => {
@@ -140,7 +140,7 @@ function CommentEventCard({ event }: { event: MarketEvent }) {
       href={`/market/${event.marketAddress}#comment-${event.data?.commentId || ''}`}
       className="block group"
     >
-      <div className="p-3 bg-gray-800/30 hover:bg-gray-800/50 rounded-lg border border-gray-800 hover:border-[#3fb8bd]/30 transition cursor-pointer">
+      <div className="p-3 bg-gray-800/30 hover:bg-gray-800/50 rounded-lg border border-gray-800 hover:border-kek-green/30 transition cursor-pointer">
         {/* Header */}
         <div className="flex items-start gap-3 mb-2">
           {/* Icon */}

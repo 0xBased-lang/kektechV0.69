@@ -182,7 +182,7 @@ export default function WalletConnectButton({
       <div className="flex items-center gap-3">
         <div className="text-sm">
           <span className="text-gray-400">Connected:</span>
-          <span className="ml-2 text-[#3fb8bd] font-mono">
+          <span className="ml-2 text-kek-green font-mono">
             {address.slice(0, 6)}...{address.slice(-4)}
           </span>
         </div>
@@ -201,7 +201,7 @@ export default function WalletConnectButton({
       <button
         onClick={connectWallet}
         disabled={isLoading}
-        className={`px-6 py-3 rounded-xl bg-gradient-to-r from-[#3fb8bd] to-[#4ecca7] text-black font-bold hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
+        className={`px-6 py-3 rounded-xl bg-gradient-to-r from-kek-green to-[#4ecca7] text-black font-bold hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
       >
         {isLoading ? 'Connecting...' : 'Connect Wallet'}
       </button>

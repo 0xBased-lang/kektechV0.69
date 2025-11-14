@@ -50,7 +50,7 @@ export function OverviewTab({ address: _address, onTabChange }: OverviewTabProps
           value="Coming Soon"
           subvalue="Portfolio valuation"
           icon="💰"
-          gradient="from-[#3fb8bd] to-[#2a8388]"
+          gradient="from-kek-green to-[#2a8388]"
           disabled
         />
       </div>
@@ -84,7 +84,7 @@ export function OverviewTab({ address: _address, onTabChange }: OverviewTabProps
       </div>
 
       {/* Welcome / Info Section */}
-      <div className="bg-gradient-to-br from-[#3fb8bd]/10 to-transparent rounded-xl border border-[#3fb8bd]/20 p-8">
+      <div className="bg-gradient-to-br from-kek-green/10 to-transparent rounded-xl border border-kek-green/20 p-8">
         <h3 className="text-2xl font-fredoka font-bold text-white mb-3">
           Welcome to Your Dashboard
         </h3>
@@ -93,15 +93,15 @@ export function OverviewTab({ address: _address, onTabChange }: OverviewTabProps
         </p>
         <ul className="space-y-2 text-gray-400 text-sm">
           <li className="flex items-start gap-2">
-            <span className="text-[#3fb8bd] mt-0.5">✓</span>
+            <span className="text-kek-green mt-0.5">✓</span>
             <span><strong className="text-white">KEKTECH Portfolio:</strong> View your NFT collection, TECH tokens, and KEKTV vouchers</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-[#3fb8bd] mt-0.5">✓</span>
+            <span className="text-kek-green mt-0.5">✓</span>
             <span><strong className="text-white">Feels Good:</strong> Track your prediction market positions and P&L</span>
           </li>
           <li className="flex items-start gap-2">
-            <span className="text-[#3fb8bd] mt-0.5">✓</span>
+            <span className="text-kek-green mt-0.5">✓</span>
             <span><strong className="text-white">Ultra-Low Fees:</strong> 1000x cheaper than traditional prediction markets</span>
           </li>
         </ul>
@@ -134,10 +134,10 @@ function QuickActionButton({ label, icon, href, disabled }: QuickActionButtonPro
   return (
     <a
       href={href}
-      className="flex flex-col items-center gap-2 p-4 bg-gray-800/30 rounded-lg border border-gray-700 hover:border-[#3fb8bd] hover:bg-gray-800/50 transition group"
+      className="flex flex-col items-center gap-2 p-4 bg-gray-800/30 rounded-lg border border-gray-700 hover:border-kek-green hover:bg-gray-800/50 transition group"
     >
       <span className="text-3xl group-hover:scale-110 transition">{icon}</span>
-      <span className="text-sm font-semibold text-gray-300 group-hover:text-[#3fb8bd]">{label}</span>
+      <span className="text-sm font-semibold text-gray-300 group-hover:text-kek-green">{label}</span>
     </a>
   )
 }

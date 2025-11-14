@@ -31,7 +31,7 @@ export function CompactStatsWidget() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-4">
-        <div className="h-6 w-6 animate-spin rounded-full border-4 border-[#3fb8bd] border-t-transparent" />
+        <div className="h-6 w-6 animate-spin rounded-full border-4 border-kek-green border-t-transparent" />
       </div>
     )
   }
@@ -50,7 +50,7 @@ export function CompactStatsWidget() {
   ]
 
   return (
-    <div className="relative bg-gradient-to-r from-gray-900/90 via-gray-900/80 to-gray-900/90 rounded-2xl border-2 border-[#3fb8bd]/30 px-8 py-6 backdrop-blur-md shadow-lg shadow-[#3fb8bd]/10 overflow-hidden">
+    <div className="relative bg-gradient-to-r from-gray-900/90 via-gray-900/80 to-gray-900/90 rounded-2xl border-2 border-kek-green/30 px-8 py-6 backdrop-blur-md shadow-lg shadow-kek-green/10 overflow-hidden">
       {/* Checkered Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(0,255,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,255,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
       <div className="relative">
@@ -58,7 +58,7 @@ export function CompactStatsWidget() {
       <div className="flex items-center justify-center gap-8 mb-6 pb-6">
         <div className="text-center">
           <div className="text-sm text-gray-400 mb-2 font-medium">Minted</div>
-          <div className="text-3xl font-bold text-[#3fb8bd]">{totalMinted.toLocaleString()}</div>
+          <div className="text-3xl font-bold text-kek-green">{totalMinted.toLocaleString()}</div>
         </div>
         <div className="h-12 w-px bg-gray-700" />
         <div className="text-center">

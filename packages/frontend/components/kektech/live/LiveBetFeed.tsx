@@ -76,7 +76,7 @@ export function LiveBetFeed({
     <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
       {/* Header */}
       <div className="px-6 py-4 border-b border-gray-800 flex items-center gap-2">
-        <Activity className="w-5 h-5 text-[#3fb8bd]" />
+        <Activity className="w-5 h-5 text-kek-green" />
         <h3 className="text-lg font-bold text-white">Live Bet Feed</h3>
         <span className="ml-auto px-2 py-1 bg-green-500/10 text-green-400 rounded-full text-xs font-medium">
           Live

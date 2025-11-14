@@ -38,7 +38,7 @@ export default function AdminDashboard() {
     return (
       <div className="min-h-screen bg-gray-950 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-[#3fb8bd]" />
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-kek-green" />
           <p className="text-gray-400">Checking admin permissions...</p>
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function AdminDashboard() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-4xl font-bold flex items-center gap-3">
-              <Shield className="h-10 w-10 text-[#3fb8bd]" />
+              <Shield className="h-10 w-10 text-kek-green" />
               Admin Dashboard
             </h1>
             <p className="text-gray-400 mt-2">
@@ -84,31 +84,31 @@ export default function AdminDashboard() {
           <TabsList className="grid w-full grid-cols-5 gap-4 bg-gray-900 p-1">
             <TabsTrigger
               value="proposals"
-              className="data-[state=active]:bg-[#3fb8bd] data-[state=active]:text-white"
+              className="data-[state=active]:bg-kek-green data-[state=active]:text-white"
             >
               📋 Proposals
             </TabsTrigger>
             <TabsTrigger
               value="active"
-              className="data-[state=active]:bg-[#3fb8bd] data-[state=active]:text-white"
+              className="data-[state=active]:bg-kek-green data-[state=active]:text-white"
             >
               🎯 Active Markets
             </TabsTrigger>
             <TabsTrigger
               value="resolution"
-              className="data-[state=active]:bg-[#3fb8bd] data-[state=active]:text-white"
+              className="data-[state=active]:bg-kek-green data-[state=active]:text-white"
             >
               ⚖️ Resolutions
             </TabsTrigger>
             <TabsTrigger
               value="override"
-              className="data-[state=active]:bg-[#3fb8bd] data-[state=active]:text-white"
+              className="data-[state=active]:bg-kek-green data-[state=active]:text-white"
             >
               🔧 Overrides
             </TabsTrigger>
             <TabsTrigger
               value="config"
-              className="data-[state=active]:bg-[#3fb8bd] data-[state=active]:text-white"
+              className="data-[state=active]:bg-kek-green data-[state=active]:text-white"
             >
               ⚙️ Config
             </TabsTrigger>
