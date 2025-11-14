@@ -33,7 +33,7 @@ export function CommentVoteButtons({
   initialDownvotes,
   onVote,
 }: CommentVoteButtonsProps) {
-  const { isAuthenticated, authenticate, address } = useWalletAuth()
+  const { isAuthenticated, authenticate, walletAddress } = useWalletAuth()
   const { voteOnComment, isVoting } = useVoteOnComment(commentId)
 
   // Local state for optimistic updates
@@ -88,7 +88,7 @@ export function CommentVoteButtons({
 
     // Submit vote
     try {
-      const userId = address || 'unknown-user'
+      const userId = walletAddress || 'unknown-user'
       const result = await voteOnComment(userId, voteType)
 
       // Update with actual server data
