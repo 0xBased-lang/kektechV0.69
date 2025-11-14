@@ -1,273 +1,382 @@
-# 📚 KEKTECH 3.0 - Documentation Index
+# KEKTECH NFT Collection - Documentation
 
-**Complete documentation for the KEKTECH 3.0 Prediction Market Platform**
-
----
-
-## 🎯 Quick Navigation
-
-**New to the project?** Start with:
-1. [GETTING_STARTED.md](GETTING_STARTED.md) - Developer setup guide **← START HERE**
-2. [MASTER_DOCUMENTATION.md](MASTER_DOCUMENTATION.md) - Complete project documentation
-3. [PROJECT_STATUS.md](PROJECT_STATUS.md) - Current deployment status
-
-**Developer?** Check:
-1. [GETTING_STARTED.md](GETTING_STARTED.md) - Setup and environment configuration
-2. [reference/TESTING.md](reference/TESTING.md) - Testing procedures (319/347 tests)
-3. [reference/OPERATIONS.md](reference/OPERATIONS.md) - Live system operations
-4. [reference/CONTRACTS.md](reference/CONTRACTS.md) - Contract reference
-5. [reference/API.md](reference/API.md) - API documentation
+**Project**: KEKTECH NFT Collection on BasedAI Network
+**Tech Stack**: Next.js 15, React, Wagmi, TypeScript, TailwindCSS
+**Blockchain**: BasedAI Network (Chain ID: 32323)
 
 ---
 
-## 📖 Active Documentation
-
-### Getting Started
-
-#### [GETTING_STARTED.md](GETTING_STARTED.md)
-**Developer onboarding and setup guide**
-- Prerequisites and dependencies
-- Repository setup
-- Environment configuration
-- Testing verification
-- Development workflow
-- Live contract interaction
-- Project structure overview
-- Troubleshooting guide
-
-**📌 Essential for new developers**
-
----
-
-### Operations & Testing
-
-#### [reference/OPERATIONS.md](reference/OPERATIONS.md)
-**Day-to-day operations for live system**
-- Market creation procedures
-- Approval and activation workflow
-- Real-time monitoring
-- Resolution processes
-- Dispute handling
-- Emergency procedures
-- Best practices
-- Troubleshooting
-
-**📌 Essential for system operators**
-
----
-
-#### [reference/TESTING.md](reference/TESTING.md)
-**Comprehensive testing guide**
-- Testing philosophy and principles
-- Smart contract tests (319/347 passing)
-- E2E tests with Playwright
-- Integration testing
-- Security validation
-- Gas optimization testing
-- Production smoke tests
-- Troubleshooting test failures
-
-**📌 Essential for contributors and QA**
-
----
-
-### Core Documents
-
-#### [MASTER_DOCUMENTATION.md](MASTER_DOCUMENTATION.md)
-**Complete project documentation**
-- Executive summary
-- What we achieved (all 11 contracts)
-- How we achieved it (hour-by-hour breakdown)
-- Technical architecture
-- Security implementation (4 layers)
-- Testing & validation (170+ tests)
-- Deployment process
-- Current status & next steps
-
-**📌 Start here for comprehensive understanding**
-
----
-
-#### [RESOLVER_SECURITY_ARCHITECTURE.md](RESOLVER_SECURITY_ARCHITECTURE.md)
-**4-layer security system design**
-- Security objectives
-- Economic game theory
-- Resolver bond system (50%)
-- Dispute mechanism (48h)
-- Resolution timeout (7 days)
-- Emergency refund (14-day timelock)
-- Attack vector analysis
-
-**📌 Technical security reference**
-
----
-
-#### [KEKTECH_3.0_Refined_Blueprint_v1.md](KEKTECH_3.0_Refined_Blueprint_v1.md)
-**System architecture blueprint**
-- Core architecture overview
-- Master Registry pattern
-- Module descriptions
-- Contract interactions
-- Economic model
-- Governance structure
-
-**📌 Architectural reference**
-
----
-
-#### [KEKTECH_3.0_Implementation_Roadmap_v1.1.md](KEKTECH_3.0_Implementation_Roadmap_v1.1.md)
-**Development implementation guide**
-- Phased development approach
-- Module implementation order
-- Testing strategy
-- Deployment plan
-- Risk mitigation
-- Timeline and milestones
-
-**📌 Development guide**
-
----
-
-#### [PROJECT_STATUS.md](PROJECT_STATUS.md)
-**Current project status**
-- Deployment status
-- All contract addresses
-- Network information
-- Security features
-- Testing summary
-- Next steps
-
-**📌 Current state snapshot**
-
----
-
-## 📦 Archive
-
-**Historical documentation preserved in organized archive:**
-
-Historical documentation (286+ files) is archived at:
-**`/Users/seman/KEKTECH_OFFICIALS/KEKTECH_ARCHIVE_20251109_184834/`**
-
-### Archive Contents
-
-**Root Documentation:**
-- Historical status files (MASTER_STATUS.md, TODO_TRACKER.md, etc.)
-- Deployment and testing reality snapshots
-- Progress checkpoints
-
-**Organized Documentation:**
-- Architecture documentation
-- Operations guides (MONITORING.md, etc.)
-- Testing documentation
-- 38+ session reports and progress documents
-
-**Note:** Essential operational guides have been migrated back to active project:
-- ✅ GETTING_STARTED.md → Now in active docs/
-- ✅ OPERATIONS.md → Now in active docs/reference/
-- ✅ TESTING.md → Now in active docs/reference/
-
-**Access Archive:** `cd /Users/seman/KEKTECH_OFFICIALS/KEKTECH_ARCHIVE_20251109_184834/`
-
----
-
-## 📊 Documentation Statistics
+## 📚 Documentation Structure
 
 ```
-Active Documents:     8 files
-Archived Documents:   38 files
-Total Documentation:  46 files
-
-Categories:
-- Getting Started:     1 file  (Setup Guide)
-- Operations & Testing: 2 files (Operations, Testing)
-- Core Documentation:  2 files (Master, Security)
-- Planning Documents:  2 files (Blueprint, Roadmap)
-- Status Reports:      1 file  (Current Status)
-- Archive:             38 files (Historical)
+docs/
+├── README.md                       # This file - Documentation index
+└── fixes/                          # Bug fixes and incident reports
+    ├── 2025-10-13-wallet-connection-crash-fix.md
+    ├── code-changes-detail.md
+    └── prevention-best-practices.md
 ```
 
 ---
 
-## 🎯 Documentation by Use Case
+## 🚨 Recent Fixes
 
-### For New Team Members
-1. [GETTING_STARTED.md](GETTING_STARTED.md) - **Start here!**
-2. [MASTER_DOCUMENTATION.md](MASTER_DOCUMENTATION.md) - Complete overview
-3. [PROJECT_STATUS.md](PROJECT_STATUS.md) - Current status
-4. [reference/TESTING.md](reference/TESTING.md) - Testing guide
+### October 13, 2025 - Wallet Connection Dashboard Crash
 
-### For Security Auditors
-1. [RESOLVER_SECURITY_ARCHITECTURE.md](RESOLVER_SECURITY_ARCHITECTURE.md) - Security design
-2. [reference/TESTING.md](reference/TESTING.md) - Security testing procedures
-3. [MASTER_DOCUMENTATION.md](MASTER_DOCUMENTATION.md) - Complete documentation
-4. Historical security reports in KEKTECH_OFFICIALS archive
+**Status**: ✅ Fixed
+**Severity**: Critical
+**Commit**: `cf9ee44`
 
-### For Developers
-1. [GETTING_STARTED.md](GETTING_STARTED.md) - Setup and environment
-2. [reference/TESTING.md](reference/TESTING.md) - Testing procedures
-3. [KEKTECH_3.0_Implementation_Roadmap_v1.1.md](KEKTECH_3.0_Implementation_Roadmap_v1.1.md) - Development roadmap
-4. [reference/CONTRACTS.md](reference/CONTRACTS.md) - Contract reference
-5. [reference/API.md](reference/API.md) - API documentation
+**Quick Summary**:
+Dashboard was crashing with `TypeError: Cannot read properties of undefined (reading 'toLowerCase')` due to unsafe property access in NFT filtering logic.
 
-### For System Operators
-1. [reference/OPERATIONS.md](reference/OPERATIONS.md) - **Operations guide**
-2. [GETTING_STARTED.md](GETTING_STARTED.md) - System setup
-3. [PROJECT_STATUS.md](PROJECT_STATUS.md) - Current deployment
+**Files Changed**:
+- `components/wallet/NFTDashboard.tsx` - Added null safety to NFT filtering
+- `components/web3/ConnectButton.tsx` - Added null safety to connector name check
 
-### For Investors
-1. [PROJECT_STATUS.md](PROJECT_STATUS.md) - Current status
-2. [MASTER_DOCUMENTATION.md](MASTER_DOCUMENTATION.md) - Complete documentation
-3. [KEKTECH_3.0_Refined_Blueprint_v1.md](KEKTECH_3.0_Refined_Blueprint_v1.md) - System blueprint
+**Documentation**:
+- 📄 [Full Incident Report](./fixes/2025-10-13-wallet-connection-crash-fix.md)
+- 🔧 [Code Changes Detail](./fixes/code-changes-detail.md)
+- 🛡️ [Prevention Best Practices](./fixes/prevention-best-practices.md)
 
 ---
 
-## 📝 Documentation Standards
+## 🏗️ Project Architecture
 
-**All documentation follows:**
-- ✅ Clear structure with table of contents
-- ✅ Comprehensive coverage
-- ✅ Professional formatting
-- ✅ Regular updates
-- ✅ Version tracking
+### Core Components
 
-**Last Updated:** November 9, 2025
-**Status:** Current & Complete
+#### Web3 Integration
+- **Wagmi Configuration**: `config/wagmi.ts`
+  - Multi-wallet support (MetaMask, WalletConnect, Coinbase)
+  - BasedAI network configuration
+  - Safe provider initialization
+
+- **Provider Fix**: `config/web3-provider-fix.ts`
+  - Handles multiple wallet extension conflicts
+  - Safe `window.ethereum` initialization
+  - Provider fallback logic
+
+- **Connect Button**: `components/web3/ConnectButton.tsx`
+  - User-friendly wallet connection UI
+  - Auto-detection of available wallets
+  - Error handling and user feedback
+
+#### Dashboard & Portfolio
+- **Main Dashboard**: `app/dashboard/page.tsx`
+  - Comprehensive portfolio view
+  - TECH tokens, NFTs, and vouchers
+  - Force dynamic rendering for Web3 hooks
+
+- **Comprehensive Dashboard**: `components/dashboard/ComprehensiveDashboard.tsx`
+  - Multi-asset portfolio display
+  - Real-time balance updates
+  - Interactive charts and statistics
+
+- **NFT Dashboard**: `components/wallet/NFTDashboard.tsx`
+  - NFT collection display
+  - KEKTECH vs other NFTs separation
+  - Gallery view with metadata
+
+#### Data Hooks
+- **Portfolio Data**: `lib/hooks/usePortfolioData.ts`
+  - Aggregates all portfolio data
+  - TECH balance, NFTs, vouchers
+  - Safe filtering and validation ✅
+
+- **Tech Balance**: `lib/hooks/useTechBalance.ts`
+  - ERC-20 token balance queries
+  - Real-time balance updates
+
+- **Voucher Balance**: `lib/hooks/useVoucherBalance.ts`
+  - ERC-1155 voucher tracking
+  - Multi-token support
+
+- **Wallet NFTs**: `lib/hooks/useWalletNFTs.ts`
+  - NFT collection fetching
+  - BlockScout API integration
+  - Error handling and retry logic
 
 ---
 
-## 🔄 Version History
+## 🔧 Configuration Files
 
-**Current Version:** 3.0 (Production)
-- All 11 contracts deployed to BasedAI mainnet
-- Comprehensive security implementation
-- 170+ test suite complete
-- Professional documentation
+### Next.js Configuration (`next.config.mjs`)
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      { hostname: 'explorer.bf1337.org' },
+      // ... other domains
+    ],
+  },
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
+}
+```
 
-**Previous Versions:**
-- See `archive/` for historical development stages
+### TypeScript Configuration (`tsconfig.json`)
+```json
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
+    "strictNullChecks": true,
+    // ... other options
+  }
+}
+```
+
+### Environment Variables
+
+Required in `.env.local`:
+```bash
+# Wallet Configuration
+NEXT_PUBLIC_REOWN_PROJECT_ID=your_project_id
+
+# Network Configuration
+NEXT_PUBLIC_BASED_RPC_URL=https://rpc.bf1337.org
+NEXT_PUBLIC_BASED_CHAIN_ID=32323
+
+# App URLs
+NEXT_PUBLIC_APP_URL=https://kektech-nextjs.vercel.app
+```
 
 ---
 
-## 📞 Need Help?
+## 🧪 Development Workflow
 
-**Quick Links:**
-- [Main README](../README.md) - Project overview
-- [GETTING_STARTED.md](GETTING_STARTED.md) - Setup guide
-- [MASTER_DOCUMENTATION.md](MASTER_DOCUMENTATION.md) - Complete docs
-- [PROJECT_STATUS.md](PROJECT_STATUS.md) - Current status
+### Setup
+```bash
+# Install dependencies
+npm install
 
-**For specific topics:**
-- **Setup:** See [GETTING_STARTED.md](GETTING_STARTED.md)
-- **Testing:** See [reference/TESTING.md](reference/TESTING.md)
-- **Operations:** See [reference/OPERATIONS.md](reference/OPERATIONS.md)
-- **Contracts:** See [reference/CONTRACTS.md](reference/CONTRACTS.md)
-- **API:** See [reference/API.md](reference/API.md)
-- **Architecture:** See [KEKTECH_3.0_Refined_Blueprint_v1.md](KEKTECH_3.0_Refined_Blueprint_v1.md)
-- **Security:** See [RESOLVER_SECURITY_ARCHITECTURE.md](RESOLVER_SECURITY_ARCHITECTURE.md)
-- **Development:** See [KEKTECH_3.0_Implementation_Roadmap_v1.1.md](KEKTECH_3.0_Implementation_Roadmap_v1.1.md)
-- **Status:** See [PROJECT_STATUS.md](PROJECT_STATUS.md)
-- **History:** See KEKTECH_OFFICIALS archive (286+ historical files)
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Run linter
+npm run lint
+```
+
+### Testing Before Deployment
+1. ✅ Run `npm run build` successfully
+2. ✅ Check for TypeScript errors
+3. ✅ Test wallet connection flow
+4. ✅ Verify NFT display
+5. ✅ Check console for errors
+6. ✅ Test on different wallets
+
+### Deployment Process
+```bash
+# Commit changes
+git add .
+git commit -m "Your message"
+
+# Push to trigger Vercel deployment
+git push origin main
+
+# Verify deployment
+vercel ls
+```
 
 ---
 
-**[← Back to Project Root](../README.md)**
+## 🐛 Common Issues & Solutions
+
+### Issue 1: Wallet Not Connecting
+
+**Symptoms**: Connect button doesn't work, no wallet popup
+
+**Solutions**:
+1. Check browser has wallet extension installed
+2. Verify `NEXT_PUBLIC_REOWN_PROJECT_ID` is set
+3. Check console for provider initialization errors
+4. Try different wallet (MetaMask recommended)
+
+**Reference**: [Provider Fix Documentation](./fixes/2025-10-13-wallet-connection-crash-fix.md#wallet-provider-conflicts)
+
+### Issue 2: NFTs Not Displaying
+
+**Symptoms**: Dashboard shows "No NFTs Found" when you have NFTs
+
+**Solutions**:
+1. Verify wallet is connected to BasedAI network (Chain ID: 32323)
+2. Check BlockScout API is accessible
+3. Review network tab for API errors
+4. Check console for filtering errors
+
+**Reference**: [Code Changes Detail](./fixes/code-changes-detail.md#change-1-nftdashboardtsx)
+
+### Issue 3: Build Errors
+
+**Symptoms**: `npm run build` fails with TypeScript errors
+
+**Solutions**:
+1. Run `npm install` to update dependencies
+2. Check for missing type definitions
+3. Verify all imports are correct
+4. Review TypeScript strict mode errors
+
+**Reference**: [Prevention Best Practices](./fixes/prevention-best-practices.md#use-typescript-strictly)
+
+---
+
+## 🛡️ Security Best Practices
+
+### 1. Environment Variables
+- Never commit `.env.local` to git
+- Use Vercel environment variables for production
+- Rotate API keys regularly
+
+### 2. Smart Contract Interaction
+- Always validate contract addresses
+- Use type-safe contract interfaces
+- Handle transaction errors gracefully
+
+### 3. User Data
+- Never log private keys or seeds
+- Sanitize user inputs
+- Validate blockchain addresses
+
+### 4. API Security
+- Rate limit API calls
+- Validate response data
+- Handle API errors gracefully
+
+---
+
+## 📊 Performance Optimization
+
+### Image Optimization
+- Use Next.js `Image` component
+- Configure `remotePatterns` in next.config
+- Implement lazy loading for NFT galleries
+
+### Code Splitting
+- Dynamic imports for heavy components
+- Route-based code splitting (automatic)
+- Lazy load wallet connectors
+
+### Caching Strategy
+- React Query for API calls (60s stale time)
+- Wagmi automatic caching
+- Browser localStorage for preferences
+
+---
+
+## 🔗 External Dependencies
+
+### Core Libraries
+- **Next.js 15**: React framework with App Router
+- **React 19**: UI library
+- **Wagmi**: Web3 React hooks
+- **Viem**: TypeScript Ethereum library
+- **TanStack Query**: Data fetching and caching
+
+### Wallet Integrations
+- **@wagmi/connectors**: Multi-wallet support
+- **WalletConnect**: QR code wallet connection
+- **Coinbase Wallet SDK**: Coinbase integration
+
+### UI Components
+- **TailwindCSS**: Utility-first CSS
+- **Lucide React**: Icon library
+- **Recharts**: Charts and graphs
+
+---
+
+## 📈 Monitoring & Analytics
+
+### Build Monitoring
+- Vercel deployment logs
+- Build time tracking
+- Bundle size analysis
+
+### Error Tracking
+- Console error monitoring
+- User feedback collection
+- Crash report analysis
+
+### Performance Metrics
+- Core Web Vitals
+- API response times
+- Wallet connection success rate
+
+---
+
+## 🚀 Future Improvements
+
+### Short Term
+- [ ] Add comprehensive error boundaries
+- [ ] Implement retry logic for failed API calls
+- [ ] Add loading skeletons for better UX
+- [ ] Create utility functions for common patterns
+
+### Medium Term
+- [ ] Add unit tests for critical components
+- [ ] Implement E2E tests with Playwright
+- [ ] Add performance monitoring
+- [ ] Create component storybook
+
+### Long Term
+- [ ] Multi-language support
+- [ ] Mobile app version
+- [ ] Advanced portfolio analytics
+- [ ] Social features integration
+
+---
+
+## 📞 Support & Resources
+
+### Documentation
+- [Next.js Docs](https://nextjs.org/docs)
+- [Wagmi Docs](https://wagmi.sh/)
+- [Viem Docs](https://viem.sh/)
+- [TailwindCSS Docs](https://tailwindcss.com/docs)
+
+### Community
+- GitHub Issues: Report bugs and request features
+- Discord: Community support (if available)
+- Email: Technical support contact
+
+### Development Team
+- **AI Assistant**: Claude Code
+- **Repository**: github.com/0xBased-lang/kektech-nextjs
+- **Deployment**: Vercel
+
+---
+
+## 📝 Changelog
+
+### October 13, 2025
+- ✅ Fixed critical wallet connection crash
+- ✅ Added null safety to NFT filtering
+- ✅ Improved connector detection logic
+- ✅ Created comprehensive documentation
+
+### Previous Updates
+- Initial project setup
+- BasedAI network integration
+- Multi-asset dashboard implementation
+- Wallet connection system
+
+---
+
+## 🎯 Quick Links
+
+- [Main Dashboard](../app/dashboard/page.tsx)
+- [Wallet Connection](../components/web3/ConnectButton.tsx)
+- [NFT Display](../components/wallet/NFTDashboard.tsx)
+- [Portfolio Hook](../lib/hooks/usePortfolioData.ts)
+
+---
+
+**Last Updated**: October 13, 2025
+**Documentation Version**: 1.0
+**Project Version**: Based on commit `cf9ee44`

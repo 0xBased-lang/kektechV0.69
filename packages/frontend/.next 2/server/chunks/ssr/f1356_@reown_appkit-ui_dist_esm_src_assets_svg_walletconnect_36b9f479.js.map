@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"file":"turbopack:///[project]/Desktop/kektechbmad100/packages/frontend/node_modules/@walletconnect/ethereum-provider/node_modules/@reown/appkit-ui/dist/esm/src/assets/svg/walletconnect.js","sourceRoot":"","sources":["../../../../../src/assets/svg/walletconnect.ts"],"sourcesContent":[],"names":[],"mappings":";;;;;;;;;AAAA,OAAO,EAAE,GAAG,EAAE,MAAM,KAAK,CAAA;;AAElB,MAAM,gBAAgB,GAAG,6NAAG,CAAA;;;;;;;;;;OAU5B,CAAA;AAEA,MAAM,0BAA0B,GAAG,6NAAG,CAAA;;;;;;;;;;;;CAY5C,CAAA;AAEM,MAAM,qBAAqB,GAAG,6NAAG,CAAA;;;;;;;CAOvC,CAAA","debugId":null}}]
-}

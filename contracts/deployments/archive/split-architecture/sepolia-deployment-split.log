@@ -1,0 +1,216 @@
+2025-11-04T20:17:30.319Z: [36m📋 Deployment Configuration[0m
+2025-11-04T20:17:30.320Z:    Network:         [33mSepolia Testnet[0m
+2025-11-04T20:17:30.320Z:    Chain ID:        [33m11155111[0m
+2025-11-04T20:17:30.320Z:    Architecture:    [33mSPLIT (Core + Extensions)[0m
+2025-11-04T20:17:30.321Z:    Deployer:        [33m0x25fD72154857Bd204345808a690d51a61A81EB0b[0m
+2025-11-04T20:17:30.322Z:    Balance:         [33m0.810812771735517373 ETH[0m
+2025-11-04T20:17:30.322Z:    Gas Multiplier:  [33m1.5x[0m
+2025-11-04T20:17:30.322Z:    Max Retries:     [33m5[0m
+
+2025-11-04T20:17:30.322Z: 
+[1m📦 Step 1/8: MasterRegistry[0m
+2025-11-04T20:17:30.323Z: [36m   🔄 Attempt 1/5 for MasterRegistry...[0m
+2025-11-04T20:17:36.733Z: [32m   ✅ MasterRegistry: 0x8b910B15beca8f8A2420Eca21747F2c0D795Ec8A[0m
+2025-11-04T20:17:36.733Z: [36m      Size: [32m5.86 KB ✅[0m[0m
+2025-11-04T20:17:36.734Z: 
+[1m📦 Step 2/8: ParameterStorage[0m
+2025-11-04T20:17:36.734Z: [36m   🔄 Attempt 1/5 for ParameterStorage...[0m
+2025-11-04T20:17:49.046Z: [32m   ✅ ParameterStorage: 0xf6B48fddB75c316c84A49Dccdd0db34a23ae531e[0m
+2025-11-04T20:17:49.047Z: [36m      Size: [32m5.69 KB ✅[0m[0m
+2025-11-04T20:17:49.047Z: 
+[1m📦 Step 3/8: AccessControlManager[0m
+2025-11-04T20:17:49.048Z: [36m   🔄 Attempt 1/5 for AccessControlManager...[0m
+2025-11-04T20:18:01.169Z: [32m   ✅ AccessControlManager: 0xEa401d14f851F8DAB1F880456520CCE10e2B79f9[0m
+2025-11-04T20:18:01.169Z: [36m      Size: [32m4.38 KB ✅[0m[0m
+2025-11-04T20:18:01.169Z: 
+[1m🔗 Step 3.5: Registering AccessControlManager[0m
+2025-11-04T20:18:54.622Z: [36m📋 Deployment Configuration[0m
+2025-11-04T20:18:54.623Z:    Network:         [33mSepolia Testnet[0m
+2025-11-04T20:18:54.623Z:    Chain ID:        [33m11155111[0m
+2025-11-04T20:18:54.623Z:    Architecture:    [33mSPLIT (Core + Extensions)[0m
+2025-11-04T20:18:54.624Z:    Deployer:        [33m0x25fD72154857Bd204345808a690d51a61A81EB0b[0m
+2025-11-04T20:18:54.624Z:    Balance:         [33m0.810782306848312677 ETH[0m
+2025-11-04T20:18:54.624Z:    Gas Multiplier:  [33m1.5x[0m
+2025-11-04T20:18:54.625Z:    Max Retries:     [33m5[0m
+
+2025-11-04T20:18:54.625Z: 
+[1m📦 Step 1/8: MasterRegistry[0m
+2025-11-04T20:18:54.625Z: [32m   ✅ MasterRegistry already deployed at: 0x8b910B15beca8f8A2420Eca21747F2c0D795Ec8A[0m
+2025-11-04T20:18:54.625Z: 
+[1m📦 Step 2/8: ParameterStorage[0m
+2025-11-04T20:18:54.625Z: [32m   ✅ ParameterStorage already deployed at: 0xf6B48fddB75c316c84A49Dccdd0db34a23ae531e[0m
+2025-11-04T20:18:54.625Z: 
+[1m📦 Step 3/8: AccessControlManager[0m
+2025-11-04T20:18:54.626Z: [32m   ✅ AccessControlManager already deployed at: 0xEa401d14f851F8DAB1F880456520CCE10e2B79f9[0m
+2025-11-04T20:18:54.632Z: 
+[1m🔗 Step 3.5: Registering AccessControlManager[0m
+2025-11-04T20:19:00.952Z: [32m   ✅ Registered[0m
+2025-11-04T20:19:00.953Z: 
+[1m🔑 Step 3.6: Granting ADMIN_ROLE[0m
+2025-11-04T20:19:15.322Z: [32m   ✅ ADMIN_ROLE granted[0m
+2025-11-04T20:19:15.323Z: 
+[1m📦 Step 3.7: MockBondingCurve[0m
+2025-11-04T20:19:15.324Z: [36m   🔄 Attempt 1/5 for MockBondingCurve...[0m
+2025-11-04T20:19:24.971Z: [32m   ✅ MockBondingCurve: 0xDd1f60aFDcB37bdd4cb8d42a1f856531b0b84d44[0m
+2025-11-04T20:19:24.971Z: [36m      Size: [31m0.00 KB ❌[0m[0m
+2025-11-04T20:19:24.972Z: 
+[1m🔗 Step 3.8: Registering BondingCurve[0m
+2025-11-04T20:19:50.472Z: [32m   ✅ Registered[0m
+2025-11-04T20:19:50.473Z: 
+[1m[35m📦 Step 4/8: FlexibleMarketFactoryCore (NEW!)[0m
+2025-11-04T20:19:50.474Z: [36m   🔄 Attempt 1/5 for FlexibleMarketFactoryCore...[0m
+2025-11-04T20:20:01.513Z: [32m   ✅ FlexibleMarketFactoryCore: 0x700bbb057C6959D4f2D84204a878681432D25f01[0m
+2025-11-04T20:20:01.513Z: [36m      Size: [32m21.87 KB ✅[0m[0m
+2025-11-04T20:20:01.513Z: 
+[1m[35m📦 Step 5/8: FlexibleMarketFactoryExtensions (NEW!)[0m
+2025-11-04T20:20:01.513Z: [36m   🔄 Attempt 1/5 for FlexibleMarketFactoryExtensions...[0m
+2025-11-04T20:20:24.647Z: [32m   ✅ FlexibleMarketFactoryExtensions: 0x415d06293561a07645853BC53872546baEdCB6a9[0m
+2025-11-04T20:20:24.648Z: [36m      Size: [32m6.42 KB ✅[0m[0m
+2025-11-04T20:20:24.648Z: 
+[1m[35m🔗 Step 5.5/8: Linking Core ↔ Extensions[0m
+2025-11-04T20:20:36.833Z: [32m   ✅ Core and Extensions linked successfully![0m
+2025-11-04T20:20:36.834Z: 
+[1m📦 Step 6/8: ResolutionManager[0m
+2025-11-04T20:20:36.835Z: [36m   🔄 Attempt 1/5 for ResolutionManager...[0m
+2025-11-04T20:20:48.840Z: [32m   ✅ ResolutionManager: 0xA1ceE266992934CcD7A3e49B1A11EF52AD07041B[0m
+2025-11-04T20:20:48.841Z: [36m      Size: [32m11.50 KB ✅[0m[0m
+2025-11-04T20:20:48.841Z: 
+[1m📦 Step 7/8: RewardDistributor[0m
+2025-11-04T20:20:48.841Z: [36m   🔄 Attempt 1/5 for RewardDistributor...[0m
+2025-11-04T20:21:01.553Z: [32m   ✅ RewardDistributor: 0x6646fa4544eCf566ae526943A230257B1B4a620E[0m
+2025-11-04T20:21:01.553Z: [36m      Size: [32m7.42 KB ✅[0m[0m
+2025-11-04T20:21:01.553Z: 
+[1m📦 Step 8/8: ProposalManager[0m
+2025-11-04T20:21:01.554Z: [36m   🔄 Attempt 1/5 for ProposalManager...[0m
+2025-11-04T20:21:13.400Z: [32m   ✅ ProposalManager: 0x1a86aaB75fBC487Fbf7F87ba77000355401c0044[0m
+2025-11-04T20:21:13.401Z: [36m      Size: [32m8.37 KB ✅[0m[0m
+2025-11-04T20:21:13.402Z: 
+[1m🔧 Registering contracts in MasterRegistry...[0m
+2025-11-04T20:21:24.923Z: [32m   ✅ Registered ParameterStorage[0m
+2025-11-04T20:21:49.055Z: [32m   ✅ Registered AccessControlManager[0m
+2025-11-04T20:22:05.242Z: [32m   ✅ Registered FlexibleMarketFactoryCore[0m
+2025-11-04T20:22:28.329Z: [32m   ✅ Registered FlexibleMarketFactoryExtensions[0m
+2025-11-04T20:22:39.861Z: [32m   ✅ Registered ResolutionManager[0m
+2025-11-04T20:22:50.240Z: [32m   ✅ Registered RewardDistributor[0m
+2025-11-04T20:23:13.882Z: [32m   ✅ Registered ProposalManager[0m
+2025-11-04T21:01:02.324Z: [36m📋 Deployment Configuration[0m
+2025-11-04T21:01:02.326Z:    Network:         [33mSepolia Testnet[0m
+2025-11-04T21:01:02.327Z:    Chain ID:        [33m11155111[0m
+2025-11-04T21:01:02.327Z:    Architecture:    [33mSPLIT (Core + Extensions)[0m
+2025-11-04T21:01:02.328Z:    Deployer:        [33m0x25fD72154857Bd204345808a690d51a61A81EB0b[0m
+2025-11-04T21:01:02.329Z:    Balance:         [33m0.804564642623548748 ETH[0m
+2025-11-04T21:01:02.330Z:    Gas Multiplier:  [33m1.5x[0m
+2025-11-04T21:01:02.330Z:    Max Retries:     [33m5[0m
+
+2025-11-04T21:01:02.330Z: 
+[1m📦 Step 1/8: MasterRegistry[0m
+2025-11-04T21:01:02.331Z: [32m   ✅ MasterRegistry already deployed at: 0x8b910B15beca8f8A2420Eca21747F2c0D795Ec8A[0m
+2025-11-04T21:01:02.331Z: 
+[1m📦 Step 2/8: ParameterStorage[0m
+2025-11-04T21:01:02.331Z: [32m   ✅ ParameterStorage already deployed at: 0xf6B48fddB75c316c84A49Dccdd0db34a23ae531e[0m
+2025-11-04T21:01:02.331Z: 
+[1m📦 Step 3/8: AccessControlManager[0m
+2025-11-04T21:01:02.332Z: [32m   ✅ AccessControlManager already deployed at: 0xEa401d14f851F8DAB1F880456520CCE10e2B79f9[0m
+2025-11-04T21:01:02.346Z: 
+[1m🔗 Step 3.5: Registering AccessControlManager[0m
+2025-11-04T21:01:12.785Z: [32m   ✅ Registered[0m
+2025-11-04T21:01:12.786Z: 
+[1m🔑 Step 3.6: Granting ADMIN_ROLE[0m
+2025-11-04T21:01:27.492Z: [36m📋 Deployment Configuration[0m
+2025-11-04T21:01:27.493Z:    Network:         [33mSepolia Testnet[0m
+2025-11-04T21:01:27.494Z:    Chain ID:        [33m11155111[0m
+2025-11-04T21:01:27.494Z:    Architecture:    [33mSPLIT (Core + Extensions)[0m
+2025-11-04T21:01:27.495Z:    Deployer:        [33m0x25fD72154857Bd204345808a690d51a61A81EB0b[0m
+2025-11-04T21:01:27.496Z:    Balance:         [33m0.804564606003255788 ETH[0m
+2025-11-04T21:01:27.497Z:    Gas Multiplier:  [33m1.5x[0m
+2025-11-04T21:01:27.497Z:    Max Retries:     [33m5[0m
+
+2025-11-04T21:01:27.497Z: 
+[1m📦 Step 1/8: MasterRegistry[0m
+2025-11-04T21:01:27.498Z: [36m   🔄 Attempt 1/5 for MasterRegistry...[0m
+2025-11-04T21:01:37.070Z: [32m   ✅ MasterRegistry: 0xB38333A90F4D20EBA3b9e1c99B6c67011315A771[0m
+2025-11-04T21:01:37.070Z: [36m      Size: [32m3.85 KB ✅[0m[0m
+2025-11-04T21:01:37.071Z: 
+[1m📦 Step 2/8: ParameterStorage[0m
+2025-11-04T21:01:37.071Z: [36m   🔄 Attempt 1/5 for ParameterStorage...[0m
+2025-11-04T21:01:49.331Z: [32m   ✅ ParameterStorage: 0xfbc51Bd9fEc34187454784e7cDcC51A5546e7eE6[0m
+2025-11-04T21:01:49.331Z: [36m      Size: [32m4.54 KB ✅[0m[0m
+2025-11-04T21:01:49.332Z: 
+[1m📦 Step 3/8: AccessControlManager[0m
+2025-11-04T21:01:49.332Z: [36m   🔄 Attempt 1/5 for AccessControlManager...[0m
+2025-11-04T21:02:00.843Z: [32m   ✅ AccessControlManager: 0xC207a7560F324cda893002261EB54D6efC810a8d[0m
+2025-11-04T21:02:00.843Z: [36m      Size: [32m3.47 KB ✅[0m[0m
+2025-11-04T21:02:00.846Z: 
+[1m🔗 Step 3.5: Registering AccessControlManager[0m
+2025-11-04T21:02:13.030Z: [32m   ✅ Registered[0m
+2025-11-04T21:02:13.030Z: 
+[1m🔑 Step 3.6: Granting ADMIN_ROLE[0m
+2025-11-04T21:02:26.861Z: [32m   ✅ ADMIN_ROLE granted[0m
+2025-11-04T21:02:26.862Z: 
+[1m📦 Step 3.7: MockBondingCurve[0m
+2025-11-04T21:02:26.863Z: [36m   🔄 Attempt 1/5 for MockBondingCurve...[0m
+2025-11-04T21:02:37.841Z: [32m   ✅ MockBondingCurve: 0x60B83c1E416b2e3f0ddD5b89320525fe5B07168A[0m
+2025-11-04T21:02:37.841Z: [36m      Size: [31m0.00 KB ❌[0m[0m
+2025-11-04T21:02:37.842Z: 
+[1m🔗 Step 3.8: Registering BondingCurve[0m
+2025-11-04T21:02:49.562Z: [32m   ✅ Registered[0m
+2025-11-04T21:02:49.563Z: 
+[1m[35m📦 Step 4/8: FlexibleMarketFactoryCore (NEW!)[0m
+2025-11-04T21:02:49.564Z: [36m   🔄 Attempt 1/5 for FlexibleMarketFactoryCore...[0m
+2025-11-04T21:03:01.215Z: [32m   ✅ FlexibleMarketFactoryCore: 0x8468051CF859bdFF85f8535d7f62103dD612597c[0m
+2025-11-04T21:03:01.215Z: [36m      Size: [32m16.73 KB ✅[0m[0m
+2025-11-04T21:03:01.216Z: 
+[1m[35m📦 Step 5/8: FlexibleMarketFactoryExtensions (NEW!)[0m
+2025-11-04T21:03:01.216Z: [36m   🔄 Attempt 1/5 for FlexibleMarketFactoryExtensions...[0m
+2025-11-04T21:03:12.665Z: [32m   ✅ FlexibleMarketFactoryExtensions: 0x5CebeE07b7dA83D9Bf8e5Ee21FB9a55bB03026D3[0m
+2025-11-04T21:03:12.665Z: [36m      Size: [32m5.19 KB ✅[0m[0m
+2025-11-04T21:03:12.665Z: 
+[1m[35m🔗 Step 5.5/8: Linking Core ↔ Extensions[0m
+2025-11-04T21:03:24.786Z: [32m   ✅ Core and Extensions linked successfully![0m
+2025-11-04T21:03:24.787Z: 
+[1m📦 Step 6/8: ResolutionManager[0m
+2025-11-04T21:03:24.787Z: [36m   🔄 Attempt 1/5 for ResolutionManager...[0m
+2025-11-04T21:03:37.642Z: [32m   ✅ ResolutionManager: 0xF6C8D81c92035fEe6D40DEc75910914296134249[0m
+2025-11-04T21:03:37.642Z: [36m      Size: [32m9.62 KB ✅[0m[0m
+2025-11-04T21:03:37.643Z: 
+[1m📦 Step 7/8: RewardDistributor[0m
+2025-11-04T21:03:37.643Z: [36m   🔄 Attempt 1/5 for RewardDistributor...[0m
+2025-11-04T21:03:48.989Z: [32m   ✅ RewardDistributor: 0xBe57022E7A478f910a40CCAe5825DFF9e571cbBA[0m
+2025-11-04T21:03:48.989Z: [36m      Size: [32m5.21 KB ✅[0m[0m
+2025-11-04T21:03:48.990Z: 
+[1m📦 Step 8/8: ProposalManager[0m
+2025-11-04T21:03:48.990Z: [36m   🔄 Attempt 1/5 for ProposalManager...[0m
+2025-11-04T21:04:00.714Z: [32m   ✅ ProposalManager: 0x9BAc482caa7C39baE39Ee299C1F97a5C024e5bB4[0m
+2025-11-04T21:04:00.715Z: [36m      Size: [32m6.24 KB ✅[0m[0m
+2025-11-04T21:04:00.715Z: 
+[1m🔧 Registering contracts in MasterRegistry...[0m
+2025-11-04T21:04:12.715Z: [32m   ✅ Registered ParameterStorage[0m
+2025-11-04T21:04:24.738Z: [32m   ✅ Registered AccessControlManager[0m
+2025-11-04T21:04:37.224Z: [32m   ✅ Registered FlexibleMarketFactoryCore[0m
+2025-11-04T21:04:48.757Z: [32m   ✅ Registered FlexibleMarketFactoryExtensions[0m
+2025-11-04T21:05:00.634Z: [32m   ✅ Registered ResolutionManager[0m
+2025-11-04T21:05:12.699Z: [32m   ✅ Registered RewardDistributor[0m
+2025-11-04T21:05:25.175Z: [32m   ✅ Registered ProposalManager[0m
+2025-11-05T18:24:40.008Z: [36m📋 Deployment Configuration[0m
+2025-11-05T18:24:40.009Z:    Network:         [33mSepolia Testnet[0m
+2025-11-05T18:24:40.009Z:    Chain ID:        [33m11155111[0m
+2025-11-05T18:24:40.010Z:    Architecture:    [33mSPLIT (Core + Extensions)[0m
+2025-11-05T18:24:40.010Z:    Deployer:        [33m0x25fD72154857Bd204345808a690d51a61A81EB0b[0m
+2025-11-05T18:24:40.010Z:    Balance:         [33m0.548455061633990184 ETH[0m
+2025-11-05T18:24:40.011Z:    Gas Multiplier:  [33m1.5x[0m
+2025-11-05T18:24:40.011Z:    Max Retries:     [33m5[0m
+
+2025-11-05T18:24:40.011Z: 
+[1m📦 Step 1/8: MasterRegistry[0m
+2025-11-05T18:24:40.011Z: [32m   ✅ MasterRegistry already deployed at: 0xB38333A90F4D20EBA3b9e1c99B6c67011315A771[0m
+2025-11-05T18:24:40.011Z: 
+[1m📦 Step 2/8: ParameterStorage[0m
+2025-11-05T18:24:40.011Z: [32m   ✅ ParameterStorage already deployed at: 0xfbc51Bd9fEc34187454784e7cDcC51A5546e7eE6[0m
+2025-11-05T18:24:40.011Z: 
+[1m📦 Step 3/8: AccessControlManager[0m
+2025-11-05T18:24:40.012Z: [32m   ✅ AccessControlManager already deployed at: 0xC207a7560F324cda893002261EB54D6efC810a8d[0m
+2025-11-05T18:24:40.023Z: 
+[1m🔗 Step 3.5: Registering AccessControlManager[0m
+2025-11-05T18:25:01.938Z: [32m   ✅ Registered[0m
+2025-11-05T18:25:01.939Z: 
+[1m🔑 Step 3.6: Granting ADMIN_ROLE[0m

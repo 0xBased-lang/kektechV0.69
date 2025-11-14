@@ -18,9 +18,9 @@ echo "📍 Current directory: $(pwd)"
 echo ""
 
 # Show which project will be deployed
-if [ -f "packages/frontend/.vercel/project.json" ]; then
-    PROJECT_ID=$(cat packages/frontend/.vercel/project.json | grep -o 'prj_[^"]*')
-    PROJECT_NAME=$(cat packages/frontend/.vercel/project.json | grep -o '"projectName":"[^"]*"' | cut -d'"' -f4)
+if [ -f ".vercel/project.json" ]; then
+    PROJECT_ID=$(grep -o 'prj_[^"]*' .vercel/project.json)
+    PROJECT_NAME=$(grep -o '"projectName":"[^"]*"' .vercel/project.json | cut -d'"' -f4)
     echo "🎯 Target Deployment:"
     echo "   Project Name: $PROJECT_NAME"
     echo "   Project ID: $PROJECT_ID"

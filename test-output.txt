@@ -1,0 +1,17 @@
+
+Running 114 tests using 1 worker
+
+✅ Homepage loaded successfully
+  ✓    1 [chromium] › tests/e2e/01-nft-platform.spec.ts:10:7 › NFT Platform - Core Functionality › 01. Homepage loads successfully (1.6s)
+  ✘    2 [chromium] › tests/e2e/01-nft-platform.spec.ts:27:7 › NFT Platform - Core Functionality › 02. Navigation menu works correctly (1.4s)
+✅ Marketplace page loaded
+  ✓    3 [chromium] › tests/e2e/01-nft-platform.spec.ts:40:7 › NFT Platform - Core Functionality › 03. Marketplace page loads (21.2s)
+✅ Gallery page loaded
+  ✓    4 [chromium] › tests/e2e/01-nft-platform.spec.ts:53:7 › NFT Platform - Core Functionality › 04. Gallery page loads (15.4s)
+✅ Dashboard page accessible
+  ✓    5 [chromium] › tests/e2e/01-nft-platform.spec.ts:66:7 › NFT Platform - Core Functionality › 05. Dashboard page accessible (12.5s)
+  ✘    6 [chromium] › tests/e2e/01-nft-platform.spec.ts:79:7 › NFT Platform - Core Functionality › 06. Responsive design - Mobile view (30.1s)
+  ✘    7 [chromium] › tests/e2e/01-nft-platform.spec.ts:91:7 › NFT Platform - Core Functionality › 07. Page transitions work smoothly (43.5s)
+  ✘    8 [chromium] › tests/e2e/01-nft-platform.spec.ts:109:7 › NFT Platform - Core Functionality › 08. Footer contains required information (41.3s)
+  ✘    9 [chromium] › tests/e2e/01-nft-platform.spec.ts:119:7 › NFT Platform - Core Functionality › 09. No console errors on page load (41.1s)
+  ✘   10 [chromium] › tests/e2e/01-nft-platform.spec.ts:142:7 › NFT Platform - Core Functionality › 10. Performance - Page loads within acceptable time (41.1s)

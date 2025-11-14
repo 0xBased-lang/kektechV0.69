@@ -1,277 +1,203 @@
-# KEKTECH 3.0 - Live Prediction Market Platform
+# KEKTECH NFT Collection
 
-<div align="center">
+A modern NFT minting platform built on the $BASED Chain (32323) using Next.js 15, Wagmi, and Reown (WalletConnect).
 
-## 🟢 LIVE ON MAINNET
+## 🚀 Features
 
-**Deployed November 6, 2025 | BasedAI Chain (32323)**
+- ✅ **Modern Tech Stack**: Next.js 15, TypeScript, Tailwind CSS
+- ✅ **Web3 Integration**: Wagmi + Reown for wallet connectivity
+- ✅ **Multi-Wallet Support**: WalletConnect, MetaMask, Coinbase Wallet
+- ✅ **Type-Safe**: Full TypeScript with strict mode
+- ✅ **Responsive Design**: Mobile-first, accessible UI
+- ✅ **$BASED Chain**: Chain ID 32323
 
-[![BasedAI](https://img.shields.io/badge/Status-LIVE-success)](https://explorer.basedai.com)
-[![Tests](https://img.shields.io/badge/Tests-100%25%20(320%2F320)-success)](./TEST_REALITY.md)
-[![Security](https://img.shields.io/badge/Security-96%2F100-success)](./packages/blockchain/audit-results/)
-[![Frontend](https://img.shields.io/badge/Frontend-Deployed-success)](https://kektech.vercel.app)
+## 🗂️ Repository Layout
 
-**Decentralized Prediction Markets - Live and Operational**
+- `/` – Active Next.js application (previously `packages/frontend`)
+- `/contracts` – Solidity/Hardhat workspace moved from `packages/blockchain`
+- `/legacy/monorepo-root` – Archived documentation, scripts, and configs from the old monorepo layout
 
-</div>
+## 📋 Prerequisites
 
----
+- Node.js 18+ or 20+
+- npm or yarn
+- A Web3 wallet (MetaMask recommended)
+- Some $BASED tokens for gas fees
 
-## 🚀 Quick Links
+## 🛠️ Installation
 
-### Live System
-- **Frontend**: [kektech.vercel.app](https://kektech.vercel.app)
-- **Contracts**: [View Addresses](./deployments/basedai-mainnet/contracts.json)
-- **Documentation**: [CLAUDE.md](./CLAUDE.md)
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/0xBased-lang/kektech-nextjs.git
+   cd kektech-nextjs
+   ```
 
-### Status & Tracking
-- **System Status**: [MASTER_STATUS.md](./MASTER_STATUS.md)
-- **Current Tasks**: [TODO_TRACKER.md](./TODO_TRACKER.md)
-- **Test Status**: [TEST_REALITY.md](./TEST_REALITY.md)
-- **Deployment Info**: [DEPLOYMENT_REALITY.md](./DEPLOYMENT_REALITY.md)
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
----
+3. **Configure environment variables**:
 
-## 🎯 Overview
+   Copy `.env.local.example` to `.env.local`:
+   ```bash
+   cp .env.local.example .env.local
+   ```
 
-KEKTECH 3.0 is a **live, operational** prediction market platform on BasedAI blockchain, featuring:
+   The `.env.local` file should contain:
+   ```env
+   # Reown/WalletConnect Configuration
+   NEXT_PUBLIC_REOWN_PROJECT_ID=ee738e17f6b483db152c5e439167f805
 
-### Deployed Infrastructure
-- ✅ **9 Core Contracts** - Live on mainnet since Nov 6, 2025
-- ✅ **100% Test Coverage** - 320/320 tests passing (Nov 8, 2025)
-- ✅ **Security Audited** - 96/100 score, 0 critical issues
-- ✅ **Gas Optimized** - $0.0001/bet (1000x cheaper than competitors)
-- ✅ **Frontend Integrated** - Full UI at kektech.vercel.app
+   # Smart Contract Configuration
+   NEXT_PUBLIC_CONTRACT_ADDRESS=0x40B6184b901334C0A88f528c1A0a1de7a77490f1
+   NEXT_PUBLIC_CHAIN_ID=32323
 
-### Technical Architecture
-- **EIP-1167 Clone Pattern** - Immutable markets via minimal proxies
-- **LMSR Bonding Curves** - Logarithmic Market Scoring Rule
-- **Registry Architecture** - Clean upgradability without proxies
-- **Multi-layer Security** - Economic + access control + time-based
+   # Blockchain Configuration
+   NEXT_PUBLIC_RPC_URL=https://mainnet.basedaibridge.com/rpc/
+   NEXT_PUBLIC_EXPLORER_URL=https://explorer.bf1337.org
 
----
+   # API Endpoints
+   NEXT_PUBLIC_API_URL=http://157.173.117.77:5000
+   NEXT_PUBLIC_METADATA_API_URL=http://157.173.117.77:5000/api/nft
+   NEXT_PUBLIC_RANKING_API_URL=http://157.173.117.77:5000/api/leaderboard
+   NEXT_PUBLIC_IMAGE_API_URL=http://157.173.117.77:5000/api/nft/image
+   ```
 
-## 📊 Performance Metrics
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-| Metric | Value | Status |
-|--------|-------|--------|
-| **Test Coverage** | 100% (320/320) | ✅ |
-| **Security Score** | 96/100 | ✅ |
-| **Gas per Bet** | ~100k ($0.0001) | ✅ |
-| **Market Creation** | ~687k gas | ✅ |
-| **Contract Size** | <24KB (max 13KB) | ✅ |
-| **Deployment** | Nov 6, 2025 | ✅ |
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
-
-## 🏗️ Architecture
-
-### Deployed Contracts (BasedAI Mainnet)
-
-```
-VersionedRegistry (Version Management)
-    |
-    └─> PredictionMarketTemplate (Cloneable)
-           |
-           v
-FlexibleMarketFactoryUnified
-    |
-    ├─> Creates Market Clones (EIP-1167)
-    |
-    v
-Market Instances (Immutable)
-    ├─> Market 1
-    ├─> Market 2
-    └─> Market N
-
-Supporting Contracts:
-├── ParameterStorage     - Global parameters
-├── AccessControlManager - Role management
-├── ResolutionManager    - Outcome resolution
-├── RewardDistributor    - Fee distribution
-└── LMSRCurve           - Pricing algorithm
-```
-
----
-
-## 🚀 Getting Started
-
-### Use the Live System
-1. Visit [kektech.vercel.app](https://kektech.vercel.app)
-2. Connect wallet (BasedAI network, Chain ID: 32323)
-3. Start trading on prediction markets
-
-### Local Development
-```bash
-# Clone repository
-git clone https://github.com/0xBased-lang/kektechV0.69.git
-cd kektechV0.69
-
-# Install dependencies
-npm install
-
-# Run tests (100% should pass)
-cd packages/blockchain
-npm test
-
-# Start local fork
-npm run node:fork
-```
-
-See [Getting Started Guide](./docs/guides/GETTING_STARTED.md) for detailed setup.
-
----
-
-## 📁 Repository Structure
+## 🏗️ Project Structure
 
 ```
-kektechV0.69/
-├── packages/
-│   ├── blockchain/         # Smart contracts (Solidity)
-│   │   ├── contracts/     # Core contracts
-│   │   ├── test/          # 320 passing tests
-│   │   └── scripts/       # Utility scripts
-│   └── frontend/          # Next.js application
-│       ├── app/           # App router
-│       └── lib/contracts/ # ABIs and addresses
-├── deployments/
-│   └── basedai-mainnet/   # Live deployment artifacts
-├── docs/                  # Documentation
-│   ├── guides/           # Developer guides
-│   ├── reference/        # API reference
-│   └── operations/       # System operations
-└── CLAUDE.md             # Main documentation
+kektech-nextjs/
+├── app/                      # Next.js App Router
+│   ├── layout.tsx           # Root layout with providers
+│   ├── page.tsx             # Homepage
+│   ├── providers.tsx        # Web3 providers
+│   ├── mint/                # Mint page (Phase 2)
+│   └── gallery/             # Gallery page (Phase 2)
+├── components/              # React components
+│   ├── layout/             # Layout components
+│   │   ├── Header.tsx
+│   │   └── Footer.tsx
+│   ├── web3/               # Web3 components
+│   │   └── ConnectButton.tsx
+│   ├── nft/                # NFT components (Phase 2)
+│   └── ui/                 # UI components (Phase 2)
+├── config/                  # Configuration files
+│   ├── chains.ts           # Chain configuration (Chain ID 32323)
+│   ├── constants.ts        # Contract constants
+│   ├── wagmi.ts            # Wagmi configuration
+│   └── contracts/          # Contract ABIs and configs
+│       ├── kektech-main.ts
+│       └── index.ts
+├── lib/                     # Utility functions
+│   ├── hooks/              # Custom React hooks (Phase 2)
+│   ├── utils/              # Utility functions
+│   │   └── cn.ts           # Tailwind class merger
+│   └── api/                # API helpers (Phase 2)
+├── types/                   # TypeScript type definitions (Phase 2)
+└── public/                  # Static assets
 ```
 
----
+## 🔧 Development
 
-## 🔧 Development Commands
+### Available Scripts
 
-```bash
-# Testing
-npm test                    # Run all tests (100% pass)
-npm run test:gas           # Gas usage report
-npm run coverage           # Coverage report
+- `npm run dev` - Start development server (with Turbopack)
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript type checker
 
-# Development
-npm run node:fork          # Start mainnet fork
-npm run security:slither   # Security analysis
+### Code Quality
 
-# Scripts
-node scripts/live/monitor.js              # Monitor live system
-node scripts/live/check-market.js [addr]  # Check market status
-```
+- **TypeScript**: Strict mode enabled
+- **ESLint**: Next.js + TypeScript + Prettier configuration
+- **Prettier**: Code formatting (run on save)
 
----
+### Adding the $BASED Chain to MetaMask
 
-## 📈 Market Lifecycle
+1. Open MetaMask
+2. Click "Add Network" → "Add Network Manually"
+3. Enter the following details:
+   - **Network Name**: $BASED Chain
+   - **RPC URL**: `https://mainnet.basedaibridge.com/rpc/`
+   - **Chain ID**: `32323`
+   - **Currency Symbol**: `BASED`
+   - **Block Explorer**: `https://explorer.bf1337.org`
 
-```mermaid
-graph LR
-    A[PROPOSED] --> B[APPROVED]
-    B --> C[ACTIVE]
-    C --> D[CLOSED]
-    D --> E[RESOLVING]
-    E --> F[RESOLVED]
-    F --> G[FINALIZED]
-    E --> H[DISPUTED]
-    H --> F
-```
+## 🌐 Blockchain Details
 
----
+- **Chain Name**: $BASED Chain
+- **Chain ID**: 32323
+- **RPC Endpoint**: https://mainnet.basedaibridge.com/rpc/
+- **Block Explorer**: https://explorer.bf1337.org
+- **Contract Address**: `0x40B6184b901334C0A88f528c1A0a1de7a77490f1`
 
-## 🔐 Security
+## 📦 Smart Contract
 
-- **Audit Score**: 96/100 (Slither analysis)
-- **Critical Issues**: 0
-- **High Issues**: 0
-- **Test Coverage**: 100%
-- **Reentrancy Protection**: All functions
-- **Access Control**: Role-based (RBAC)
-- **Immutable Markets**: EIP-1167 clones
+### KEKTECH Main Collection
 
----
+- **Address**: `0x40B6184b901334C0A88f528c1A0a1de7a77490f1`
+- **Total Supply**: 10,000 NFTs
+- **Max Per Transaction**: 5 NFTs
+- **Metadata**: Dynamic on-chain metadata
+- **Ranking**: On-chain ranking system
 
-## 🌟 Key Features
+## 🚧 Phase 2 (Upcoming)
 
-### For Users
-- Place bets with BASED tokens
-- Create custom prediction markets
-- Resolve markets through consensus
-- Claim winnings automatically
+The following features will be implemented in Phase 2:
 
-### For Developers
-- Clean, modular architecture
-- 100% test coverage
-- Comprehensive documentation
-- Gas-optimized contracts
-- TypeScript SDK (coming soon)
-
----
-
-## 📊 Testing Parameters
-
-### Quick Testing (Development)
-```javascript
-{
-  marketDuration: 1 hour,
-  resolutionTime: 30 minutes,
-  disputeWindow: 15 minutes
-}
-```
-
-### Production (Live Markets)
-```javascript
-{
-  marketDuration: 7-30 days,
-  resolutionTime: 24-48 hours,
-  disputeWindow: 12-24 hours
-}
-```
-
----
+- [ ] Mint functionality with transaction handling
+- [ ] NFT gallery with filtering and sorting
+- [ ] User profile page
+- [ ] Transaction history
+- [ ] NFT ranking display
+- [ ] Image generation API integration
+- [ ] Share functionality
+- [ ] Mobile-optimized UI
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details.
-
-### Development Process
 1. Fork the repository
-2. Create your feature branch
-3. Write tests first (TDD)
-4. Implement your feature
-5. Ensure 100% test coverage
-6. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
----
+### Commit Convention
+
+We follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation changes
+- `style:` - Code style changes (formatting, etc.)
+- `refactor:` - Code refactoring
+- `test:` - Adding or updating tests
+- `chore:` - Maintenance tasks
 
 ## 📄 License
 
-MIT License - see [LICENSE](./LICENSE) file for details.
+This project is proprietary and confidential.
+
+## 🔗 Links
+
+- [GitHub Repository](https://github.com/0xBased-lang/kektech-nextjs)
+- [Block Explorer](https://explorer.bf1337.org)
+- [RPC Endpoint](https://mainnet.basedaibridge.com/rpc/)
+
+## 💬 Support
+
+For issues and questions, please open an issue on GitHub.
 
 ---
 
-## 🔗 Resources
-
-- **Documentation**: [CLAUDE.md](./CLAUDE.md)
-- **Architecture**: [docs/architecture/](./docs/architecture/)
-- **Contracts**: [docs/reference/CONTRACTS.md](./docs/reference/CONTRACTS.md)
-- **Monitoring**: [docs/operations/MONITORING.md](./docs/operations/MONITORING.md)
-
----
-
-## 📞 Support
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/0xBased-lang/kektechV0.69/issues)
-- **Documentation**: [Complete docs](./CLAUDE.md)
-- **Status Updates**: [MASTER_STATUS.md](./MASTER_STATUS.md)
-
----
-
-<div align="center">
-
-**Built with ❤️ on BasedAI**
-
-**Live Since November 6, 2025**
-
-</div>
+**Built with ❤️ by the KEKTECH Team**
+# WebSocket URL: wss://ws.kektech.xyz/ws

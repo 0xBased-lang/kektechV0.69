@@ -1,3 +1,0 @@
-module.exports=[868506,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(488262);a.n(d("[project]/Desktop/kektechbmad100/kektech-mainnet-frontend/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},793357,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(488262);a.n(d("[project]/Desktop/kektechbmad100/kektech-mainnet-frontend/node_modules/next/dist/client/components/builtin/global-error.js"))},997485,a=>{"use strict";a.i(868506);var b=a.i(793357);a.n(b)}];
-
-//# sourceMappingURL=f056e_next_dist_client_components_builtin_global-error_6777cb7c.js.map

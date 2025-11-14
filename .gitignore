@@ -1,105 +1,65 @@
-# Environment Variables (CRITICAL - Never commit!)
-**/.env
-**/.env.local
-**/.env.*.local
-**/.env.production
-**/.env.development
-**/secrets.json
-**/*private-key*
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# Backup directories
-backup/
-CLEANUP_BACKUP/
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Dependencies
-node_modules/
-**/node_modules/
+# testing
+/coverage
 
-# Build outputs
-*.log
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
 .DS_Store
-**/.DS_Store
-**/dist
-**/build
-**/.next
-**/out
+*.pem
 
-# Archive directories (historical reference, optional to exclude)
-docs/archive/session-reports/
-
-# IDE
+# editor settings
 .vscode/
 .idea/
-.cursor/
-.bmad-core/
-*.swp
-*.swo
 
-# Temporary files
-*.tmp
-tmp/
-temp/
-test-output.txt
-
-# Blockchain specific
-**/artifacts
-**/cache
-**/typechain
-**/typechain-types
-**/.hardhat
-**/.solcover
-
-# Test coverage
-**/coverage
-**/.nyc_output
-
-# Python virtual environments
-.venv/
-venv/
-*.pyc
-__pycache__/
-
-# Backup files
-*.backup
-*.bak
-*.bak[0-9]
-
-# Test outputs (keep structure, ignore content)
-test-results/logs/*
-test-results/gas/latest/*
-!**/.gitkeep
-.vercel
-
-# Archived documentation (in official KEKTECH_OFFICIALS archive)
-docs/archive/
-MASTER_STATUS.md
-TODO_TRACKER.md
-TEST_REALITY.md
-DEPLOYMENT_REALITY.md
-CURRENT_STATUS.md
-
-# Official archive location
-/Users/seman/KEKTECH_OFFICIALS/
-
-# Added by Task Master AI
-# Logs
-logs
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-dev-debug.log
-# Dependency directories
-# Environment variables
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+!.env.local.example
+
+# Security: Never commit these files
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# hardhat
+cache/
+artifacts/
+typechain-types/
 .env
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-# OS specific
-# Task files
-tasks.json
-tasks/ 
+.env.local
+.env*.local
+.cursor/
+.claude/

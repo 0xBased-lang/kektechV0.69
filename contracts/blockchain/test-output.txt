@@ -1,0 +1,1886 @@
+
+> bmad-blockchain-dev@1.0.0 test
+> hardhat test
+
+WARNING: You are currently using Node.js v23.11.0, which is not supported by Hardhat. This can lead to unexpected behavior. See https://hardhat.org/nodejs-versions
+
+
+ ·-------------------------------|--------------------------------|--------------------------------·
+ |  Solc version: 0.8.20         ·  Optimizer enabled: true       ·  Runs: 50                      │
+ ································|································|·································
+ |  Contract Name                ·  Deployed size (KiB) (change)  ·  Initcode size (KiB) (change)  │
+ ································|································|·································
+ |  AccessControlManager         ·                 3.475 (0.000)  ·                 3.930 (0.000)  │
+ ································|································|·································
+ |  MarketTemplateRegistry       ·                 8.305 (0.000)  ·                 8.532 (0.000)  │
+ ································|································|·································
+ |  MarketValidation             ·                 1.293 (0.000)  ·                 1.324 (0.000)  │
+ ································|································|·································
+ |  ParameterStorage             ·                 4.535 (0.000)  ·                 4.770 (0.000)  │
+ ································|································|·································
+ |  ResolutionManager            ·                13.005 (0.000)  ·                13.237 (0.000)  │
+ ································|································|·································
+ |  RewardDistributor            ·                 5.212 (0.000)  ·                 5.380 (0.000)  │
+ ································|································|·································
+ |  RewardDistributorToggleMock  ·                 0.351 (0.000)  ·                 0.478 (0.000)  │
+ ·-------------------------------|--------------------------------|--------------------------------·
+
+
+  AccessControlManager
+    Deployment
+      ✔ Should set the correct registry (207ms)
+      ✔ Should grant DEFAULT_ADMIN_ROLE to deployer
+      ✔ Should start unpaused
+      ✔ Should have DEFAULT_ADMIN_ROLE as its own admin
+    grantRole
+      ✔ Should grant role successfully
+      ✔ Should revert when granting to zero address
+      ✔ Should revert when granting invalid role
+      ✔ Should revert when called by non-admin
+      ✔ Should revert when role already granted
+      ✔ Should revert when paused
+    revokeRole
+      ✔ Should revoke role successfully
+      ✔ Should revert when role not held
+      ✔ Should revert when called by non-admin
+    renounceRole
+      ✔ Should renounce role successfully
+      ✔ Should revert when role not held
+    Batch Operations
+      ✔ Should grant roles in batch
+      ✔ Should revoke roles in batch
+      ✔ Should revert batch grant with empty array
+    Role Admin Management
+      ✔ Should set role admin successfully
+      ✔ Should allow admin of role to grant that role
+    Permission Checks
+      ✔ Should check role successfully
+      ✔ Should revert checkRole when role not held
+      ✔ Should check if has any role
+      ✔ Should check if has all roles
+      ✔ Should return false when not all roles held
+    Enumeration
+      ✔ Should get role member count
+      ✔ Should get role member by index
+      ✔ Should get all role members
+      ✔ Should maintain member list after revoke
+    Admin Functions
+      ✔ Should pause successfully
+      ✔ Should unpause successfully
+      ✔ Should revert pause when not PAUSER
+    Gas Optimization
+      ✔ Should keep hasRole gas under 5k
+Gas used for batch grant (3 accounts): 262634
+Gas per grant in batch: 87544.66666666667
+      ✔ Should optimize batch grant operations
+    Edge Cases & Security
+      ✔ Should handle multiple role assignments
+      ✔ Should support role check
+      ✔ Should maintain consistency after multiple operations
+      ✔ Should integrate with registry
+
+  Gas Optimization Profiling
+
+🔬 GAS PROFILING ANALYSIS
+================================================================================
+
+📦 DEPLOYMENT GAS COSTS:
+   Registry:               1386705 gas
+   ParameterStorage:       1058188 gas
+   AccessControl:           922777 gas
+   RewardDistributor:      1231178 gas
+   ResolutionManager:      3046101 gas
+   LMSRCurve:              1403799 gas
+   MarketValidation:        339614 gas
+   TemplateRegistry:       1890960 gas
+   Factory:                1910360 gas
+
+📊 MARKET CREATION GAS BREAKDOWN:
+   ----------------------------------------------------------------------
+    1) Profile: Market Creation Breakdown
+
+📊 PLACE BET GAS BREAKDOWN:
+   ----------------------------------------------------------------------
+    2) Profile: Place Bet Breakdown
+
+📊 RESOLUTION GAS BREAKDOWN:
+   ----------------------------------------------------------------------
+    3) Profile: Resolution Operations
+
+🎯 TOP OPTIMIZATION OPPORTUNITIES:
+   ======================================================================
+
+   1. 🔴 CRITICAL: Binary Search in placeBet (~500k gas)
+      Issue: Up to 25 iterations calling bonding curve calculateCost()
+      Impact: Reduces 967k → ~467k (52% reduction!)
+      Solutions:
+         a) Cache bonding curve results (10-20 key prices)
+         b) Use interpolation between cached points
+         c) Reduce iterations (25 → 15 with better initial bounds)
+         d) Pre-calculate common bet amounts (0.01, 0.1, 1.0 ETH)
+
+   2. 🔴 CRITICAL: Market Creation Validation (~365k gas)
+      Issue: Unknown validation logic consuming majority of gas
+      Impact: Reduces 712k → ~347k (51% reduction!)
+      Solutions:
+         a) Profile validation steps individually
+         b) Move non-critical validation off-chain
+         c) Batch storage writes
+         d) Optimize registry lookups (cache addresses)
+
+   3. 🟡 MODERATE: Storage Optimization
+      Issue: Multiple SSTORE operations in hot paths
+      Impact: Reduces overall gas by ~10-15%
+      Solutions:
+         a) Pack related variables (uint128 instead of uint256)
+         b) Use memory variables, single final SSTORE
+         c) Reduce event data (indexed parameters)
+
+   4. 🟡 MODERATE: Registry Lookups Caching
+      Issue: Multiple external calls per operation
+      Impact: Saves ~5-10k per operation
+      Solutions:
+         a) Cache contract addresses in storage
+         b) Update cache on registry changes only
+         c) Use immutable for truly constant addresses
+
+   5. 🟢 MINOR: Event Optimization
+      Issue: Large event payloads
+      Impact: Saves ~2-5k per event
+      Solutions:
+         a) Remove redundant indexed parameters
+         b) Use smaller data types where possible
+         c) Emit only essential data
+    ✔ Analysis: Optimization Opportunities
+
+💰 MAINNET COST ESTIMATES (BasedAI Chain):
+   ======================================================================
+
+   Gas Price: 1 gwei (typical L2)
+   $BASED Price: $0.1 (example)
+
+   Current Gas Costs:
+   Deploy Full System  :   5000000 gas =        0.005 $BASED ($0.0005) once
+   Create Market       :    712000 gas =     0.000712 $BASED ($0.0001) per market
+   Place Bet           :    967000 gas =     0.000967 $BASED ($0.0001) per bet
+   Propose Resolution  :    454000 gas =     0.000454 $BASED ($0.0000) per market
+   Auto-Finalize       :    137000 gas =     0.000137 $BASED ($0.0000) per market
+   Claim Winnings      :    109000 gas =     0.000109 $BASED ($0.0000) per user
+
+   📊 Market Lifecycle Example (100 bets):
+      Create Market:           0.000712 $BASED
+      100 Bets:                  0.0967 $BASED
+      Propose Resolution:      0.000454 $BASED
+      Auto-Finalize:           0.000137 $BASED
+      100 Claims:                0.0109 $BASED
+      ──────────────────────────────────────────────────
+      TOTAL:                   0.108903 $BASED ($0.01)
+
+   ⚠️  Note: Actual costs depend on:
+      - BasedAI gas price (may be lower than 1 gwei)
+      - $BASED token price (volatile)
+      - Network congestion
+      - Contract optimization level
+    ✔ Cost Estimate: Mainnet Deployment
+
+  ParameterStorage
+    Deployment
+      ✔ Should set the correct registry
+      ✔ Should start with experimental mode disabled
+      ✔ Should have zero parameters initially
+    setParameter
+      ✔ Should set a parameter value
+      ✔ Should emit ParameterUpdated event
+      ✔ Should update existing parameter
+      ✔ Should revert when called by non-authorized user
+    Guardrails
+      ✔ Should set guardrails for a parameter
+      ✔ Should enforce minimum guardrail
+      ✔ Should enforce maximum guardrail
+      ✔ Should allow values within guardrails
+    Experimental Mode
+      ✔ Should toggle experimental mode
+      ✔ Should emit ExperimentalModeToggled event
+      ✔ Should bypass guardrails when experimental mode enabled
+    Boolean Parameters
+      ✔ Should set boolean parameter
+      ✔ Should emit BoolParameterUpdated event
+      ✔ Should toggle boolean value
+    Address Parameters
+      ✔ Should set address parameter
+      ✔ Should emit AddressParameterUpdated event
+      ✔ Should revert with zero address
+    Batch Operations
+      ✔ Should batch set multiple parameters
+      ✔ Should revert with mismatched array lengths
+    View Functions
+      ✔ Should return all parameters
+      ✔ Should check parameter existence
+      ✔ Should return correct parameter count
+    Gas Optimization
+      ✔ Should keep gas under 30k for parameter read
+Gas used for batch set (2 params): 208150
+Gas per param: 104075
+      ✔ Should optimize batch operations
+    Edge Cases
+      ✔ Should handle maximum uint256 value
+      ✔ Should handle zero value parameters
+      ✔ Should revert when getting non-existent parameter
+    Registry Integration
+      ✔ Should work with registry-based access control
+
+  Phase 5 + 6 Integration: Lifecycle & Dispute Aggregation
+    Phase 5: Resolution Lifecycle Functions
+      4) "before each" hook for "5.1: proposeOutcome() should transition ACTIVE → RESOLVING"
+
+  Phase 7: Complete System Integration Test
+
+🚀 Phase 7: Complete System Integration Test
+============================================================
+Testing: Phase 5 (Lifecycle) + Phase 6 (Dispute Aggregation)
+============================================================
+    7.1: Complete Market Lifecycle (PROPOSED → FINALIZED)
+   ✅ Market created in PROPOSED state: 0xc95ff0608561b6bA084c78D14f09e9826190f968
+      ✔ 7.1.1: Should create market in PROPOSED state
+   ✅ Lifecycle: PROPOSED → APPROVED → ACTIVE
+      ✔ 7.1.2: Should transition PROPOSED → APPROVED → ACTIVE
+   ✅ Betting only allowed in ACTIVE state
+      ✔ 7.1.3: Should allow betting only when ACTIVE
+    7.2: Phase 5 Resolution Functions
+   ✅ proposeOutcome: ACTIVE → RESOLVING
+      ✔ 7.2.1: proposeOutcome() should transition ACTIVE → RESOLVING
+   ✅ dispute: RESOLVING → DISPUTED
+      ✔ 7.2.2: dispute() should transition RESOLVING → DISPUTED
+   ✅ finalize: RESOLVING → FINALIZED
+      ✔ 7.2.3: finalize() should transition RESOLVING → FINALIZED
+   ✅ finalize: DISPUTED → FINALIZED
+      ✔ 7.2.4: finalize() should also work from DISPUTED state
+    7.3: Phase 6 Dispute Aggregation
+   ✅ Auto-finalized with 100% agreement
+      ✔ 7.3.1: Should auto-finalize with ≥75% agreement
+   ✅ Auto-disputed with 50% disagreement
+      ✔ 7.3.2: Should auto-dispute with ≥40% disagreement
+   ✅ Stayed RESOLVING with 65/35 split
+      ✔ 7.3.3: Should stay RESOLVING with mixed signals (65/35)
+   ✅ Admin override finalized disputed market
+      ✔ 7.3.4: Admin can override and finalize disputed market
+    7.4: End-to-End User Flow
+      - 7.4.1: Complete market lifecycle (SKIPPED - bet fails despite working in 7.1.3)
+    7.5: Gas Benchmarking
+
+   ⚡ Gas Benchmarking Results:
+   📊 Market Creation: 712432 gas ❌ (target: <200k)
+   📊 Place Bet:        967460 gas ❌ (target: <100k)
+   📊 Propose Resolution:  454444 gas
+   📊 Auto-Finalize:    137117 gas ⚠️  (target: <100k)
+   📊 Claim Winnings:   108761 gas ⚠️  (target: <80k)
+      ✔ 7.5.1: Should meet gas targets for all operations
+
+============================================================
+✅ Phase 7 Integration Testing Complete!
+============================================================
+
+  PredictionMarket
+    Deployment & Initialization
+      ✔ Should deploy PredictionMarket contract
+      ✔ Should initialize with correct market info
+      ✔ Should set correct registry reference
+      ✔ Should prevent re-initialization
+      ✔ Should require valid resolution time
+    Bet Placement
+      5) Should place bet on OUTCOME1
+      6) Should place bet on OUTCOME2
+      7) Should reject bet with zero amount
+      8) Should reject bet on invalid outcome
+      9) Should enforce minimum bet size
+      10) Should enforce maximum bet size
+      11) Should update total bets counter
+      12) Should update total volume
+      13) Should store bet info correctly
+      14) Should allow same user to increase bet on same outcome
+      15) Should prevent changing bet to different outcome
+      16) Should prevent betting after resolution time
+      17) Should prevent betting after market is resolved
+      18) Should update liquidity pools correctly
+    AMM & Odds Calculation
+      19) Should calculate odds correctly with balanced pools
+      20) Should calculate odds correctly with imbalanced pools
+      21) Should handle odds with only one side betting
+      22) Should emit LiquidityUpdated event
+    Market Resolution
+      ✔ Should allow resolver to resolve market (41ms)
+      23) Should update market state after resolution
+      ✔ Should prevent non-resolver from resolving
+      ✔ Should prevent resolution before resolution time
+      ✔ Should prevent resolving with invalid outcome
+      24) Should prevent double resolution
+      ✔ Should check canResolve() correctly
+    Claim Winnings
+      25) Should allow winner to claim winnings
+      26) Should transfer correct payout amount
+      27) Should mark bet as claimed
+      28) Should prevent claiming before resolution
+      29) Should prevent loser from claiming
+      30) Should prevent user with no bet from claiming
+      31) Should prevent double claiming
+      32) Should calculate payout correctly with fees
+      33) Should check hasWinnings() correctly
+    View Functions
+      ✔ Should return correct market info (40ms)
+      ✔ Should return correct bet info
+      ✔ Should return zero for non-existent bet
+      ✔ Should return liquidity pools
+    Integration Tests
+      ✔ Should integrate with AccessControlManager for resolution
+      34) Should integrate with ParameterStorage for fees
+      ✔ Should integrate with VersionedRegistry
+    Edge Cases & Security
+      35) Should handle various bet sizes
+      36) Should handle very large bets
+      37) Should handle many bettors
+      ✔ Should protect against reentrancy in claim
+      ✔ Should handle zero liquidity edge case
+    Gas Usage
+      - Should measure placeBet gas usage (informational)
+resolveMarket gas used: 267498
+      38) Should meet resolveMarket gas target (<150k)
+      39) Should measure claimWinnings gas usage
+
+  PredictionMarket Lifecycle (Phase 5.2)
+    Valid State Transitions
+      ✔ 5.2.1: Should transition PROPOSED → APPROVED on approval
+      ✔ 5.2.2: Should transition APPROVED → ACTIVE on activation
+      - 5.2.3-5.2.6: RESOLVING/DISPUTED transitions (NOT YET IMPLEMENTED)
+    Invalid State Transitions
+      ✔ 5.2.7: Should revert PROPOSED → ACTIVE (must be approved first)
+      ✔ 5.2.8: Should revert APPROVED → FINALIZED (invalid transition)
+      - 5.2.9: Should revert ACTIVE → FINALIZED (must resolve first) - NOT YET IMPLEMENTED
+      ✔ 5.2.10: Should revert FINALIZED → any state (terminal state)
+      ✔ 5.2.11: Should revert backwards transitions
+      ✔ 5.2.12: Should revert unauthorized state changes
+    Event Emissions
+      ✔ 5.2.13: Should emit MarketStateChanged with correct data
+      ✔ 5.2.14: Should emit events for all transitions
+      ✔ 5.2.15: Should return correct state from getMarketState()
+    State-Gated Operations
+      ✔ Should only allow placeBet when ACTIVE
+      - Should only allow claimWinnings when FINALIZED - NOT YET IMPLEMENTED
+    Direct Deployment Integration
+      ✔ Should set PROPOSED state on market initialization
+      ✔ Should allow factory (deployer) to call approve()
+      ✔ Should allow factory (deployer) to call activate()
+
+  ResolutionManager
+    Deployment & Initialization
+      ✔ Should deploy ResolutionManager contract
+      ✔ Should set correct registry reference
+      ✔ Should set correct dispute window
+      ✔ Should set correct minimum dispute bond
+      ✔ Should start unpaused
+    Market Resolution
+      ✔ Should resolve market with valid outcome (38ms)
+      ✔ Should update resolution data correctly
+      ✔ Should mark market as resolved
+      ✔ Should only allow resolver role to resolve
+      ✔ Should require valid outcome (1 or 2)
+      ✔ Should prevent double resolution (42ms)
+      ✔ Should require non-empty evidence
+      ✔ Should prevent resolution when paused
+      ✔ Should track resolver history
+    Batch Resolution
+      40) Should batch resolve multiple markets
+      ✔ Should require matching array lengths (42ms)
+    Dispute Mechanism
+      ✔ Should allow dispute with sufficient bond (39ms)
+      ✔ Should update dispute data correctly
+      ✔ Should prevent dispute with insufficient bond
+      ✔ Should prevent dispute after window closes
+      ✔ Should prevent double dispute
+      ✔ Should check canDispute correctly
+    Dispute Investigation
+      ✔ Should allow admin to investigate dispute
+      ✔ Should require open dispute for investigation
+      ✔ Should only allow admin to investigate
+    Dispute Resolution
+      ✔ Should uphold dispute and change outcome
+      41) Should reject dispute and keep original outcome
+      ✔ Should refund bond if dispute upheld
+      ✔ Should only allow admin to resolve disputes
+    Resolution Finalization
+      ✔ Should finalize resolution after dispute window
+      ✔ Should update status to finalized
+      ✔ Should prevent finalization within dispute window
+      42) Should batch finalize multiple resolutions
+    Enumeration
+      43) Should return pending resolutions
+      ✔ Should return disputed resolutions (40ms)
+      ✔ Should return resolver history
+    Admin Functions
+      ✔ Should update dispute window
+      ✔ Should update min dispute bond
+      ✔ Should pause and unpause
+      ✔ Should only allow admin for admin functions
+    Integration Tests
+      ✔ Should integrate with PredictionMarket (42ms)
+      ✔ Should integrate with AccessControlManager
+      ✔ Should integrate with VersionedRegistry
+    Edge Cases & Security
+      44) Should handle multiple resolvers
+      ✔ Should protect against reentrancy
+      ✔ Should handle excess dispute bond (40ms)
+    Gas Usage
+resolveMarket gas used: 418466
+      45) Should meet resolveMarket gas target (<150k)
+batchResolve gas used (3 markets): 236777
+Gas per market in batch: 78925
+      ✔ Should optimize batch operations
+
+  ResolutionManager - Phase 6: Community Voting
+    Community Dispute Window
+      46) should open community dispute window when resolution proposed
+      47) should set correct end time (48 hours default)
+      48) should prevent duplicate windows for same market
+      49) should store proposed outcome correctly
+      50) should initialize vote counts to zero
+      51) should only allow resolver to propose resolution
+    Signal Aggregation Logic
+      52) should auto-finalize with >75% agreement
+      53) should mark disputed with >40% disagreement
+      54) should wait if signals are mixed (50-50)
+      55) should handle zero votes gracefully
+      56) should calculate percentages correctly
+      57) should allow multiple signal submissions (updates)
+      58) should handle edge case: 100% agreement
+      59) should handle edge case: 100% disagreement
+      60) should only allow backend to submit signals
+      61) should revert if no active community dispute
+    Auto-Finalization
+      62) should close window after auto-finalization
+      63) should emit MarketAutoFinalized event
+      64) should emit ResolutionFinalized event
+      65) should prevent further signal submissions after finalization
+      66) should set resolution status to FINALIZED
+    Admin Override
+      67) should allow admin to override disputed market
+      68) should close community dispute window on override
+      69) should emit AdminResolution event with reason
+      70) should only allow admin to override
+      71) should finalize immediately after override
+      72) should revert with invalid outcome
+    Threshold Configuration
+      73) should set agreement threshold
+      74) should set disagreement threshold
+      75) should reject invalid agreement threshold (<= 50)
+      76) should reject invalid agreement threshold (> 100)
+      77) should reject invalid disagreement threshold (>= 50)
+      78) should reject invalid disagreement threshold (<= 0)
+      79) should only allow admin to set thresholds
+    Integration with Existing System
+      80) should still allow bond-based disputes
+      81) should not interfere with bond-based workflow
+      82) should allow choosing between systems
+    Gas Benchmarking
+      83) should measure gas for proposeResolution()
+      84) should measure gas for submitDisputeSignals()
+      85) should measure gas for adminResolveMarket()
+
+  RewardDistributor
+    Deployment
+      ✔ Should deploy with correct registry
+      ✔ Should initialize with zero balances
+      ✔ Should have correct fee distribution from ParameterStorage
+    Fee Collection
+      ✔ Should collect fees from market
+      ✔ Should split fees correctly
+      ✔ Should update treasury balance
+      ✔ Should update staker rewards pool
+      ✔ Should track total fees collected
+      ✔ Should emit FeesCollected event
+      ✔ Should handle multiple fee collections
+      ✔ Should revert on insufficient value sent
+      ✔ Should revert on zero address market
+    Reward Claims
+      ✔ Should process reward claim
+      ✔ Should record claim data
+      ✔ Should mark user as claimed
+      ✔ Should prevent double claims
+      ✔ Should track total rewards claimed
+      ✔ Should emit RewardClaimed event
+      ✔ Should revert on zero address claimer
+      ✔ Should revert on zero amount
+    Creator Fees
+      ✔ Should track unclaimed creator fees
+      ✔ Should allow creator to claim fees
+      ✔ Should transfer fees to creator
+      ✔ Should reset unclaimed fees after claim
+      ✔ Should revert if no fees to claim
+    Staker Rewards
+      ✔ Should distribute staker rewards
+      ✔ Should transfer rewards to staker
+      ✔ Should decrease staker pool
+      ✔ Should require ADMIN_ROLE
+    Treasury Management
+      ✔ Should allow admin to withdraw treasury
+      ✔ Should transfer funds to recipient
+      ✔ Should decrease treasury balance
+      ✔ Should revert on insufficient balance
+      ✔ Should require ADMIN_ROLE
+    Batch Operations
+      ✔ Should batch process rewards
+      ✔ Should batch collect fees
+      ✔ Should revert on array length mismatch
+    Fee Distribution Updates
+      ✔ Should allow admin to update fee distribution
+      ✔ Should use updated fees for new collections
+    View Functions
+      ✔ Should return correct fee distribution
+      ✔ Should return correct market fees
+      ✔ Should return correct claim status
+    Gas Targets
+      ✔ Should meet collectFees gas target (<260k)
+      ✔ Should meet processRewardClaim gas target (<190k)
+
+  L-1: Slippage Protection & Front-Running Prevention
+    Basic Slippage Protection
+      86) Should allow bet when minExpectedOdds = 0 (no slippage check)
+      87) Should allow bet when current odds >= minExpectedOdds
+      88) Should revert bet when current odds < minExpectedOdds
+    Front-Running Attack Prevention
+      89) Should prevent MEV bot from front-running user bet
+      90) Should allow bet after odds stabilize
+    Odds Calculation and Slippage
+      91) Should correctly calculate odds after each bet
+      92) Should handle extreme slippage with large bets
+    Gas Efficiency
+      93) Should not significantly increase gas when minExpectedOdds = 0
+      94) Should add minimal gas cost for slippage check
+    Edge Cases
+      95) Should handle minExpectedOdds = 0 (no protection)
+      96) Should handle minExpectedOdds = max uint256
+      97) Should work correctly for both outcomes
+    Integration with Existing Features
+      98) Should work with minimum/maximum bet limits
+      99) Should work with multiple bets from same user
+
+  Upgrade Workflow - PredictionMarketV2
+    V1 → V2 Upgrade Workflow
+      ✔ Should successfully register V1 template
+      ✔ Should create V1 market using V1 template
+      ✔ Should deploy V2 template and register in VersionedRegistry
+      ✔ Should create NEW markets using V2 template after upgrade
+      ✔ Should prove V1 markets stay immutable after V2 upgrade
+    Upgrade Gas Costs
+
+📊 UPGRADE GAS COSTS:
+  Deploy V2 Template: ~1,400,000 gas (one-time)
+  Register in Registry: 94637 gas
+  Total Upgrade Cost: ~1.494.637 gas
+  At $BASED $0.10, 0.1 gwei: ~$0.0001
+      ✔ Should measure gas cost to deploy and register V2 template
+
+📊 MARKET CREATION GAS COMPARISON:
+  V1 Market: 712252 gas
+  V2 Market: 660952 gas
+  Difference: 51300 gas (7.20%)
+      ✔ Should verify V2 market creation gas is same as V1
+    Architecture Documentation
+
+📚 COMPLETE UPGRADE WORKFLOW:
+
+1️⃣ DEPLOY V2 TEMPLATE:
+   const PredictionMarketV2 = await ethers.getContractFactory("PredictionMarketV2");
+   const marketTemplateV2 = await PredictionMarketV2.deploy();
+   await marketTemplateV2.waitForDeployment();
+
+2️⃣ REGISTER IN VERSIONED REGISTRY:
+   await registry.setContract(
+     ethers.id("PredictionMarketTemplate"),
+     marketTemplateV2.target,
+     2 // Version 2
+   );
+
+3️⃣ VERIFY UPGRADE:
+   const registeredTemplate = await registry.getContract(
+     ethers.id("PredictionMarketTemplate")
+   );
+   expect(registeredTemplate).to.equal(marketTemplateV2.target);
+
+4️⃣ NEW MARKETS AUTOMATICALLY USE V2:
+   // No factory changes needed!
+   await factory.createMarket(config, { value: bond });
+   // This market now uses V2 logic ✅
+
+5️⃣ OLD MARKETS STAY ON V1 (IMMUTABLE):
+   // Markets created before upgrade still work
+   // They continue using V1 logic (clone is immutable) ✅
+
+✅ BENEFITS:
+   - No factory redeployment needed
+   - No manager redeployment needed
+   - Existing markets unaffected
+   - Gas efficient (~1.4M one-time cost)
+   - Transparent version tracking
+      ✔ Should document the complete upgrade workflow
+
+  PredictionMarket - Virtual Liquidity
+    Empty Market Odds
+      100) Should show 2.0x odds on both sides for empty market
+      101) Should NOT show 1.0x odds anymore (old behavior eliminated)
+    First Bettor Experience
+      102) Should give first bettor profitable odds (not 1.0x)
+      103) Should incentivize second bettor to balance the market
+    Odds Smoothness
+      104) Should provide smooth odds curves with multiple bets
+      105) Should prevent extreme odds even with very imbalanced markets
+    Payout Calculations (Real Pools Only)
+      106) Should calculate payouts using REAL pools, not virtual
+      107) Should verify payouts don't include virtual liquidity (asymmetric bets)
+      108) Should match displayed odds with actual payout ratios
+    Edge Cases with Virtual Liquidity
+      109) Should handle single-sided market correctly
+      110) Should handle tiny bets with virtual liquidity
+    Gas Efficiency
+      111) Should have similar gas costs to old implementation
+    Virtual Liquidity Constant
+      112) Should use 100 BASED as virtual liquidity constant
+
+
+  209 passing (2s)
+  5 pending
+  112 failing
+
+  1) Gas Optimization Profiling
+       Profile: Market Creation Breakdown:
+     Error: VM Exception while processing transaction: reverted with custom error 'ContractNotFound("0x9fd10f678426d62cb3a9606a7cfddf160945b8141a68b451b7a17f9f906f8599")'
+    at VersionedRegistry.getContract (contracts/core/VersionedRegistry.sol:129)
+    at FlexibleMarketFactoryUnified._getMarketTemplate (contracts/core/FlexibleMarketFactoryUnified.sol:757)
+    at FlexibleMarketFactoryUnified._deployAndInitializeMarket (contracts/core/FlexibleMarketFactoryUnified.sol:673)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.createMarket (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/GasOptimizationProfile.test.js:128:20)
+  
+
+  2) Gas Optimization Profiling
+       Profile: Place Bet Breakdown:
+     TypeError: unsupported addressable value (argument="target", value=null, code=INVALID_ARGUMENT, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:691:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at assertArgument (node_modules/ethers/src.ts/utils/errors.ts:731:5)
+      at resolveAddress (node_modules/ethers/src.ts/address/checks.ts:122:19)
+      at /Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/contract/contract.ts:172:60
+      at ParamType.#walkAsync (node_modules/ethers/src.ts/abi/fragments.ts:779:24)
+      at ParamType.walkAsync (node_modules/ethers/src.ts/abi/fragments.ts:797:24)
+      at /Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/contract/contract.ts:170:22
+      at Array.map (<anonymous>)
+      at resolveArgs (node_modules/ethers/src.ts/contract/contract.ts:169:37)
+
+  3) Gas Optimization Profiling
+       Profile: Resolution Operations:
+     TypeError: unsupported addressable value (argument="target", value=null, code=INVALID_ARGUMENT, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:691:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at assertArgument (node_modules/ethers/src.ts/utils/errors.ts:731:5)
+      at resolveAddress (node_modules/ethers/src.ts/address/checks.ts:122:19)
+      at /Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/contract/contract.ts:172:60
+      at ParamType.#walkAsync (node_modules/ethers/src.ts/abi/fragments.ts:779:24)
+      at ParamType.walkAsync (node_modules/ethers/src.ts/abi/fragments.ts:797:24)
+      at /Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/ethers/src.ts/contract/contract.ts:170:22
+      at Array.map (<anonymous>)
+      at resolveArgs (node_modules/ethers/src.ts/contract/contract.ts:169:37)
+
+  4) Phase 5 + 6 Integration: Lifecycle & Dispute Aggregation
+       "before each" hook for "5.1: proposeOutcome() should transition ACTIVE → RESOLVING":
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at Context.<anonymous> (test/hardhat/Phase5And6Integration.test.js:16:48)
+
+  5) PredictionMarket
+       Bet Placement
+         Should place bet on OUTCOME1:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at waitForPendingTransaction (node_modules/@nomicfoundation/hardhat-chai-matchers/src/internal/emit.ts:28:17)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:223:7)
+  
+
+  6) PredictionMarket
+       Bet Placement
+         Should place bet on OUTCOME2:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at waitForPendingTransaction (node_modules/@nomicfoundation/hardhat-chai-matchers/src/internal/emit.ts:28:17)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:238:7)
+  
+
+  7) PredictionMarket
+       Bet Placement
+         Should reject bet with zero amount:
+     AssertionError: Expected transaction to be reverted with custom error 'InvalidBetAmount', but it reverted with custom error 'MarketNotActive'
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:245:7)
+
+  8) PredictionMarket
+       Bet Placement
+         Should reject bet on invalid outcome:
+     AssertionError: Expected transaction to be reverted with custom error 'InvalidOutcome', but it reverted with custom error 'MarketNotActive'
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:253:7)
+
+  9) PredictionMarket
+       Bet Placement
+         Should enforce minimum bet size:
+     AssertionError: Expected transaction to be reverted with custom error 'BetTooSmall', but it reverted with custom error 'MarketNotActive'
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:268:7)
+
+  10) PredictionMarket
+       Bet Placement
+         Should enforce maximum bet size:
+     AssertionError: Expected transaction to be reverted with custom error 'BetTooLarge', but it reverted with custom error 'MarketNotActive'
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:279:7)
+
+  11) PredictionMarket
+       Bet Placement
+         Should update total bets counter:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:289:7)
+  
+
+  12) PredictionMarket
+       Bet Placement
+         Should update total volume:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:303:7)
+  
+
+  13) PredictionMarket
+       Bet Placement
+         Should store bet info correctly:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:318:7)
+  
+
+  14) PredictionMarket
+       Bet Placement
+         Should allow same user to increase bet on same outcome:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:332:7)
+  
+
+  15) PredictionMarket
+       Bet Placement
+         Should prevent changing bet to different outcome:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:347:7)
+  
+
+  16) PredictionMarket
+       Bet Placement
+         Should prevent betting after resolution time:
+     AssertionError: Expected transaction to be reverted with custom error 'BettingClosed', but it reverted with custom error 'MarketNotActive'
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:359:7)
+
+  17) PredictionMarket
+       Bet Placement
+         Should prevent betting after market is resolved:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:365:33)
+
+  18) PredictionMarket
+       Bet Placement
+         Should update liquidity pools correctly:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:375:7)
+  
+
+  19) PredictionMarket
+       AMM & Odds Calculation
+         Should calculate odds correctly with balanced pools:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:397:7)
+  
+
+  20) PredictionMarket
+       AMM & Odds Calculation
+         Should calculate odds correctly with imbalanced pools:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:409:7)
+  
+
+  21) PredictionMarket
+       AMM & Odds Calculation
+         Should handle odds with only one side betting:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:420:7)
+  
+
+  22) PredictionMarket
+       AMM & Odds Calculation
+         Should emit LiquidityUpdated event:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at waitForPendingTransaction (node_modules/@nomicfoundation/hardhat-chai-matchers/src/internal/emit.ts:28:17)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:433:7)
+  
+
+  23) PredictionMarket
+       Market Resolution
+         Should update market state after resolution:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:452:26)
+
+  24) PredictionMarket
+       Market Resolution
+         Should prevent double resolution:
+     AssertionError: Expected transaction to be reverted with custom error 'MarketAlreadyResolved', but it reverted with custom error 'MarketNotActive'
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:498:7)
+
+  25) PredictionMarket
+       Claim Winnings
+         Should allow winner to claim winnings:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:518:33)
+
+  26) PredictionMarket
+       Claim Winnings
+         Should transfer correct payout amount:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:532:33)
+
+  27) PredictionMarket
+       Claim Winnings
+         Should mark bet as claimed:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:549:33)
+
+  28) PredictionMarket
+       Claim Winnings
+         Should prevent claiming before resolution:
+     AssertionError: Expected transaction to be reverted with custom error 'MarketNotResolved', but it reverted with reason 'Market not finalized'
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:560:7)
+
+  29) PredictionMarket
+       Claim Winnings
+         Should prevent loser from claiming:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:566:33)
+
+  30) PredictionMarket
+       Claim Winnings
+         Should prevent user with no bet from claiming:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:575:33)
+
+  31) PredictionMarket
+       Claim Winnings
+         Should prevent double claiming:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:584:33)
+
+  32) PredictionMarket
+       Claim Winnings
+         Should calculate payout correctly with fees:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:601:7)
+  
+
+  33) PredictionMarket
+       Claim Winnings
+         Should check hasWinnings() correctly:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:619:40)
+
+  34) PredictionMarket
+       Integration Tests
+         Should integrate with ParameterStorage for fees:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:694:7)
+  
+
+  35) PredictionMarket
+       Edge Cases & Security
+         Should handle various bet sizes:
+     AssertionError: Expected transaction NOT to be reverted
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:715:7)
+
+  36) PredictionMarket
+       Edge Cases & Security
+         Should handle very large bets:
+     AssertionError: Expected transaction NOT to be reverted
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:727:7)
+
+  37) PredictionMarket
+       Edge Cases & Security
+         Should handle many bettors:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x02f0dab81a9a423308049579926c54eac80c4018)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.placeBet (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:735:7)
+  
+
+  38) PredictionMarket
+       Gas Usage
+         Should meet resolveMarket gas target (<150k):
+
+      AssertionError: expected 267498 to be below 150000.
+      + expected - actual
+
+      -267498
+      +150000
+      
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:781:37)
+
+  39) PredictionMarket
+       Gas Usage
+         Should measure claimWinnings gas usage:
+     TypeError: resolutionManager.connect(...).proposeOutcome is not a function
+      at deployResolvedMarketFixture (test/hardhat/PredictionMarket.test.js:142:47)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/PredictionMarket.test.js:785:33)
+
+  40) ResolutionManager
+       Batch Resolution
+         Should batch resolve multiple markets:
+
+      AssertionError: expected false to be true
+      + expected - actual
+
+      -false
+      +true
+      
+      at Context.<anonymous> (test/hardhat/ResolutionManager.test.js:330:65)
+
+  41) ResolutionManager
+       Dispute Resolution
+         Should reject dispute and keep original outcome:
+     Error: VM Exception while processing transaction: reverted with custom error 'ContractNotFound("0x6e4acd89d07ff984df300241e2d8d4afe2734a034a137fe114d82c7de6be1287")'
+    at VersionedRegistry.getContract (contracts/core/VersionedRegistry.sol:129)
+    at ResolutionManager.resolveDispute (contracts/core/ResolutionManager.sol:387)
+    at ResolutionManager.resolveDispute (contracts/core/ResolutionManager.sol:387)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.resolveDispute (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at waitForPendingTransaction (node_modules/@nomicfoundation/hardhat-chai-matchers/src/internal/emit.ts:28:17)
+    at Context.<anonymous> (test/hardhat/ResolutionManager.test.js:514:7)
+  
+
+  42) ResolutionManager
+       Resolution Finalization
+         Should batch finalize multiple resolutions:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x29a7ea4dbbd30e923808bc7b9f316378366ed620)
+    at ResolutionManager.resolveMarket (contracts/core/ResolutionManager.sol:183)
+    at ResolutionManager.onlyResolver (contracts/core/ResolutionManager.sol:131)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.resolveMarket (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/ResolutionManager.test.js:625:9)
+  
+
+  43) ResolutionManager
+       Enumeration
+         Should return pending resolutions:
+
+      AssertionError: expected +0 to equal 1
+      + expected - actual
+
+      -0
+      +1
+      
+      at Context.<anonymous> (test/hardhat/ResolutionManager.test.js:647:33)
+
+  44) ResolutionManager
+       Edge Cases & Security
+         Should handle multiple resolvers:
+     Error: VM Exception while processing transaction: reverted with custom error 'MarketNotActive()'
+    at PredictionMarket.resolveMarket (contracts/core/PredictionMarket.sol:328)
+    at <UnrecognizedContract>.<unknown> (0x29a7ea4dbbd30e923808bc7b9f316378366ed620)
+    at ResolutionManager.resolveMarket (contracts/core/ResolutionManager.sol:183)
+    at ResolutionManager.onlyResolver (contracts/core/ResolutionManager.sol:131)
+    at EdrProviderWrapper.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:359:41)
+    at HardhatEthersSigner.sendTransaction (node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)
+    at send (node_modules/ethers/src.ts/contract/contract.ts:313:20)
+    at Proxy.resolveMarket (node_modules/ethers/src.ts/contract/contract.ts:352:16)
+    at Context.<anonymous> (test/hardhat/ResolutionManager.test.js:780:7)
+  
+
+  45) ResolutionManager
+       Gas Usage
+         Should meet resolveMarket gas target (<150k):
+
+      AssertionError: expected 418466 to be below 200000.
+      + expected - actual
+
+      -418466
+      +200000
+      
+      at Context.<anonymous> (test/hardhat/ResolutionManager.test.js:824:37)
+
+  46) ResolutionManager - Phase 6: Community Voting
+       Community Dispute Window
+         should open community dispute window when resolution proposed:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:98:63)
+
+  47) ResolutionManager - Phase 6: Community Voting
+       Community Dispute Window
+         should set correct end time (48 hours default):
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:116:63)
+
+  48) ResolutionManager - Phase 6: Community Voting
+       Community Dispute Window
+         should prevent duplicate windows for same market:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:130:63)
+
+  49) ResolutionManager - Phase 6: Community Voting
+       Community Dispute Window
+         should store proposed outcome correctly:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:144:63)
+
+  50) ResolutionManager - Phase 6: Community Voting
+       Community Dispute Window
+         should initialize vote counts to zero:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:156:63)
+
+  51) ResolutionManager - Phase 6: Community Voting
+       Community Dispute Window
+         should only allow resolver to propose resolution:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:169:60)
+
+  52) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should auto-finalize with >75% agreement:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:182:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:190:58)
+
+  53) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should mark disputed with >40% disagreement:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:182:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:201:58)
+
+  54) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should wait if signals are mixed (50-50):
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:182:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:212:58)
+
+  55) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should handle zero votes gracefully:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:182:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:221:58)
+
+  56) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should calculate percentages correctly:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:182:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:232:58)
+
+  57) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should allow multiple signal submissions (updates):
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:182:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:242:58)
+
+  58) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should handle edge case: 100% agreement:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:182:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:257:58)
+
+  59) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should handle edge case: 100% disagreement:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:182:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:266:58)
+
+  60) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should only allow backend to submit signals:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:182:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:275:56)
+
+  61) ResolutionManager - Phase 6: Community Voting
+       Signal Aggregation Logic
+         should revert if no active community dispute:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:283:46)
+
+  62) ResolutionManager - Phase 6: Community Voting
+       Auto-Finalization
+         should close window after auto-finalization:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:293:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:301:58)
+
+  63) ResolutionManager - Phase 6: Community Voting
+       Auto-Finalization
+         should emit MarketAutoFinalized event:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:293:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:311:58)
+
+  64) ResolutionManager - Phase 6: Community Voting
+       Auto-Finalization
+         should emit ResolutionFinalized event:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:293:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:320:58)
+
+  65) ResolutionManager - Phase 6: Community Voting
+       Auto-Finalization
+         should prevent further signal submissions after finalization:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:293:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:328:58)
+
+  66) ResolutionManager - Phase 6: Community Voting
+       Auto-Finalization
+         should set resolution status to FINALIZED:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:293:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:338:58)
+
+  67) ResolutionManager - Phase 6: Community Voting
+       Admin Override
+         should allow admin to override disputed market:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupDisputedMarket (test/hardhat/ResolutionManagerPhase6.test.js:349:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:358:56)
+
+  68) ResolutionManager - Phase 6: Community Voting
+       Admin Override
+         should close community dispute window on override:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupDisputedMarket (test/hardhat/ResolutionManagerPhase6.test.js:349:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:370:56)
+
+  69) ResolutionManager - Phase 6: Community Voting
+       Admin Override
+         should emit AdminResolution event with reason:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupDisputedMarket (test/hardhat/ResolutionManagerPhase6.test.js:349:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:379:56)
+
+  70) ResolutionManager - Phase 6: Community Voting
+       Admin Override
+         should only allow admin to override:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupDisputedMarket (test/hardhat/ResolutionManagerPhase6.test.js:349:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:388:56)
+
+  71) ResolutionManager - Phase 6: Community Voting
+       Admin Override
+         should finalize immediately after override:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupDisputedMarket (test/hardhat/ResolutionManagerPhase6.test.js:349:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:396:56)
+
+  72) ResolutionManager - Phase 6: Community Voting
+       Admin Override
+         should revert with invalid outcome:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupDisputedMarket (test/hardhat/ResolutionManagerPhase6.test.js:349:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:405:56)
+
+  73) ResolutionManager - Phase 6: Community Voting
+       Threshold Configuration
+         should set agreement threshold:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:419:44)
+
+  74) ResolutionManager - Phase 6: Community Voting
+       Threshold Configuration
+         should set disagreement threshold:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:430:44)
+
+  75) ResolutionManager - Phase 6: Community Voting
+       Threshold Configuration
+         should reject invalid agreement threshold (<= 50):
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:441:44)
+
+  76) ResolutionManager - Phase 6: Community Voting
+       Threshold Configuration
+         should reject invalid agreement threshold (> 100):
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:453:44)
+
+  77) ResolutionManager - Phase 6: Community Voting
+       Threshold Configuration
+         should reject invalid disagreement threshold (>= 50):
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:461:44)
+
+  78) ResolutionManager - Phase 6: Community Voting
+       Threshold Configuration
+         should reject invalid disagreement threshold (<= 0):
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:473:44)
+
+  79) ResolutionManager - Phase 6: Community Voting
+       Threshold Configuration
+         should only allow admin to set thresholds:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:481:44)
+
+  80) ResolutionManager - Phase 6: Community Voting
+       Integration with Existing System
+         should still allow bond-based disputes:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:495:70)
+
+  81) ResolutionManager - Phase 6: Community Voting
+       Integration with Existing System
+         should not interfere with bond-based workflow:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:515:70)
+
+  82) ResolutionManager - Phase 6: Community Voting
+       Integration with Existing System
+         should allow choosing between systems:
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:532:63)
+
+  83) ResolutionManager - Phase 6: Community Voting
+       Gas Benchmarking
+         should measure gas for proposeResolution():
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:564:63)
+
+  84) ResolutionManager - Phase 6: Community Voting
+       Gas Benchmarking
+         should measure gas for submitDisputeSignals():
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:556:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:577:58)
+
+  85) ResolutionManager - Phase 6: Community Voting
+       Gas Benchmarking
+         should measure gas for adminResolveMarket():
+     Error: incorrect number of arguments to constructor
+      at ContractFactory.getDeployTransaction (node_modules/ethers/src.ts/contract/factory.ts:87:19)
+      at ContractFactory.deploy (node_modules/ethers/src.ts/contract/factory.ts:105:31)
+      at deployFixture (test/hardhat/ResolutionManagerPhase6.test.js:15:54)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at setupProposedResolution (test/hardhat/ResolutionManagerPhase6.test.js:556:23)
+      at Context.<anonymous> (test/hardhat/ResolutionManagerPhase6.test.js:587:65)
+
+  86) L-1: Slippage Protection & Front-Running Prevention
+       Basic Slippage Protection
+         Should allow bet when minExpectedOdds = 0 (no slippage check):
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:88:39)
+
+  87) L-1: Slippage Protection & Front-Running Prevention
+       Basic Slippage Protection
+         Should allow bet when current odds >= minExpectedOdds:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:97:39)
+
+  88) L-1: Slippage Protection & Front-Running Prevention
+       Basic Slippage Protection
+         Should revert bet when current odds < minExpectedOdds:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:110:46)
+
+  89) L-1: Slippage Protection & Front-Running Prevention
+       Front-Running Attack Prevention
+         Should prevent MEV bot from front-running user bet:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:127:52)
+
+  90) L-1: Slippage Protection & Front-Running Prevention
+       Front-Running Attack Prevention
+         Should allow bet after odds stabilize:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:148:52)
+
+  91) L-1: Slippage Protection & Front-Running Prevention
+       Odds Calculation and Slippage
+         Should correctly calculate odds after each bet:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:165:46)
+
+  92) L-1: Slippage Protection & Front-Running Prevention
+       Odds Calculation and Slippage
+         Should handle extreme slippage with large bets:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:190:46)
+
+  93) L-1: Slippage Protection & Front-Running Prevention
+       Gas Efficiency
+         Should not significantly increase gas when minExpectedOdds = 0:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:211:39)
+
+  94) L-1: Slippage Protection & Front-Running Prevention
+       Gas Efficiency
+         Should add minimal gas cost for slippage check:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:221:39)
+
+  95) L-1: Slippage Protection & Front-Running Prevention
+       Edge Cases
+         Should handle minExpectedOdds = 0 (no protection):
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:234:52)
+
+  96) L-1: Slippage Protection & Front-Running Prevention
+       Edge Cases
+         Should handle minExpectedOdds = max uint256:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:246:39)
+
+  97) L-1: Slippage Protection & Front-Running Prevention
+       Edge Cases
+         Should work correctly for both outcomes:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:255:46)
+
+  98) L-1: Slippage Protection & Front-Running Prevention
+       Integration with Existing Features
+         Should work with minimum/maximum bet limits:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:272:39)
+
+  99) L-1: Slippage Protection & Front-Running Prevention
+       Integration with Existing Features
+         Should work with multiple bets from same user:
+     HardhatError: HH700: Artifact for contract "FlexibleMarketFactory" not found. Did you mean "IFlexibleMarketFactory"?
+      at Artifacts._handleWrongArtifactForContractName (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:721:11)
+      at Artifacts._getArtifactPathFromFiles (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:852:19)
+      at Artifacts._getArtifactPath (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:516:21)
+      at Artifacts.readArtifact (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/hardhat/src/internal/artifacts.ts:71:26)
+      at getContractFactory (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-ethers/src/internal/helpers.ts:120:22)
+      at deployMarketFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:30:39)
+      at loadFixture (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (/Users/seman/Desktop/kektechbmad100/expansion-packs/bmad-blockchain-dev/test/hardhat/SlippageProtection.test.js:286:39)
+
+  100) PredictionMarket - Virtual Liquidity
+       Empty Market Odds
+         Should show 2.0x odds on both sides for empty market:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x8731d45ff9684d380302573cCFafd994Dfa7f7d3", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610204 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:88:26)
+
+  101) PredictionMarket - Virtual Liquidity
+       Empty Market Odds
+         Should NOT show 1.0x odds anymore (old behavior eliminated):
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x3489745eff9525CCC3d8c648102FE2cf3485e228", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610214 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:99:26)
+
+  102) PredictionMarket - Virtual Liquidity
+       First Bettor Experience
+         Should give first bettor profitable odds (not 1.0x):
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0xf18774574148852771c2631d7d06E2A6c8b44fCA", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610224 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:114:33)
+
+  103) PredictionMarket - Virtual Liquidity
+       First Bettor Experience
+         Should incentivize second bettor to balance the market:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x1c1521cf734CD13B02e8150951c3bF2B438be780", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610234 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:135:38)
+
+  104) PredictionMarket - Virtual Liquidity
+       Odds Smoothness
+         Should provide smooth odds curves with multiple bets:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x20F5f006a0184883068bBF58fb0c526A8EEa8BFD", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610244 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:162:47)
+
+  105) PredictionMarket - Virtual Liquidity
+       Odds Smoothness
+         Should prevent extreme odds even with very imbalanced markets:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x9852795dbb01913439f534b4984fBf74aC8AfA12", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610254 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:220:33)
+
+  106) PredictionMarket - Virtual Liquidity
+       Payout Calculations (Real Pools Only)
+         Should calculate payouts using REAL pools, not virtual:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0xa4d0806d597146df93796A38435ABB2a3cb96677", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610264 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:249:64)
+
+  107) PredictionMarket - Virtual Liquidity
+       Payout Calculations (Real Pools Only)
+         Should verify payouts don't include virtual liquidity (asymmetric bets):
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0xF8b299F87EBb62E0b625eAF440B73Cc6b7717dbd", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610274 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:279:64)
+
+  108) PredictionMarket - Virtual Liquidity
+       Payout Calculations (Real Pools Only)
+         Should match displayed odds with actual payout ratios:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x057cD3082EfED32d5C907801BF3628B27D88fD80", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610284 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:311:64)
+
+  109) PredictionMarket - Virtual Liquidity
+       Edge Cases with Virtual Liquidity
+         Should handle single-sided market correctly:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x3C2BafebbB0c8c58f39A976e725cD20D611d01e9", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610294 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:347:59)
+
+  110) PredictionMarket - Virtual Liquidity
+       Edge Cases with Virtual Liquidity
+         Should handle tiny bets with virtual liquidity:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x11632F9766Ee9d9317F95562a6bD529652ead78f", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610304 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:372:33)
+
+  111) PredictionMarket - Virtual Liquidity
+       Gas Efficiency
+         Should have similar gas costs to old implementation:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x90E75f390332356426B60FB440DF23f860F6A113", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610314 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:392:33)
+
+  112) PredictionMarket - Virtual Liquidity
+       Virtual Liquidity Constant
+         Should use 100 BASED as virtual liquidity constant:
+     Error: no matching fragment (operation="fragment", info={ "args": [ "0x8Aed6FE10dF3d6d981B101496C9c7245AE65cAEc", "Will Bitcoin reach $100k by Dec 31?", "Yes", "No", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 1763610324 ], "key": "initialize" }, code=UNSUPPORTED_OPERATION, version=6.15.0)
+      at makeError (node_modules/ethers/src.ts/utils/errors.ts:698:21)
+      at assert (node_modules/ethers/src.ts/utils/errors.ts:719:25)
+      at getFragment (node_modules/ethers/src.ts/contract/contract.ts:270:15)
+      at Proxy.initialize (node_modules/ethers/src.ts/contract/contract.ts:350:26)
+      at deployEmptyMarketFixture (test/hardhat/VirtualLiquidity.test.js:59:18)
+      at loadFixture (node_modules/@nomicfoundation/hardhat-network-helpers/src/loadFixture.ts:59:18)
+      at Context.<anonymous> (test/hardhat/VirtualLiquidity.test.js:418:26)
+
+
+
