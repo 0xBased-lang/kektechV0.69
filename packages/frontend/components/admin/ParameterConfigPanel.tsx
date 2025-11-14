@@ -100,35 +100,35 @@ export function ParameterConfigPanel() {
     // Fees
     protocolFeeBps: {
       key: 'protocolFeeBps',
-      value: protocolFee.data ? Number(protocolFee.data) : 250,
+      value: protocolFee.value ? Number(protocolFee.value) : 250,
       unit: 'bps',
       description: 'Protocol fee (2.5%)',
       category: 'fees'
     },
     creatorFeeBps: {
       key: 'creatorFeeBps',
-      value: creatorFee.data ? Number(creatorFee.data) : 150,
+      value: creatorFee.value ? Number(creatorFee.value) : 150,
       unit: 'bps',
       description: 'Creator fee (1.5%)',
       category: 'fees'
     },
     stakerIncentiveBps: {
       key: 'stakerIncentiveBps',
-      value: stakerIncentive.data ? Number(stakerIncentive.data) : 50,
+      value: stakerIncentive.value ? Number(stakerIncentive.value) : 50,
       unit: 'bps',
       description: 'Staker incentive (0.5%)',
       category: 'fees'
     },
     treasuryFeeBps: {
       key: 'treasuryFeeBps',
-      value: treasuryFee.data ? Number(treasuryFee.data) : 50,
+      value: treasuryFee.value ? Number(treasuryFee.value) : 50,
       unit: 'bps',
       description: 'Treasury fee (0.5%)',
       category: 'fees'
     },
     winnersShareBps: {
       key: 'winnersShareBps',
-      value: winnersShare.data ? Number(winnersShare.data) : 9500,
+      value: winnersShare.value ? Number(winnersShare.value) : 9500,
       unit: 'bps',
       description: 'Winners share (95%)',
       category: 'fees'
@@ -137,21 +137,21 @@ export function ParameterConfigPanel() {
     // Market limits
     minCreatorBond: {
       key: 'minCreatorBond',
-      value: minCreatorBond.data ? Number(minCreatorBond.data) / 1e18 : 0.1,
+      value: minCreatorBond.value ? Number(minCreatorBond.value) / 1e18 : 0.1,
       unit: 'BASED',
       description: 'Minimum creator bond (refundable)',
       category: 'market'
     },
     minimumBet: {
       key: 'minimumBet',
-      value: minimumBet.data ? Number(minimumBet.data) / 1e18 : 0.01,
+      value: minimumBet.value ? Number(minimumBet.value) / 1e18 : 0.01,
       unit: 'BASED',
       description: 'Minimum bet size',
       category: 'market'
     },
     maximumBet: {
       key: 'maximumBet',
-      value: maximumBet.data ? Number(maximumBet.data) / 1e18 : 100,
+      value: maximumBet.value ? Number(maximumBet.value) / 1e18 : 100,
       unit: 'BASED',
       description: 'Maximum bet size',
       category: 'market'
@@ -167,7 +167,7 @@ export function ParameterConfigPanel() {
     },
     minDisputeBond: {
       key: 'minDisputeBond',
-      value: minDisputeBond.data ? Number(minDisputeBond.data) / 1e18 : (mode === 'testing' ? 0.01 : 0.1),
+      value: minDisputeBond.minDisputeBond ? Number(minDisputeBond.minDisputeBond) / 1e18 : (mode === 'testing' ? 0.01 : 0.1),
       unit: 'BASED',
       description: 'Minimum dispute bond',
       category: 'resolution'
@@ -190,14 +190,14 @@ export function ParameterConfigPanel() {
     // Approval
     likesRequired: {
       key: 'likesRequired',
-      value: likesRequired.data ? Number(likesRequired.data) : 10,
+      value: likesRequired.value ? Number(likesRequired.value) : 10,
       unit: 'likes',
       description: 'Likes needed for auto-approval',
       category: 'approval'
     },
     approvalWindow: {
       key: 'approvalWindow',
-      value: approvalWindow.data ? Number(approvalWindow.data) / 3600 : 24,
+      value: approvalWindow.value ? Number(approvalWindow.value) / 3600 : 24,
       unit: 'hours',
       description: 'Time window for approval votes',
       category: 'approval'
@@ -206,21 +206,21 @@ export function ParameterConfigPanel() {
     // LMSR
     minB: {
       key: 'minB',
-      value: minB.data ? Number(minB.data) / 1e18 : 1,
+      value: minB.value ? Number(minB.value) / 1e18 : 1,
       unit: 'BASED',
       description: 'Minimum liquidity parameter',
       category: 'lmsr'
     },
     maxB: {
       key: 'maxB',
-      value: maxB.data ? Number(maxB.data) / 1e18 : 1000,
+      value: maxB.value ? Number(maxB.value) / 1e18 : 1000,
       unit: 'BASED',
       description: 'Maximum liquidity parameter',
       category: 'lmsr'
     },
     defaultB: {
       key: 'defaultB',
-      value: defaultB.data ? Number(defaultB.data) / 1e18 : 100,
+      value: defaultB.value ? Number(defaultB.value) / 1e18 : 100,
       unit: 'BASED',
       description: 'Default liquidity parameter',
       category: 'lmsr'
@@ -229,19 +229,19 @@ export function ParameterConfigPanel() {
     // Flags
     marketCreationActive: {
       key: 'marketCreationActive',
-      value: marketCreationActive.data ?? true,
+      value: marketCreationActive.value ?? true,
       description: 'Enable market creation',
       category: 'flags'
     },
     experimentalMarketsActive: {
       key: 'experimentalMarketsActive',
-      value: experimentalMarketsActive.data ?? false,
+      value: experimentalMarketsActive.value ?? false,
       description: 'Enable experimental market types',
       category: 'flags'
     },
     emergencyPause: {
       key: 'emergencyPause',
-      value: emergencyPause.data ?? false,
+      value: emergencyPause.value ?? false,
       description: 'Emergency pause all markets',
       category: 'flags'
     },
@@ -282,7 +282,7 @@ export function ParameterConfigPanel() {
 
       // Update numeric parameters
       for (const [key, value] of numericChanges) {
-        await updateParameter.updateParameter(key, value);
+        await updateParameter.updateParameter(key, BigInt(Math.floor(value)));
       }
 
       // Update boolean parameters
@@ -302,11 +302,8 @@ export function ParameterConfigPanel() {
       setChanges({});
       setSaveSuccess(true);
 
-      // Refetch all data
-      disputeWindow.refetch();
-      protocolFee.refetch();
-      creatorFee.refetch();
-      // ... refetch other parameters
+      // Note: Hooks auto-refresh, manual refetch not needed
+      // Data will update automatically after transactions confirm
 
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (error: any) {
