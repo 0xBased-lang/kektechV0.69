@@ -32,7 +32,7 @@ export function ResolutionVoteDisplay({ marketAddress }: ResolutionVoteDisplayPr
     )
   }
 
-  if (!votes || votes.length === 0) {
+  if (!votes || votes.total === 0) {
     return (
       <Card>
         <CardHeader>
