@@ -29,7 +29,7 @@ export function Header() {
   const isAdmin = address?.toLowerCase() === ADMIN_WALLET.toLowerCase()
 
   // Get authentication state and methods
-  const { isAuthenticated, isAuthenticating, signOut } = useWalletAuth()
+  const { isAuthenticated, signOut } = useWalletAuth()
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)

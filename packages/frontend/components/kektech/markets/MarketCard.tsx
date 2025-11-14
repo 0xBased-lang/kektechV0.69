@@ -8,7 +8,7 @@ import { useMarketInfo } from '@/lib/hooks/kektech';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
 import { MarketState } from '@/lib/contracts/types';
 import { formatBasedAmount, formatPercentage, formatRelativeTime, truncate } from '@/lib/utils';
-import { TrendingUp, Users, Clock, CheckCircle2, Pin, Flame, Target, DollarSign, Zap } from 'lucide-react';
+import { TrendingUp, Users, Clock, CheckCircle2, Pin, Flame, DollarSign, Zap } from 'lucide-react';
 import Link from 'next/link';
 import type { Address } from 'viem';
 

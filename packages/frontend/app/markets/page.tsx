@@ -54,7 +54,6 @@ export default function MarketsPage() {
     setFilters,
     filteredMarkets: allFilteredMarkets,
     totalCount,
-    filteredCount,
   } = useMarketFilters(marketsForFiltering);
 
   // Apply tab-based filtering on top of search/sort filters

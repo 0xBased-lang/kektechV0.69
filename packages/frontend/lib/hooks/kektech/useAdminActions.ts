@@ -14,7 +14,6 @@ import { keccak256, toBytes } from 'viem';
 import AccessControlManagerABI from '@/lib/contracts/abis/AccessControlManager.json';
 import ParameterStorageABI from '@/lib/contracts/abis/ParameterStorage.json';
 import ResolutionManagerABI from '@/lib/contracts/abis/ResolutionManager.json';
-import FlexibleMarketFactoryUnifiedABI from '@/lib/contracts/abis/FlexibleMarketFactoryUnified.json';
 
 // Admin role constant (keccak256("ADMIN_ROLE"))
 const ADMIN_ROLE = keccak256(toBytes('ADMIN_ROLE'));
@@ -298,10 +297,10 @@ export function useProposedMarkets() {
 /**
  * Hook to get proposal votes for a market
  */
-export function useProposalVotes(marketAddress: Address) {
+export function useProposalVotes(_marketAddress: Address) {
   // TODO: Implement backend API call to get proposal votes
   // This will be connected to the database in Phase 2
-  const [votes, setVotes] = useState({
+  const [votes] = useState({
     likes: 0,
     dislikes: 0,
     userVote: null as 'like' | 'dislike' | null,
@@ -316,10 +315,10 @@ export function useProposalVotes(marketAddress: Address) {
 /**
  * Hook to get resolution votes for a market
  */
-export function useResolutionVotes(marketAddress: Address) {
+export function useResolutionVotes(_marketAddress: Address) {
   // TODO: Implement backend API call to get resolution votes
   // This will be connected to the database in Phase 2
-  const [votes, setVotes] = useState({
+  const [votes] = useState({
     agreeCount: 0,
     disagreeCount: 0,
     comments: [] as any[],

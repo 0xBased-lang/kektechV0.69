@@ -26,10 +26,11 @@ const FALLBACK_NFTS = [
 ]
 
 // Get random NFTs from the collection
-function getRandomNFTs(nfts: NFTData[], count: number): NFTData[] {
-  const shuffled = [...nfts].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, count)
-}
+// Currently unused - can be used for randomizing the NFT display
+// function getRandomNFTs(nfts: NFTData[], count: number): NFTData[] {
+//   const shuffled = [...nfts].sort(() => Math.random() - 0.5)
+//   return shuffled.slice(0, count)
+// }
 
 export function FeaturedNFTs() {
   const [allNFTs, setAllNFTs] = useState<NFTData[]>([])
