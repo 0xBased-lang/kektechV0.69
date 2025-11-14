@@ -40,7 +40,8 @@ export function ProposalVoteButtons({ marketAddress }: ProposalVoteButtonsProps)
       toast.success(isUpvote ? 'Voted like!' : 'Voted dislike!')
       refetch()
     } catch (error: unknown) {
-      toast.error(error.message || 'Failed to vote')
+      const message = error instanceof Error ? error.message : 'Failed to vote'
+      toast.error(message)
     }
   }
 
