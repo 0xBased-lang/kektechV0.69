@@ -33,7 +33,7 @@ export function CommentVoteButtons({
   initialDownvotes,
   onVote,
 }: CommentVoteButtonsProps) {
-  const { isAuthenticated, authenticate, walletAddress } = useWalletAuth()
+  const { isAuthenticated, authenticate, walletAddress: _walletAddress } = useWalletAuth()
   const { voteOnComment, isVoting } = useVoteOnComment(commentId)
 
   // Local state for optimistic updates
