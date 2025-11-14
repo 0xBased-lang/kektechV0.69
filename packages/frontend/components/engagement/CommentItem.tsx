@@ -30,7 +30,7 @@ interface CommentItemProps {
   onVote?: () => void
 }
 
-export function CommentItem({ comment, marketAddress, onVote }: CommentItemProps) {
+export function CommentItem({ comment, marketAddress: _marketAddress, onVote }: CommentItemProps) {
   // Truncate wallet address: 0x1234...5678
   const truncatedAddress = comment.userId
     ? `${comment.userId.slice(0, 6)}...${comment.userId.slice(-4)}`
