@@ -116,7 +116,6 @@ function ResolutionMarketCard({
   const marketInfo = useMarketInfo(marketAddress, true);
   const { votes, isLoading: loadingData } = useResolutionVotes(marketAddress);
 
-  const _totalVotes = votes ? votes.total : 0;
   const agreePercentage = votes?.agreePercentage || 0;
   const willAutoFinalize = agreePercentage >= 75;
   const needsReview = agreePercentage < 60 && agreePercentage > 40;
