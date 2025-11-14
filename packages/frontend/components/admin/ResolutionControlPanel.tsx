@@ -180,7 +180,7 @@ function ResolutionMarketCard({
       )}
 
       {/* Time remaining - TODO: Get from market info */}
-      {marketInfo.expiryTime && (
+      {marketInfo.resolutionTime && (
         <p className="text-xs text-muted-foreground mt-2">
           <Clock className="h-3 w-3 inline mr-1" />
           Dispute window active
