@@ -323,8 +323,8 @@ export function ParameterConfigPanel() {
 
       await updateDisputeWindowHook.updateDisputeWindow(newWindowSeconds);
 
-      // Refetch to get updated value
-      await disputeWindow.refetch();
+      // Hook will auto-refresh with new value
+      // No manual refetch needed
 
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
