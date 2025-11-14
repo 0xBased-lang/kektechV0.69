@@ -119,7 +119,7 @@ export default function ProposalsPage() {
       {/* Proposals Grid */}
       <div className="grid gap-4">
         {markets.length === 0 ? (
-          <EmptyState message="No market proposals yet. Be the first to create one!" />
+          <EmptyState title="No market proposals yet. Be the first to create one!" />
         ) : (
           markets.map((address) => (
             <ProposalCardWrapper key={address} address={address} showAll={showAll} />

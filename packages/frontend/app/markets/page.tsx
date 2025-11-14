@@ -40,12 +40,14 @@ export default function MarketsPage() {
   // Fetch market info for all markets using the safe hook
   const { marketInfos, isLoading: isLoadingMarketData } = useMarketInfoList(markets);
 
-  // Prepare markets for filtering
+  // Prepare markets for filtering (filter out markets with undefined info)
   const marketsForFiltering = useMemo(() => {
-    return marketInfos.map(({ address, info }) => ({
-      address,
-      info,
-    }));
+    return marketInfos
+      .filter(({ info }) => info !== undefined)
+      .map(({ address, info }) => ({
+        address,
+        info: info!,  // TypeScript: we know info is defined after filter
+      }));
   }, [marketInfos]);
 
   // Apply advanced filtering
