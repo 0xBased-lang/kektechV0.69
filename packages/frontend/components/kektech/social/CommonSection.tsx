@@ -12,6 +12,17 @@ import Link from 'next/link';
 import { truncate } from '@/lib/utils';
 import { LoadingSpinner } from '@/components/kektech/ui/LoadingSpinner';
 
+interface Comment {
+  id: string;
+  comment: string;
+  marketAddress: string;
+  userId: string;
+  upvotes: number;
+  downvotes: number;
+  timestamp: string;
+  marketQuestion?: string;
+}
+
 interface CommonSectionProps {
   /** Maximum comments to display */
   maxComments?: number;
@@ -125,7 +136,7 @@ function TopCommentCard({
   comment,
   rank,
 }: {
-  comment: any;
+  comment: Comment;
   rank: number;
 }) {
   return (

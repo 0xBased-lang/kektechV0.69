@@ -27,13 +27,13 @@ export async function GET(
     const offset = parseInt(searchParams.get('offset') || '0');
 
     // Build where clause
-    const where: any = { marketAddress };
+    const where: Record<string, string> = { marketAddress };
     if (filterType !== 'all') {
       where.type = filterType;
     }
 
     // Build order by clause
-    let orderBy: any = { timestamp: 'desc' }; // default: recent
+    let orderBy: Record<string, string> | Array<Record<string, string>> = { timestamp: 'desc' }; // default: recent
     if (sortBy === 'top') {
       orderBy = { upvotes: 'desc' };
     } else if (sortBy === 'controversial') {

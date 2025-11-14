@@ -17,7 +17,7 @@ import { RANKING_API_URL } from '@/config/constants'
  */
 
 // In-memory cache (Context7 Next.js API route pattern)
-let cachedRankings: any = null
+let cachedRankings: unknown = null
 let cacheTimestamp = 0
 const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes in milliseconds
 

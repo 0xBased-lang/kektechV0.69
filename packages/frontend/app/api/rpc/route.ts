@@ -33,7 +33,7 @@ let circuitOpen = false;
 let circuitOpenedAt = 0;
 
 // Smart cache for static/slow-changing data
-const requestCache = new Map<string, { data: any; timestamp: number }>();
+const requestCache = new Map<string, { data: unknown; timestamp: number }>();
 const CACHE_DURATION: Record<string, number> = {
   'eth_chainId': 3600000, // 1 hour (never changes)
   'eth_blockNumber': 12000, // 12 seconds (BasedAI block time)
