@@ -166,7 +166,7 @@ export default function MarketPage({ params }: MarketPageProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div>
                   <div className="text-gray-400 text-sm mb-1">State</div>
-                  <div className="text-white font-semibold">{getStateLabel(state)}</div>
+                  <div className="text-white font-semibold">{getStateLabel(state ?? MarketState.PROPOSED)}</div>
                 </div>
                 <div>
                   <div className="text-gray-400 text-sm mb-1">Total Volume</div>
@@ -237,8 +237,8 @@ export default function MarketPage({ params }: MarketPageProps) {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-400">Status</span>
-                    <span className={`font-semibold ${getStateColor(state).split(' ')[0]}`}>
-                      {getStateLabel(state)}
+                    <span className={`font-semibold ${getStateColor(state ?? MarketState.PROPOSED).split(' ')[0]}`}>
+                      {getStateLabel(state ?? MarketState.PROPOSED)}
                     </span>
                   </div>
                   <div className="flex justify-between">

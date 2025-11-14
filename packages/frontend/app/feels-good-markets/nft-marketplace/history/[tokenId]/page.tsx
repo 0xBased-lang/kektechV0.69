@@ -7,13 +7,14 @@
 import { NFTHistoryPage } from '@/components/marketplace/NFTHistoryPage'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     tokenId: string
-  }
+  }>
 }
 
-export default function NFTHistoryRoute({ params }: PageProps) {
-  const tokenId = parseInt(params.tokenId, 10)
+export default async function NFTHistoryRoute({ params }: PageProps) {
+  const { tokenId: tokenIdStr } = await params
+  const tokenId = parseInt(tokenIdStr, 10)
 
   // Validate tokenId
   if (isNaN(tokenId) || tokenId < 0 || tokenId > 3) {
@@ -41,7 +42,8 @@ export function generateStaticParams() {
 
 // Metadata
 export async function generateMetadata({ params }: PageProps) {
-  const tokenId = parseInt(params.tokenId, 10)
+  const { tokenId: tokenIdStr } = await params
+  const tokenId = parseInt(tokenIdStr, 10)
 
   const names: Record<number, string> = {
     0: 'Genesis',
