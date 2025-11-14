@@ -102,16 +102,16 @@ export function ResolutionVoteDisplay({ marketAddress }: ResolutionVoteDisplayPr
               >
                 {/* Vote Header */}
                 <div className="flex items-center justify-between">
-                  <Badge variant={vote.isAgree ? 'default' : 'destructive'}>
-                    {vote.isAgree ? (
+                  <Badge variant={vote.vote === 'agree' ? 'default' : 'destructive'}>
+                    {vote.vote === 'agree' ? (
                       <CheckCircle2 className="h-3 w-3 mr-1" />
                     ) : (
                       <XCircle className="h-3 w-3 mr-1" />
                     )}
-                    {vote.isAgree ? 'Agree' : 'Disagree'}
+                    {vote.vote === 'agree' ? 'Agree' : 'Disagree'}
                   </Badge>
                   <span className="text-xs text-muted-foreground">
-                    {formatDistanceToNow(new Date(vote.createdAt), {
+                    {formatDistanceToNow(new Date(vote.timestamp), {
                       addSuffix: true,
                     })}
                   </span>
