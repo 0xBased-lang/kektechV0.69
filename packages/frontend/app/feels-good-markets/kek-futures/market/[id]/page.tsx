@@ -69,7 +69,7 @@ export default function MarketDetailPage() {
               <Tabs
                 defaultValue="discussion"
                 value={activeEngagementTab}
-                onValueChange={(value) => setActiveEngagementTab(value as any)}
+                onValueChange={(value) => setActiveEngagementTab(value as 'discussion' | 'sentiment' | 'resolution')}
                 className="w-full"
               >
                 {/* Tab List - KEKTECH styled */}

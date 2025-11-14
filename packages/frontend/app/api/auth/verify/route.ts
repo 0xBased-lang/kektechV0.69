@@ -268,12 +268,12 @@ export async function POST(request: NextRequest) {
       walletAddress,
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     const duration = Date.now() - startTime;
 
     console.error('[AUTH] Verification error', {
-      error: error.message,
-      stack: error.stack,
+      error: (error as Error).message,
+      stack: (error as Error).stack,
       ip,
       duration,
       timestamp: new Date().toISOString(),

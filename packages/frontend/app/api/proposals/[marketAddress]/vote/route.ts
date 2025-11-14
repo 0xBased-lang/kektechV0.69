@@ -85,7 +85,7 @@ export async function POST(
     let marketAddress: string;
     try {
       marketAddress = sanitizeAddress(rawMarketAddress);
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         { success: false, error: 'Invalid market address format' },
         { status: 400 }
