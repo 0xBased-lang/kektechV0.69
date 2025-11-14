@@ -86,12 +86,12 @@ export function ParameterConfigPanel() {
 
   // Determine mode from dispute window (15 min = testing, 48 hours = production)
   useEffect(() => {
-    if (disputeWindow.data) {
-      const windowSeconds = Number(disputeWindow.data);
+    if (disputeWindow.disputeWindow) {
+      const windowSeconds = Number(disputeWindow.disputeWindow);
       // 15 minutes = 900 seconds (testing), 48 hours = 172800 seconds (production)
       setMode(windowSeconds <= 1800 ? 'testing' : 'production');
     }
-  }, [disputeWindow.data]);
+  }, [disputeWindow.disputeWindow]);
 
   const loading = disputeWindow.isLoading || protocolFee.isLoading;
 
@@ -160,7 +160,7 @@ export function ParameterConfigPanel() {
     // Resolution (current mode)
     disputeWindow: {
       key: 'disputeWindow',
-      value: disputeWindow.data ? (mode === 'testing' ? Number(disputeWindow.data) / 60 : Number(disputeWindow.data) / 3600) : (mode === 'testing' ? 15 : 48),
+      value: disputeWindow.disputeWindow ? (mode === 'testing' ? Number(disputeWindow.disputeWindow) / 60 : Number(disputeWindow.disputeWindow) / 3600) : (mode === 'testing' ? 15 : 48),
       unit: mode === 'testing' ? 'minutes' : 'hours',
       description: `Dispute window (${mode.toUpperCase()})`,
       category: 'resolution'
