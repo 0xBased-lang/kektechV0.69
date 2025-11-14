@@ -1,7 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
@@ -18,11 +14,12 @@ import {
   Eye,
   AlertCircle
 } from "lucide-react";
-import { useMarketList } from "@/lib/hooks/kektech/useMarketData";
+import { useMarketList, useMarketInfo } from "@/lib/hooks/kektech/useMarketData";
 import { useMarketInfoList } from "@/lib/hooks/useMarketInfoList";
 import { formatDistanceToNow } from "date-fns";
 import { formatEther } from "viem";
 import type { Address } from "viem";
+import type { MarketInfo } from "@/lib/contracts/types";
 
 interface MarketMetrics {
   totalBets: number;
