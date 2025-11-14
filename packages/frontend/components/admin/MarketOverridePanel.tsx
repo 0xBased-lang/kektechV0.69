@@ -16,7 +16,6 @@ import {
   Check,
   X,
   Play,
-  Pause,
   SkipForward,
   AlertTriangle,
   Shield,
@@ -224,7 +223,6 @@ function OverrideControlPanel({ marketAddress }: { marketAddress: Address }) {
 
   const [selectedOutcome, setSelectedOutcome] = useState<0 | 1>(0);
   const [reason, setReason] = useState("");
-  const [forceAction, setForceAction] = useState(false);
 
   const currentState = marketInfo.state !== undefined ? STATE_NAMES[marketInfo.state] : 'UNKNOWN';
 
