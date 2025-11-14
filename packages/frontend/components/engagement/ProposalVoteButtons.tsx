@@ -19,7 +19,7 @@ interface ProposalVoteButtonsProps {
 }
 
 export function ProposalVoteButtons({ marketAddress }: ProposalVoteButtonsProps) {
-  const { isAuthenticated, authenticate, address } = useWalletAuth()
+  const { isAuthenticated, authenticate } = useWalletAuth()
   const { votes: voteData, refetch } = useProposalVotes(marketAddress)
   const { submitVote, isSubmitting } = useSubmitProposalVote(marketAddress)
 

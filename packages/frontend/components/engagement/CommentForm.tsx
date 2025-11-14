@@ -30,7 +30,7 @@ interface CommentFormProps {
 
 export function CommentForm({ marketAddress, onCommentPosted }: CommentFormProps) {
   const [comment, setComment] = useState('')
-  const { isAuthenticated, authenticate, address } = useWalletAuth()
+  const { isAuthenticated, authenticate } = useWalletAuth()
   const { submitComment, isSubmitting, error } = useSubmitComment(marketAddress)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -54,8 +54,7 @@ export function CommentForm({ marketAddress, onCommentPosted }: CommentFormProps
 
     // Post comment
     try {
-      const userId = address || 'unknown-user'
-      await submitComment(userId, comment.trim())
+      await submitComment(comment.trim())
       toast.success('Comment posted successfully!')
       setComment('') // Clear form
       onCommentPosted?.() // Callback for parent to refresh
@@ -69,7 +68,7 @@ export function CommentForm({ marketAddress, onCommentPosted }: CommentFormProps
     try {
       await authenticate()
       toast.success('Successfully signed in!')
-    } catch (_err) {
+    } catch {
       toast.error('Failed to sign in')
     }
   }
