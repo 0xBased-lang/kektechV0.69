@@ -124,11 +124,6 @@ const ProposalCard = memo(function ProposalCard({
           <h3 className="font-semibold text-lg line-clamp-2">
             {marketInfo.question || "Loading..."}
           </h3>
-          {marketInfo.description && (
-            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-              {marketInfo.description}
-            </p>
-          )}
           <p className="text-xs text-muted-foreground mt-2 font-mono">
             {marketAddress}
           </p>
