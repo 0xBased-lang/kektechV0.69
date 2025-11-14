@@ -7,7 +7,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { MarketState } from '@/lib/contracts/types';
 import type { Address } from 'viem';
-import type { FilterState, SortOption } from '@/components/kektech/markets/MarketFilters';
+import type { FilterState } from '@/components/kektech/markets/MarketFilters';
 
 const STORAGE_KEY = 'kektech_market_filters';
 

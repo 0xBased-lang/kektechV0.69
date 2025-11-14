@@ -35,8 +35,6 @@ export function useTrendingMarkets(markets: Address[] | undefined, limit: number
   // Calculate trending scores
   const trendingScores = useMemo(() => {
     const now = Date.now() / 1000; // Current time in seconds
-    const oneDayAgo = now - (24 * 60 * 60);
-    const oneWeekAgo = now - (7 * 24 * 60 * 60);
 
     const scores: TrendingScore[] = marketInfos
       .filter(({ info }) => info !== null) // Only calculate for loaded markets

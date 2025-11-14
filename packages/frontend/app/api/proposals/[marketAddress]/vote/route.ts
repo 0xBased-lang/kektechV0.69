@@ -12,7 +12,7 @@ import { sanitizeAddress } from '@/lib/utils/sanitize';
 
 // GET - Get vote counts for a market proposal
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ marketAddress: string }> }
 ) {
   try {

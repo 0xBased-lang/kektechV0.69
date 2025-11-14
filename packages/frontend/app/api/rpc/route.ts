@@ -200,8 +200,8 @@ export async function POST(request: NextRequest) {
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
 
-        const isTimeout = error.name === 'AbortError';
-        const isNetworkError = error.message.includes('fetch');
+        const isTimeout = lastError.name === 'AbortError';
+        const isNetworkError = lastError.message.includes('fetch');
 
         console.warn(`⚠️  RPC attempt ${attempt + 1}/${MAX_RETRIES} failed:`, {
           method: body.method,
@@ -306,7 +306,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Handle OPTIONS preflight requests
-export async function OPTIONS(request: NextRequest) {
+export async function OPTIONS(_request: NextRequest) {
   return NextResponse.json({}, {
     status: 200,
     headers: {

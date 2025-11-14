@@ -130,7 +130,7 @@ export function useWalletAuth() {
       }
 
       // Backend verification succeeded, session is now stored in cookies!
-      const { success, userId, walletAddress: verifiedAddress } = await response.json()
+      const { success: _success, userId: _userId, walletAddress: _verifiedAddress } = await response.json()
 
       // 🔧 FIX: Wait for session to be available from cookies (with retry)
       // Prevents race conditions where cookies haven't fully propagated yet

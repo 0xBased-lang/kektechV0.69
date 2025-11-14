@@ -157,8 +157,8 @@ export const sanitizeURL = (url: string): string | null => {
  * @param max - Maximum allowed value
  * @returns Sanitized number or null if invalid
  */
-export const sanitizeNumber = (value: any, min?: number, max?: number): number | null => {
-  const num = parseFloat(value);
+export const sanitizeNumber = (value: unknown, min?: number, max?: number): number | null => {
+  const num = parseFloat(String(value));
 
   if (isNaN(num) || !isFinite(num)) {
     return null;

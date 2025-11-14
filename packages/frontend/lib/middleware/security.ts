@@ -3,7 +3,7 @@
  * Applies rate limiting, origin validation, and input sanitization
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { rateLimitMiddleware } from '@/lib/utils/rate-limit';
 import { securityMiddleware } from '@/lib/utils/security';
 

@@ -35,13 +35,13 @@ export default function MarketPage({ params }: MarketPageProps) {
   const {
     state,
     question,
-    outcome1Name,
-    outcome2Name,
-    creator,
-    resolutionTime,
-    isResolved,
-    totalBets,
-    totalVolume,
+    outcome1Name: _outcome1Name,
+    outcome2Name: _outcome2Name,
+    creator: _creator,
+    resolutionTime: _resolutionTime,
+    isResolved: _isResolved,
+    totalBets: _totalBets,
+    totalVolume: _totalVolume,
     isLoading,
     hasError,
     usingFallback
@@ -124,8 +124,8 @@ export default function MarketPage({ params }: MarketPageProps) {
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <span className={`px-3 py-1 rounded-lg text-sm font-semibold ${getStateColor(state)}`}>
-                  {getStateLabel(state)}
+                <span className={`px-3 py-1 rounded-lg text-sm font-semibold ${getStateColor(state ?? MarketState.PROPOSED)}`}>
+                  {getStateLabel(state ?? MarketState.PROPOSED)}
                 </span>
                 <span className="text-gray-500 text-sm">
                   {marketAddress.slice(0, 6)}...{marketAddress.slice(-4)}

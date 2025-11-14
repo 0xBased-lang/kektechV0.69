@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
     if (!validationResult.success) {
       console.warn('[AUTH] Invalid request format', {
         ip,
-        errors: validationResult.error.errors,
+        errors: validationResult.error.issues,
       });
       return NextResponse.json(
         { success: false, error: 'Invalid request format' },
@@ -218,7 +218,7 @@ export async function POST(request: NextRequest) {
     const supabase = await createServerClient();
 
     // Step 3: Verify OTP with server client (stores session in cookies automatically)
-    const { data: sessionData, error: sessionError } = await supabase.auth.verifyOtp({
+    const { data: _sessionData, error: sessionError } = await supabase.auth.verifyOtp({
       token_hash: linkData.properties.hashed_token,
       type: 'magiclink',
     });
@@ -235,7 +235,7 @@ export async function POST(request: NextRequest) {
     let sessionReady = false;
 
     while (retries < maxRetries && !sessionReady) {
-      const { data: { session: verifiedSession }, error: checkError } = await supabase.auth.getSession();
+      const { data: { session: verifiedSession }, error: _checkError } = await supabase.auth.getSession();
 
       if (verifiedSession?.user?.id === userId) {
         sessionReady = true;
