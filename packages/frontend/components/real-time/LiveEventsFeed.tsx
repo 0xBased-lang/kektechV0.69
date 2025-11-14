@@ -13,7 +13,7 @@
  */
 
 import React, { useEffect } from 'react';
-import { useKektechWebSocket } from '@/lib/hooks/useKektechWebSocket';
+import { useKektechWebSocket, MarketEvent } from '@/lib/hooks/useKektechWebSocket';
 import { formatDistanceToNow } from 'date-fns';
 import { Activity, AlertCircle, CheckCircle2, RefreshCw, Wifi, WifiOff } from 'lucide-react';
 
@@ -131,7 +131,7 @@ export function LiveEventsFeed({
 /**
  * Individual event card component
  */
-function EventCard({ event }: { event: any }) {
+function EventCard({ event }: { event: MarketEvent }) {
   const getEventIcon = (type: string) => {
     switch (type) {
       case 'MarketCreated':
