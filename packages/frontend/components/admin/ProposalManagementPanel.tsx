@@ -74,7 +74,7 @@ const ProposalCard = memo(function ProposalCard({
   const approveMarket = useAdminApproveMarket(marketAddress); // ✅ FIXED: Use Admin hook that calls Factory
   const rejectMarket = useRejectMarket(marketAddress);
   const { votes, isLoading: loadingVotes, refetch } = useProposalVotes(marketAddress);
-  const [rejectReason, setRejectReason] = useState("");
+  const [rejectReason, _setRejectReason] = useState("");
 
   // ✅ FIXED: Filter at component level - only render PROPOSED markets
   if (marketInfo.state !== MarketState.PROPOSED && !marketInfo.isLoading) {
