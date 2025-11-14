@@ -6,6 +6,17 @@
 BASE_URL=${1:-"https://kektech-frontend.vercel.app"}
 TEST_MARKET="0x593c6A47d51644A54115e60aCf0Bd8bbd371e449"
 ORIGIN_HEADER="$BASE_URL"
+COOKIE_JAR=$(mktemp)
+
+# Optional: provide a protection bypass token via env var or prompt
+if [ -n "$VERCEL_BYPASS_TOKEN" ]; then
+  echo "🔐 Setting Vercel bypass cookie..."
+  curl -s -c "$COOKIE_JAR" \
+    "${BASE_URL}?x-vercel-set-bypass-cookie=true&x-vercel-protection-bypass=${VERCEL_BYPASS_TOKEN}" > /dev/null
+else
+  # Ensure cookie jar exists even if bypass not used
+  touch "$COOKIE_JAR"
+fi
 
 echo "🧪 KEKTECH API Endpoint Testing"
 echo "====================================="
@@ -13,7 +24,7 @@ echo ""
 
 echo "1. Testing Database Health..."
 echo "GET /api/health/db"
-RESPONSE=$(curl -s -X GET "${BASE_URL}/api/health/db")
+RESPONSE=$(curl -s -b "$COOKIE_JAR" -X GET "${BASE_URL}/api/health/db")
 echo "$RESPONSE" | jq .
 if echo "$RESPONSE" | jq -e '.success == true' > /dev/null; then
     echo "✅ Database health: PASS"
@@ -26,7 +37,7 @@ echo ""
 
 echo "2. Testing Top Comments Endpoints..."
 echo "GET /api/comments/top?timeframe=day&limit=1"
-RESPONSE=$(curl -s -X GET "${BASE_URL}/api/comments/top?timeframe=day&limit=1")
+RESPONSE=$(curl -s -b "$COOKIE_JAR" -X GET "${BASE_URL}/api/comments/top?timeframe=day&limit=1")
 echo "$RESPONSE" | jq .
 if echo "$RESPONSE" | jq -e '.success == true' > /dev/null; then
     echo "✅ Top comments (day): PASS"
@@ -35,7 +46,7 @@ else
 fi
 
 echo "GET /api/comments/top?timeframe=all&limit=10"
-RESPONSE=$(curl -s -X GET "${BASE_URL}/api/comments/top?timeframe=all&limit=10")
+RESPONSE=$(curl -s -b "$COOKIE_JAR" -X GET "${BASE_URL}/api/comments/top?timeframe=all&limit=10")
 echo "$RESPONSE" | jq .
 if echo "$RESPONSE" | jq -e '.success == true' > /dev/null; then
     echo "✅ Top comments (all): PASS"
@@ -46,7 +57,7 @@ echo ""
 
 echo "3. Testing Market Comments Endpoints..."
 echo "GET /api/comments/market/${TEST_MARKET}"
-RESPONSE=$(curl -s -X GET "${BASE_URL}/api/comments/market/${TEST_MARKET}")
+RESPONSE=$(curl -s -b "$COOKIE_JAR" -X GET "${BASE_URL}/api/comments/market/${TEST_MARKET}")
 echo "$RESPONSE" | jq .
 if echo "$RESPONSE" | jq -e '.success == true' > /dev/null; then
     echo "✅ Market comments (GET): PASS"
@@ -55,7 +66,7 @@ else
 fi
 
 echo "Testing POST /api/comments/market/[address] (should return 401 Unauthorized without auth)"
-HTTP_CODE=$(curl -s -X POST "${BASE_URL}/api/comments/market/${TEST_MARKET}" \
+HTTP_CODE=$(curl -s -b "$COOKIE_JAR" -X POST "${BASE_URL}/api/comments/market/${TEST_MARKET}" \
     -H "Content-Type: application/json" \
     -H "Origin: ${ORIGIN_HEADER}" \
     -d '{"comment":"Test comment"}' \
@@ -72,7 +83,7 @@ echo ""
 
 echo "4. Testing Proposal Voting Endpoints..."
 echo "GET /api/proposals/${TEST_MARKET}/vote"
-RESPONSE=$(curl -s -X GET "${BASE_URL}/api/proposals/${TEST_MARKET}/vote")
+RESPONSE=$(curl -s -b "$COOKIE_JAR" -X GET "${BASE_URL}/api/proposals/${TEST_MARKET}/vote")
 echo "$RESPONSE" | jq .
 if echo "$RESPONSE" | jq -e '.success == true' > /dev/null; then
     echo "✅ Proposal votes (GET): PASS"
@@ -81,7 +92,7 @@ else
 fi
 
 echo "Testing POST /api/proposals/[marketAddress]/vote (should return 401 without auth)"
-HTTP_CODE=$(curl -s -X POST "${BASE_URL}/api/proposals/${TEST_MARKET}/vote" \
+HTTP_CODE=$(curl -s -b "$COOKIE_JAR" -X POST "${BASE_URL}/api/proposals/${TEST_MARKET}/vote" \
     -H "Content-Type: application/json" \
     -H "Origin: ${ORIGIN_HEADER}" \
     -d '{"vote":"like"}' \
@@ -96,7 +107,7 @@ echo ""
 
 echo "5. Testing Resolution Voting Endpoints..."
 echo "GET /api/resolution/${TEST_MARKET}/vote"
-RESPONSE=$(curl -s -X GET "${BASE_URL}/api/resolution/${TEST_MARKET}/vote")
+RESPONSE=$(curl -s -b "$COOKIE_JAR" -X GET "${BASE_URL}/api/resolution/${TEST_MARKET}/vote")
 echo "$RESPONSE" | jq .
 if echo "$RESPONSE" | jq -e '.success == true' > /dev/null; then
     echo "✅ Resolution votes (GET): PASS"
@@ -105,7 +116,7 @@ else
 fi
 
 echo "Testing POST /api/resolution/[marketAddress]/vote (should return 401 without auth)"
-HTTP_CODE=$(curl -s -X POST "${BASE_URL}/api/resolution/${TEST_MARKET}/vote" \
+HTTP_CODE=$(curl -s -b "$COOKIE_JAR" -X POST "${BASE_URL}/api/resolution/${TEST_MARKET}/vote" \
     -H "Content-Type: application/json" \
     -H "Origin: ${ORIGIN_HEADER}" \
     -d '{"vote":"agree","comment":"Test comment"}' \
@@ -137,3 +148,5 @@ echo "1. If database tests pass: All 500 errors should be resolved"
 echo "2. If 405 errors persist: Investigate frontend URL formatting"
 echo "3. Test frontend functionality in browser"
 echo "4. Verify console errors are eliminated"
+
+rm -f "$COOKIE_JAR"
