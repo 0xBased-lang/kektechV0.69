@@ -157,7 +157,7 @@ export function CreateMarketForm({ onSuccess, onCancel }: CreateMarketFormProps)
 
     if (alreadyReported) return;
 
-    onSuccess({ txHash: hash, marketAddress });
+    onSuccess({ txHash: hash, marketAddress: marketAddress ?? undefined });
     lastReportedTxRef.current = { hash, address: normalizedAddress };
   }, [isSuccess, hash, marketAddress, onSuccess]);
 
