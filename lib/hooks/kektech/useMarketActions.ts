@@ -57,7 +57,7 @@ export function useCreateMarket() {
         const decoded = decodeEventLog({
           abi: ABIS.MarketFactory,
           data: log.data,
-          topics: log.topics as readonly [Hex, ...Hex[]] | readonly [],
+          topics: log.topics as [] | [Hex, ...Hex[]],
         });
 
         if (decoded.eventName === 'MarketCreated' && decoded.args?.marketAddress) {
