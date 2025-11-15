@@ -60,8 +60,12 @@ export function useCreateMarket() {
           topics: log.topics as [] | [Hex, ...Hex[]],
         });
 
-        if (decoded.eventName === 'MarketCreated' && decoded.args?.marketAddress) {
-          return decoded.args.marketAddress as Address;
+        if (decoded.eventName === 'MarketCreated') {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const args = decoded.args as any;
+          if (args?.marketAddress) {
+            return args.marketAddress as Address;
+          }
         }
       } catch {
         // Ignore non-matching logs
